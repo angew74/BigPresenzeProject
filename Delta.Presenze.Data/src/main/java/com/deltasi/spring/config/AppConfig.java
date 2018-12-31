@@ -25,8 +25,8 @@ import org.springframework.core.env.Environment;
 @Configuration
 @PropertySource("classpath:db.properties")
 @EnableTransactionManagement
-@ComponentScans(value = { @ComponentScan("com.boraji.tutorial.spring.dao"),
-@ComponentScan("com.boraji.tutorial.spring.service") })
+@ComponentScans(value = { @ComponentScan("com.deltasi.presenze.dao"),
+@ComponentScan("com.deltasi.presenze.dao") })
 public class AppConfig {
 
   @Autowired
