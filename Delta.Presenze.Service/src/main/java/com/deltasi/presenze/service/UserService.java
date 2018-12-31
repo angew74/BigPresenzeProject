@@ -6,7 +6,7 @@
 package com.deltasi.presenze.service;
 
 import com.deltasi.presenze.dao.PersonaDao;
-import com.deltasi.presenze.dao.UtenteDao;
+import com.deltasi.presenze.dao.UserDao;
 import com.deltasi.presenze.model.Persona;
 import com.deltasi.presenze.model.User;
 import java.util.List;
@@ -24,13 +24,13 @@ import com.deltasi.presenze.contracts.IUserService;
  * @author AdminDSI
  */
 
-@Service("UserService")
+@Service("userService")
 public class UserService implements UserDetailsService , IUserService {
 
   
     
      @Autowired
-    private UtenteDao utenteDAO;
+    private UserDao utenteDAO;
     
     @Override
     @Transactional 
