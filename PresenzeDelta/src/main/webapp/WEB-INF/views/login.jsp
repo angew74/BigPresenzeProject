@@ -21,10 +21,8 @@
         }
     %>
  
-    <form name='loginForm' action="<c:url value='login' />"
-        "
-method='POST'>
- 
+  <form action='<spring:url value="/loginAction"/>' method="post">
+  
         <table>
             <tr>
                 <td>User:</td>
