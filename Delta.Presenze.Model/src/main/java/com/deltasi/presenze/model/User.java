@@ -5,11 +5,15 @@
  */
 package com.deltasi.presenze.model;
 
+import java.util.HashSet;
+import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -21,7 +25,7 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "users")
-public class Utente {
+public class User {
 
     /**
      * @return the id
@@ -68,16 +72,21 @@ public class Utente {
     /**
      * @return the enaabled
      */
-    public boolean isEnaabled() {
-        return enaabled;
+    public boolean isEnabled() {
+        return enabled;
     }
 
     /**
      * @param enaabled the enaabled to set
      */
-    public void setEnaabled(boolean enaabled) {
-        this.enaabled = enaabled;
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
+    
+     public Set<Authorities> getAuthorities() {
+        return authorities;
+    }
+    
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Column(name = "user_id")  
@@ -96,9 +105,13 @@ public class Utente {
    
    @Column(name = "enabled")
    @NotNull 
-   private boolean enaabled;
+   private boolean enabled;
    
    
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+  private Set<Authorities> authorities = new HashSet<>();
+
+    
    
    
    
