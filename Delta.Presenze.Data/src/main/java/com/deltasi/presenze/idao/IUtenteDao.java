@@ -6,7 +6,7 @@
 package com.deltasi.presenze.idao;
 
 import com.deltasi.presenze.model.Persona;
-import com.deltasi.presenze.model.Utente;
+import com.deltasi.presenze.model.User;
 import java.util.List;
 
 /**
@@ -15,14 +15,16 @@ import java.util.List;
  */
 public interface IUtenteDao {
     
-    public void addUtente(Utente utente);
+    public void addUtente(User utente);
  
-    public List<Utente> getAllUtenti();
+    public List<User> getAllUtenti();
  
     public void deleteUtente(Integer id);
  
-    public Utente updateUtente(Utente utente);
+    public User updateUtente(User utente);
  
-    public Utente getUtente(int id);
+    public User getUtente(int id);
+    
+    public User findUserByUsername(String username);
     
 }

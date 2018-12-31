@@ -7,7 +7,7 @@ package com.deltasi.presenze.dao;
 
 import com.deltasi.presenze.idao.IUtenteDao;
 import com.deltasi.presenze.model.Persona;
-import com.deltasi.presenze.model.Utente;
+import com.deltasi.presenze.model.User;
 import java.util.List;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,36 +25,39 @@ public class UtenteDao implements IUtenteDao {
     private SessionFactory sessionFactory;
     
     @Override
-    public void addUtente(Utente utente) {
+    public void addUtente(User utente) {
           sessionFactory.getCurrentSession().saveOrUpdate(utente);
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<Utente> getAllUtenti() {
+    public List<User> getAllUtenti() {
          return sessionFactory.getCurrentSession().createQuery("from Users")
                 .list();
     }
 
     @Override
     public void deleteUtente(Integer id) {
-         Utente utente = (Utente) sessionFactory.getCurrentSession().load(
-                Utente.class, id);
+         User utente = (User) sessionFactory.getCurrentSession().load(User.class, id);
         if (null != utente) {
             this.sessionFactory.getCurrentSession().delete(utente);
         }
     }
 
     @Override
-    public Utente updateUtente(Utente utente) {
+    public User updateUtente(User utente) {
             sessionFactory.getCurrentSession().update(utente);
         return utente;
     }
 
     @Override
-    public Utente getUtente(int id) {
-       return (Utente) sessionFactory.getCurrentSession().get(
-                Utente.class, id);
+    public User getUtente(int id) {
+       return (User) sessionFactory.getCurrentSession().get(User.class, id);
     }
     
+    @Override
+    public User findUserByUsername(String username)
+    {
+           return (User) sessionFactory.getCurrentSession().get(User.class, username);
+    }    
 }
