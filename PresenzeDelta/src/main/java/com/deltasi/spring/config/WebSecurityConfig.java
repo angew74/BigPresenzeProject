@@ -7,6 +7,7 @@ package com.deltasi.spring.config;
 
 import com.deltasi.presenze.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -24,8 +25,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
     
     @Autowired
-  private UserService userDetailsService;
-  
+    @Qualifier("userService")
+  private UserDetailsService  userDetailsService;
+   
     @Bean
 public UserDetailsService userDetailsService() {
     return super.userDetailsService();
