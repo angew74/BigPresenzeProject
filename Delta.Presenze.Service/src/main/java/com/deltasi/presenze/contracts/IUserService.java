@@ -5,7 +5,6 @@
  */
 package com.deltasi.presenze.contracts;
 
-import com.deltasi.presenze.model.Persona;
 import com.deltasi.presenze.model.User;
 import java.util.List;
 

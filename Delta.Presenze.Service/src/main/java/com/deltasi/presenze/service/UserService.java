@@ -5,9 +5,7 @@
  */
 package com.deltasi.presenze.service;
 
-import com.deltasi.presenze.dao.PersonaDao;
 import com.deltasi.presenze.dao.UserDao;
-import com.deltasi.presenze.model.Persona;
 import com.deltasi.presenze.model.User;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,45 +22,45 @@ import com.deltasi.presenze.contracts.IUserService;
  * @author AdminDSI
  */
 
-@Service("userService")
+@Service("userDetailsService")
 public class UserService implements UserDetailsService , IUserService {
 
   
     
      @Autowired
-    private UserDao utenteDAO;
+    private UserDao userDAO;
     
     @Override
     @Transactional 
     public void addUtente(User utente) {
-      utenteDAO.addUtente(utente);
+      userDAO.addUtente(utente);
     }
 
     @Override
     public List<User> getAllUtenti() {
-       return utenteDAO.getAllUtenti();
+       return userDAO.getAllUtenti();
     }
 
     @Override
     public void deleteUtente(Integer id) {
-       utenteDAO.deleteUtente(id);
+       userDAO.deleteUtente(id);
     }
 
     @Override
     @Transactional(readOnly = true)
     public User getUtente(int id) {
-       return utenteDAO.getUtente(id);
+       return userDAO.getUtente(id);
     }
 
     @Override
     public User updateUtente(User utente) {
-        return utenteDAO.updateUtente(utente);
+        return userDAO.updateUtente(utente);
     }
     
      @Override
      @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) {
-       User user = utenteDAO.findUserByUsername(username);
+       User user = userDAO.findUserByUsername(username);
     UserBuilder builder = null;
     if (user != null) {
       
