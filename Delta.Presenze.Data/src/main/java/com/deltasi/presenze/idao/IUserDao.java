@@ -13,7 +13,7 @@ import java.util.List;
  *
  * @author AdminDSI
  */
-public interface IUtenteDao {
+public interface IUserDao {
     
     public void addUtente(User utente);
  

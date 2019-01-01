@@ -5,7 +5,7 @@
  */
 package com.deltasi.presenze.dao;
 
-import com.deltasi.presenze.idao.IUtenteDao;
+import com.deltasi.presenze.idao.IUserDao;
 import com.deltasi.presenze.model.User;
 import java.util.List;
 import org.hibernate.SessionFactory;
@@ -18,7 +18,7 @@ import org.springframework.stereotype.Repository;
  */
 
 @Repository
-public class UserDao implements IUtenteDao {
+public class UserDao implements IUserDao {
 
      @Autowired
     private SessionFactory sessionFactory;
