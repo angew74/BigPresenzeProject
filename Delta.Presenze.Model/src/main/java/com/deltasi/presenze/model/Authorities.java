@@ -5,8 +5,11 @@
  */
 package com.deltasi.presenze.model;
 
+import java.math.BigInteger;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -16,11 +19,17 @@ import javax.persistence.Table;
 @Table(name = "AUTHORITIES")
 public class Authorities {
   @Id
-  @Column(name = "AUTHORITY")
+  /* @Column(name = "idauthorities", columnDefinition = "NUMERIC(10,0)")*/ 
+  @Column(name = "idauthorities")
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
+      
+  
+  @Column(name = "authority")
   private String authority;
 
   @ManyToOne
-  @JoinColumn(name = "USERNAME")
+  @JoinColumn(name = "user_id")
   private User user;
 
   //Getter and Setter methods
@@ -51,6 +60,20 @@ public class Authorities {
      */
     public void setUser(User user) {
         this.user = user;
+    }
+
+    /**
+     * @return the Id
+     */
+    public Long getId() {
+        return id;
+    }
+
+    /**
+     * @param Id the Id to set
+     */
+    public void setId(Long Id) {
+        this.id = Id;
     }
 }
 
