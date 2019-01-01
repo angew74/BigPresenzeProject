@@ -5,9 +5,6 @@
  */
 package com.deltasi.spring.config;
 
-import org.springframework.context.annotation.ComponentScan.Filter;
-import org.springframework.web.filter.CharacterEncodingFilter;
-import org.springframework.web.filter.reactive.HiddenHttpMethodFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 /**
@@ -19,7 +16,7 @@ public class MvcWebApplicationInitializer extends AbstractAnnotationConfigDispat
   // Load database and spring security configuration
   @Override
   protected Class<?>[] getRootConfigClasses() {
-    return new Class[] { AppConfig.class, WebSecurityConfig.class };
+    return new Class[] { HibernateConf.class, WebSecurityConfig.class };
   }
 
   // Load spring web configuration
