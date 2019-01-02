@@ -1,9 +1,10 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<html>
- 
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<!DOCTYPE html>
+<html> 
 <head>
-<title>Custom Login Page</title>
- 
+<title>Custom Login Page</title> 
 <style>
 .errorblock {
     color: #ff0000;
@@ -11,15 +12,8 @@
 }
 </style>
 </head>
-<body onload='document.loginForm.j_username.focus();'>
-    <h3>Custom Login Page</h3>
- 
-    <%
-        String errorString = (String) request.getAttribute("error");
-        if (errorString != null && errorString.trim().equals("true")) {
-            out.println("<span class=\"errorblock\">Incorrect login name or password. Please try again");
-        }
-    %>
+<body>
+    <h3>Custom Login Page</h3>  
  
   <form action='<spring:url value="/loginAction"/>' method="post">
   
