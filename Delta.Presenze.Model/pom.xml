@@ -10,38 +10,32 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <hibernate.version>5.4.0.Final</hibernate.version>
-         <java.version>1.8</java.version>
+        <java.version>1.8</java.version>
     </properties>      
-      <dependencies>
-           <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-core</artifactId>
-               <version>${hibernate.version}</version>
-                <type>jar</type>
-           </dependency>
-  
+    <dependencies>
         <dependency>
             <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-c3p0</artifactId>
+            <artifactId>hibernate-core</artifactId>
             <version>${hibernate.version}</version>
+            <type>jar</type>         
+        </dependency>         
+        <dependency>
+            <groupId>org.hibernate.javax.persistence</groupId>
+            <artifactId>hibernate-jpa-2.1-api</artifactId>
+            <version>1.0.0.Final</version>
+            <type>jar</type>
         </dependency>
-            <dependency>
-                  <groupId>org.hibernate.javax.persistence</groupId>
-                  <artifactId>hibernate-jpa-2.1-api</artifactId>
-                  <version>1.0.0.Final</version>
-                  <type>jar</type>
-            </dependency>
-            <dependency>
-                  <groupId>javax.validation</groupId>
-                  <artifactId>validation-api</artifactId>
-                  <version>1.1.0.Final</version>
-                  <type>jar</type>
-            </dependency>
-            <dependency>
-                  <groupId>org.hibernate</groupId>
-                  <artifactId>hibernate-validator</artifactId>
-                  <version>${hibernate.version}</version>
-                  <type>jar</type>
-            </dependency>
-      </dependencies>
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+            <version>1.1.0.Final</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>${hibernate.version}</version>
+            <type>jar</type>
+        </dependency>        
+    </dependencies>
 </project>

@@ -16,13 +16,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "AUTHORITIES")
+@Table(name = "authorities")
 public class Authorities {
   @Id
   /* @Column(name = "idauthorities", columnDefinition = "NUMERIC(10,0)")*/ 
   @Column(name = "idauthorities")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+  private Integer id;
       
   
   @Column(name = "authority")
@@ -65,14 +65,14 @@ public class Authorities {
     /**
      * @return the Id
      */
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
     /**
      * @param Id the Id to set
      */
-    public void setId(Long Id) {
+    public void setId(Integer Id) {
         this.id = Id;
     }
 }
