@@ -1,8 +1,3 @@
-<%-- 
-    Document   : index
-    Created on : 31-dic-2018, 15.44.00
-    Author     : AdminDSI
---%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
