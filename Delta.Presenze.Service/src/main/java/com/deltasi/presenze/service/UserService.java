@@ -16,6 +16,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.deltasi.presenze.contracts.IUserService;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -25,7 +26,7 @@ import com.deltasi.presenze.contracts.IUserService;
 @Service("userDetailsService")
 public class UserService implements UserDetailsService , IUserService {
 
-  
+    private Logger logger = Logger.getLogger(UserService.class);
     
      @Autowired
     private UserDao userDAO;
@@ -62,6 +63,8 @@ public class UserService implements UserDetailsService , IUserService {
     public UserDetails loadUserByUsername(String username) {
        User user = userDAO.findUserByUsername(username);
     UserBuilder builder = null;
+    try 
+    {
     if (user != null) {
       
       builder = org.springframework.security.core.userdetails.User.withUsername(username);
@@ -70,9 +73,15 @@ public class UserService implements UserDetailsService , IUserService {
       String[] authorities = user.getAuthorities()
           .stream().map(a -> a.getAuthority()).toArray(String[]::new);
 
-      builder.authorities(authorities);
+      builder.authorities(authorities);   
     } else {
-      throw new UsernameNotFoundException("User not found.");
+       logger.error("Utente non trovato");
+      throw new UsernameNotFoundException("Utente non trovato");
+    }
+    }
+    catch(Exception ex)
+    {
+         logger.error(ex.getMessage());
     }
     return builder.build();
     }
