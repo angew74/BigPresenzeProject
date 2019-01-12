@@ -108,8 +108,26 @@ public class User {
    private boolean enabled;
    
    
+   @Column(name = "mailaziendale")
+   @NotNull 
+   private String mailaziendale;
+   
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
   private Set<Authorities> authorities = new HashSet<>();
+
+    /**
+     * @return the mailaziendale
+     */
+    public String getMailaziendale() {
+        return mailaziendale;
+    }
+
+    /**
+     * @param mailaziendale the mailaziendale to set
+     */
+    public void setMailaziendale(String mailaziendale) {
+        this.mailaziendale = mailaziendale;
+    }
 
     
    

@@ -6,11 +6,16 @@
 package com.deltasi.presenze.model;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
@@ -82,15 +87,16 @@ public class Persona {
    @NotNull
    private Date datanascita;   
    
-
-   @Column(name = "mailpersonale", unique = true)
-   @Email(message = "{persona.mailpersonale.invalido}")
-   private String mailpersonale;
+  @OneToOne
+  private User user;
    
-   @Column(name = "mailaziendale", unique = true)
-   @Size(max = 90, min = 5, message = "{persona.mailaziendale.invalido}")
-   @Email(message = "{persona.email.invalido}")
-   private String mailaziendale;
+
+ 
+   
+   @Column(name = "numeromatricola", unique = true)
+   @Size(max = 90, min = 5, message = "{persona.numeromatricola.invalido}")
+   @Email(message = "{persona.numeromatricola.invalido}")
+   private String numeromatricola;
 
     /**
      * @return the id
@@ -245,33 +251,33 @@ public class Persona {
     public void setDatanascita(Date datanascita) {
         this.datanascita = datanascita;
     }
-
-    /**
-     * @return the mailpersonale
-     */
-    public String getMailpersonale() {
-        return mailpersonale;
-    }
-
-    /**
-     * @param mailpersonale the mailpersonale to set
-     */
-    public void setMailpersonale(String mailpersonale) {
-        this.mailpersonale = mailpersonale;
-    }
-
+    
     /**
      * @return the mailaziendale
      */
-    public String getMailaziendale() {
-        return mailaziendale;
+    public String getNumeromatricola() {
+        return numeromatricola;
     }
 
     /**
      * @param mailaziendale the mailaziendale to set
      */
-    public void setMailaziendale(String mailaziendale) {
-        this.mailaziendale = mailaziendale;
+    public void setNumeromatricola(String numeromatricola) {
+        this.numeromatricola = numeromatricola;
+    }
+
+    /**
+     * @return the user
+     */
+    public User getUser() {
+        return user;
+    }
+
+    /**
+     * @param user the user to set
+     */
+    public void setUser(User user) {
+        this.user = user;
     }
 
 }
