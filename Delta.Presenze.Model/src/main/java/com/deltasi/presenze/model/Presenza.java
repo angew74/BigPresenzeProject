@@ -260,7 +260,7 @@ public class Presenza {
         this.permessomalattafiglio = permessomalattafiglio;
     }
     
-   @OneToMany(cascade = CascadeType.ALL, mappedBy = "persona")
+ @OneToMany(cascade = CascadeType.ALL, mappedBy = "persona")
   private Set<Persona> persone = new HashSet<>();
     
 }
