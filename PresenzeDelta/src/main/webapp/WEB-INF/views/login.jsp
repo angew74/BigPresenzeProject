@@ -27,8 +27,8 @@
                 <td><input type='password' name='password' /></td>
             </tr>
             <tr>
-                <td><input name="submit" type="submit" value="submit" /></td>
-                <td><input name="reset" type="reset" /></td>
+                <td><input name="submit" type="submit" value="Conferma" /></td>
+                <td><input name="reset" type="reset" value="Annulla"/></td>
             </tr>
         </table>
  

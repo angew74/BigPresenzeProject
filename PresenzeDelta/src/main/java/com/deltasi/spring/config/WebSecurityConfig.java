@@ -15,6 +15,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  *
@@ -23,6 +25,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
+    
+     private static final Logger logger = LogManager.getLogger(WebSecurityConfig.class);
     
     @Autowired   
   private UserDetailsService  userDetailsService;
@@ -36,12 +40,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
   
   @Override
   protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+     logger.debug("Sono dentro configure");
     auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
   }
 
   @Override
-  protected void configure(HttpSecurity http) throws Exception {
-    http.authorizeRequests().anyRequest().hasAnyRole("ADMIN", "USER")
+  protected void configure(HttpSecurity http) throws Exception {  
+      logger.debug("Sono dentro configure con http");
+  http.authorizeRequests().anyRequest().hasAnyRole("ADMIN", "USER")
     .and()
     .authorizeRequests().antMatchers("/login**").permitAll()
     .and()
