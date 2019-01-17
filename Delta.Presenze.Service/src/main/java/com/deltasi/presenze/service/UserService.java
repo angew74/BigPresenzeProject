@@ -63,6 +63,11 @@ public class UserService implements UserDetailsService , IUserService {
     public UserDetails loadUserByUsername(String username) {
        User user = userDAO.findUserByUsername(username);
     UserBuilder builder = null;
+    //logs debug message
+		if(logger.isDebugEnabled()){
+			logger.debug("Sono in userdetails");
+		}
+
     try 
     {
     if (user != null) {
@@ -73,7 +78,8 @@ public class UserService implements UserDetailsService , IUserService {
       String[] authorities = user.getAuthorities()
           .stream().map(a -> a.getAuthority()).toArray(String[]::new);
 
-      builder.authorities(authorities);   
+      builder.authorities(authorities);  
+     builder.roles(authorities);
     } else {
        logger.error("Utente non trovato");
       throw new UsernameNotFoundException("Utente non trovato");
