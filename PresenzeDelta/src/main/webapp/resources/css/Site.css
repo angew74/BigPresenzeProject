@@ -16,6 +16,13 @@ em {
 	font-style: italic; 
 }
 
+.login-card {
+  max-width: 400px;
+}
+.login-header-image {
+   background-image: url('images/buttons/personal.png');
+  background-size: cover;
+}
 #ina .table {
 	background: #f5f5f5;
 	border-collapse: separate;
