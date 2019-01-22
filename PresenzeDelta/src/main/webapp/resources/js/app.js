@@ -1,4 +1,4 @@
-﻿var app = angular.module("INAApp", ['ngMessages', 'ngMaterial', 'ngAnimate','ngSanitize', 'ngAria','md.data.table'])
+﻿var app = angular.module("PresenzeApp", ['ngMessages', 'ngMaterial', 'ngAnimate','ngSanitize', 'ngAria','md.data.table'])
 .config(function ($mdThemingProvider) {
     var bluegreyMap = $mdThemingProvider.extendPalette('blue-grey', {
         '700': '#455A64',
