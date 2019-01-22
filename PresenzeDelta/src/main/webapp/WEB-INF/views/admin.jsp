@@ -1,8 +1,4 @@
-<%-- 
-    Document   : admin
-    Created on : 20-dic-2018, 16.02.32
-    Author     : AdminDSI
---%>
+
 
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@page session="true"%>

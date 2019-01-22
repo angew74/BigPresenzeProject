@@ -8,12 +8,11 @@ package com.deltasi.presenze.dao;
 import com.deltasi.presenze.idao.IUserDao;
 import com.deltasi.presenze.model.User;
 import java.util.List;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.apache.log4j.Logger;
-import org.hibernate.annotations.NamedQueries;
-import org.hibernate.annotations.NamedQuery;
 
 /**
  *
@@ -22,7 +21,7 @@ import org.hibernate.annotations.NamedQuery;
 @Repository
 public class UserDao implements IUserDao {
 
-    private Logger logger = Logger.getLogger(UserDao.class);
+  private static final Logger logger = LogManager.getLogger(UserDao.class);
 
     @Autowired
     private SessionFactory sessionFactory;

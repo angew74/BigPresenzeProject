@@ -16,6 +16,7 @@ public class MvcWebApplicationInitializer extends AbstractAnnotationConfigDispat
   // Load database and spring security configuration
   @Override
   protected Class<?>[] getRootConfigClasses() {
+      
     return new Class[] { HibernateConf.class, WebSecurityConfig.class };
   }
 
