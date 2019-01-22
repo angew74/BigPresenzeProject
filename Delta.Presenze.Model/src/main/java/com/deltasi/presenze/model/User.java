@@ -17,6 +17,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import org.hibernate.validator.constraints.Email;
 
 /**
  *
@@ -89,7 +90,7 @@ public class User {
     
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
-   @Column(name = "user_id")  
+   @Column(name = "user_id")   
    private Integer id;
    
    @Column(name = "user_name")
@@ -110,6 +111,7 @@ public class User {
    
    @Column(name = "mailaziendale")
    @NotNull 
+   @Email
    private String mailaziendale;
    
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
