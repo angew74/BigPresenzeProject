@@ -17,6 +17,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 
 
 /**
@@ -47,10 +48,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 
   @Override
   protected void configure(HttpSecurity http) throws Exception {
-    http.authorizeRequests().antMatchers("/resources/**").permitAll().anyRequest().permitAll();
-    http.authorizeRequests().anyRequest().hasAnyRole("ADMIN", "USER")
+  http.authorizeRequests().anyRequest().hasAnyRole("ADMIN", "USER")
     .and()
-    .authorizeRequests().antMatchers("/login**").permitAll()    
+    .authorizeRequests().antMatchers("/login**").permitAll()
     .and()
     .formLogin().loginPage("/login").loginProcessingUrl("/loginAction").permitAll()
     .and()
@@ -58,5 +58,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
     .and()
     .csrf().disable();
   }
+  
+  @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers("/resources/**")         
+         .and()
+         .ignoring().antMatchers("/webjars/**");
+    }
+
     
 }

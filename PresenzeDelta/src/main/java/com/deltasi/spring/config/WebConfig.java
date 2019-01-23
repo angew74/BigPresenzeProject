@@ -48,7 +48,8 @@ public class WebConfig implements WebMvcConfigurer {
          .addResolver(new PathResourceResolver());
          registry.addResourceHandler("/images/**").addResourceLocations("/css/images/")
             .setCacheControl(CacheControl.maxAge(2, TimeUnit.HOURS).cachePublic());
-         registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
+         registry.addResourceHandler("/webjars/**").addResourceLocations("/webjars/");
+        
     }
 
   @Override
