@@ -4,6 +4,9 @@
 <%@page session="true"%>
 <html>
 <body>
+    <c:import url="menu.jsp" ></c:import>
+    <jsp:include page="menu.jsp" />
+    <%@ include file="/WEB-INF/views/menu.jsp" %>
     <h1>Name : ${name}</h1>
     <h1>Description : ${description}</h1>
   
