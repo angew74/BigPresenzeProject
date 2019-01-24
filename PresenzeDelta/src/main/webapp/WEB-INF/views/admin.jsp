@@ -11,7 +11,7 @@
         <h2>
             Welcome : ${user} | <a
                 href="<c:url value="/j_spring_security_logout" />"> Logout</a>
-        </h2>
+        </h2>      
     </c:if>
 </body>
 </html>
