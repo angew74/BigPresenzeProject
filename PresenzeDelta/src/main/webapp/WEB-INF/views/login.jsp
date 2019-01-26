@@ -6,7 +6,8 @@
 <html> 
     <head>
         <meta name="viewport" content="initial-scale=1, maximum-scale=1">
-        <link href="<c:url value="/resources/css/Site.css" />" type="text/css" rel="stylesheet" />       
+        <link href="<c:url value="/resources/css/menu.css" />" type="text/css" rel="stylesheet" />       
+        <link href="<c:url value="/resources/css/Login.css" />" type="text/css" rel="stylesheet" />       
         <link rel="stylesheet" href="webjars/bootstrap/4.1.1/css/bootstrap.min.css">
         <script type="text/javascript" src="webjars/jquery/3.2.1/jquery.min.js"></script>
         <script type="text/javascript" src="webjars/bootstrap/4.1.1/js/bootstrap.min.js"></script>
@@ -14,7 +15,7 @@
     </head>   
     <body>
         <nav class="navbar navbar-icon-top navbar-expand-lg navbar-dark bg-dark">
-            <a class="navbar-brand" href="#">Menu</a>
+            <a class="navbar-brand"  href="http://Deltasi.it"><img src="resources/css/images/delta-logo.png" style="height: 4em; display: inline-block;vertical-align: middle; max-width: 100%;" /></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -26,40 +27,7 @@
                             Home
                             <span class="sr-only">(current)</span>
                         </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <i class="fa fa-plus-square"></i> 
-                            Presenza
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link disabled" href="#">
-                           <i class="fa fa-bars"></i> 
-                           Riepilogo
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link disabled" href="#">
-                           <i class="fa fa-address-card"></i> 
-                          Anagrafica
-                        </a>
-                    </li>
-                </ul>
-                <ul class="navbar-nav ">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <i class="fa fa-clone"></i>  
-                            Curriculum
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <i class="fa fa-university"></i>                 
-                                    Qualità
-                        </a>
-                    </li>
-                </ul>          
+                    </li>                  
             </div>
         </nav> 
         <div class="wrapper fadeInDown">
@@ -68,10 +36,10 @@
 
                 <!-- Icon -->
                 <div class="fadeIn first">
-                    <img src="resources/css/images/buttons/personal.png" id="icon"  alt="User Icon" />
+                    <img id="profile-img" class="profile-img-card" src="resources/css/images/avatar.png" id="icon"  alt="User Icon" />
                 </div>
 
-                <form action='<spring:url value="/loginAction"/>' method="post">       
+                <form action='<spring:url value="/login"/>' method="post">       
                     <input id="login" type="text" name="username"  placeholder="Username"  class="fadeIn second">                                   
                     <input id="password" type="password" name="password"  placeholder="password" class="fadeIn third">                  
                     <input type="submit" class="fadeIn fourth" value="Accedi">     

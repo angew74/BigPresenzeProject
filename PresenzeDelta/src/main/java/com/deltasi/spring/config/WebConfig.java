@@ -5,6 +5,8 @@
  */
 package com.deltasi.spring.config;
 
+import com.deltasi.spring.interceptors.SessionTimerInterceptor;
+import com.deltasi.spring.interceptors.UserInterceptor;
 import java.util.concurrent.TimeUnit;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -15,6 +17,7 @@ import org.springframework.http.CacheControl;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
@@ -33,10 +36,27 @@ import org.springframework.web.servlet.view.JstlView;
 @ComponentScan(basePackages = { "com.deltasi.presenzedelta.Controllers" })
 public class WebConfig implements WebMvcConfigurer {
 
+     public WebConfig() {
+        super();
+    }
+    
   @Override
   public void configureViewResolvers(ViewResolverRegistry registry) {
     registry.jsp().prefix("/WEB-INF/views/").suffix(".jsp");
   }
+  
+   @Override
+    public void addViewControllers(final ViewControllerRegistry registry) {
+        registry.addViewController("/anonymous.html");
+
+        registry.addViewController("/login.html");
+        registry.addViewController("/index.html");
+        registry.addViewController("/admin.html");
+        registry.addViewController("/home.html");
+        registry.addViewController("/logout.html");
+        registry.addViewController("/menu.html");
+        registry.addViewController("/head.html");
+    }
   
   @Override
   public void addResourceHandlers(ResourceHandlerRegistry registry) {
@@ -51,11 +71,17 @@ public class WebConfig implements WebMvcConfigurer {
          registry.addResourceHandler("/webjars/**").addResourceLocations("/webjars/");
         
     }
-
+  
+  @Override
+    public void addInterceptors(final InterceptorRegistry registry) {        
+        registry.addInterceptor(new UserInterceptor());
+        registry.addInterceptor(new SessionTimerInterceptor());
+    }
+/*
   @Override
   public void addViewControllers(ViewControllerRegistry registry) {
     registry.addViewController("/login").setViewName("login");
-  }
+  }*/
     @Bean
    public InternalResourceViewResolver resolver() {
       InternalResourceViewResolver resolver = new InternalResourceViewResolver();
