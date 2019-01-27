@@ -5,7 +5,7 @@
  */
 package com.deltasi.presenze.model;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.CascadeType;
@@ -14,6 +14,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -42,8 +43,8 @@ public class Curriculum {
    private String versione;
    
    
-   @Column(name = "file")  
-   private String file;  
+   @Column(name = "file", columnDefinition="BLOB")    
+   private byte[] file;  
      
    @Column(name = "utenteope")  
    @NotNull
@@ -114,14 +115,14 @@ public class Curriculum {
     /**
      * @return the file
      */
-    public String getFile() {
+    public byte[] getFile() {
         return file;
     }
 
     /**
      * @param file the file to set
      */
-    public void setFile(String file) {
+    public void setFile(byte[] file) {
         this.file = file;
     }
 
@@ -152,8 +153,7 @@ public class Curriculum {
     public void setDataope(Date dataope) {
         this.dataope = dataope;
     }
-    
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "persona")
-  private Set<Persona> Persona = new HashSet<>();
-    
+   
+  
+   
 }

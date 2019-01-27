@@ -7,6 +7,7 @@ package com.deltasi.presenze.model;
 
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -14,6 +15,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -22,93 +24,87 @@ import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.Email;
 
-
-
 /**
  *
  * @author AdminDSI
  */
-
 @Entity
 @Table(name = "persona")
 public class Persona {
-    
-   @Id
-   @GeneratedValue(strategy = GenerationType.IDENTITY)
-   @Column(name = "id")  
-   private Long id;
 
-      
-   @Column(name = "nome")
-   @NotNull
-   @Size(max = 90, min = 3, message = "{persona.nome.invalido}")
-   private String nome;
-   
-   @Column(name = "cognome")
-   @NotNull
-   @Size(max = 90, min = 3, message = "{persona.cognome.invalido}")
-   private String cognome;
-   
-   @Column(name = "sesso")
-   @NotNull
-   @Size(max = 1, min = 1, message = "{persona.sesso.invalido}")
-   private String sesso;
-   
-   @Column(name = "codicefiscale")  
-   @Size(max = 16, min = 16, message = "{persona.codicefiscale.invalido}")
-   private String codicefiscale;
-   
-   @Column(name = "comunenascita")  
-   @Size(max = 3, min = 90, message = "{persona.comunenascita.invalido}")
-   private String comunenascita;   
-   
-    @Column(name = "statonascita")  
-   @Size(max = 3, min = 90, message = "{persona.statonascita.invalido}")
-   private String statonascita;   
-   
-   @Column(name = "cittadinanza")  
-   @Size(max = 3, min = 90, message = "{persona.cittadinanza.invalido}")
-   private String cittadinanza;   
-   
-   
-   @Column(name = "utenteope")  
-   @NotNull
-   @Size(max = 16, min = 8, message = "{persona.utente.invalido}")
-   private String utente;   
-   
-   
-   @Column(name = "dataope")  
-   @NotNull 
-   private Date dataope;   
-   
-   
-   @Column(name = "datanascita")  
-   @Past
-   @NotNull
-   private Date datanascita;   
-   
-  @OneToOne
-  private User user;
-   
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Integer id;
 
- 
-   
-   @Column(name = "numeromatricola", unique = true)
-   @Size(max = 90, min = 5, message = "{persona.numeromatricola.invalido}")
-   @Email(message = "{persona.numeromatricola.invalido}")
-   private String numeromatricola;
+    @Column(name = "nome")
+    @NotNull
+    @Size(max = 90, min = 3, message = "{persona.nome.invalido}")
+    private String nome;
+
+    @Column(name = "cognome")
+    @NotNull
+    @Size(max = 90, min = 3, message = "{persona.cognome.invalido}")
+    private String cognome;
+
+    @Column(name = "sesso")
+    @NotNull
+    @Size(max = 1, min = 1, message = "{persona.sesso.invalido}")
+    private String sesso;
+
+    @Column(name = "codicefiscale")
+    @Size(max = 16, min = 16, message = "{persona.codicefiscale.invalido}")
+    private String codicefiscale;
+
+    @Column(name = "comunenascita")
+    @Size(max = 3, min = 90, message = "{persona.comunenascita.invalido}")
+    private String comunenascita;
+
+    @Column(name = "statonascita")
+    @Size(max = 3, min = 90, message = "{persona.statonascita.invalido}")
+    private String statonascita;
+
+    @Column(name = "cittadinanza")
+    @Size(max = 3, min = 90, message = "{persona.cittadinanza.invalido}")
+    private String cittadinanza;
+
+    @Column(name = "utenteope")
+    @NotNull
+    @Size(max = 16, min = 8, message = "{persona.utente.invalido}")
+    private String utente;
+
+    @Column(name = "dataope")
+    @NotNull
+    private Date dataope;
+
+    @Column(name = "datanascita")
+    @Past
+    @NotNull
+    private Date datanascita;
+
+    @OneToOne
+    private User user;
+
+    @OneToMany
+    @JoinColumn(name = "idpersona")
+    private List<Curriculum> curricula;
+
+    @Column(name = "numeromatricola", unique = true)
+    @Size(max = 90, min = 5, message = "{persona.numeromatricola.invalido}")
+    @Email(message = "{persona.numeromatricola.invalido}")
+    private String numeromatricola;
 
     /**
      * @return the id
      */
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
     /**
      * @param id the id to set
      */
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -224,6 +220,14 @@ public class Persona {
         this.utente = utente;
     }
 
+    public List<Curriculum> getCurricula() {
+        return curricula;
+    }
+
+    public void setCurricula(List<Curriculum> c) {
+        this.curricula = c;
+    }
+
     /**
      * @return the dataope
      */
@@ -251,7 +255,7 @@ public class Persona {
     public void setDatanascita(Date datanascita) {
         this.datanascita = datanascita;
     }
-    
+
     /**
      * @return the mailaziendale
      */
@@ -281,4 +285,3 @@ public class Persona {
     }
 
 }
-

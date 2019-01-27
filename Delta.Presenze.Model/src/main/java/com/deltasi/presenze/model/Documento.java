@@ -5,16 +5,12 @@
  */
 package com.deltasi.presenze.model;
 
-import java.sql.Date;
-import java.util.HashSet;
-import java.util.Set;
-import javax.persistence.CascadeType;
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -38,15 +34,15 @@ public class Documento {
    @Column(name = "tipologicadoc")  
    private String tipologicadoc;
     
-   @Column(name = "estensione")  
+   @Column(name = "estensionefile")  
    private String estensione;
    
    @Column(name = "versione")  
    private String versione;
    
    
-   @Column(name = "file")  
-   private String file;  
+   @Column(name = "file",columnDefinition="BLOB")      
+   private byte[] file;  
      
    @Column(name = "utenteope")  
    @NotNull
@@ -58,10 +54,10 @@ public class Documento {
    @NotNull 
    private Date dataope;    
    
-   
+   /*
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "documentoqualita")
   private Set<Authorities> authorities = new HashSet<>();
-
+*/
     /**
      * @return the id
      */
@@ -135,14 +131,14 @@ public class Documento {
     /**
      * @return the file
      */
-    public String getFile() {
+    public byte[] getFile() {
         return file;
     }
 
     /**
      * @param file the file to set
      */
-    public void setFile(String file) {
+    public void setFile(byte[] file) {
         this.file = file;
     }
 
@@ -174,18 +170,14 @@ public class Documento {
         this.dataope = dataope;
     }
 
-    /**
-     * @return the authorities
-     */
+   /*
     public Set<Authorities> getAuthorities() {
         return authorities;
     }
 
-    /**
-     * @param authorities the authorities to set
-     */
+   
     public void setAuthorities(Set<Authorities> authorities) {
         this.authorities = authorities;
-    }
+    }*/
 
 }

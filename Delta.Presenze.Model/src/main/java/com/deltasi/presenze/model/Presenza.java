@@ -8,6 +8,7 @@ package com.deltasi.presenze.model;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -15,6 +16,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -24,60 +27,55 @@ import javax.validation.constraints.Size;
  *
  * @author AdminDSI
  */
-
 @Entity
 @Table(name = "presenza")
 public class Presenza {
-    
-   @Column(name = "utenteope")  
-   @NotNull
-   @Size(max = 16, min = 8, message = "{persona.utente.invalido}")
-   private String utente;   
-   
-   
-   @Column(name = "dataope")  
-   @NotNull 
-   private Date dataope;   
-   
-   @Id
-   @GeneratedValue(strategy = GenerationType.IDENTITY)
-   @Column(name = "idgiorno")  
-   private Long id;
 
-   
-   
-   @Column(name = "giorno")  
-   @NotNull
-   private Date giorno;
-   
-   @Column(name = "oraentrata")  
-   private LocalDateTime oraentrata;
-   
-           
-   @Column(name = "orauscita")  
-   private LocalDateTime orauscita;
-   
-   
-   @Column(name = "pausapranzo")  
-   private int pausapranzo;
-   
-   @Column(name = "ore permesso")  
-   private int orepermesso;
-   
-   @Column(name = "permessomaternita")  
-   private int permessomaternita;
-   
-   @Column(name = "congedoparentale")  
-   private int congedoparentale;
-   
-   @Column(name = "malattia")  
-   private String malattia;
-   
-   @Column(name = "ferie")  
-   private String ferie;
-   
-   @Column(name = "permessomalattiafiglio")  
-   private int permessomalattafiglio;
+    @Column(name = "utenteope")
+    @NotNull
+    @Size(max = 16, min = 8, message = "{persona.utente.invalido}")
+    private String utente;
+
+    @Column(name = "dataope")
+    @NotNull
+    private Date dataope;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "idgiorno")
+    private Integer id;
+
+    @Column(name = "giorno")
+    @NotNull
+    private Date giorno;
+
+    @Column(name = "oraentrata")
+    private LocalDateTime oraentrata;
+
+    @Column(name = "orauscita")
+    private LocalDateTime orauscita;
+
+    @Column(name = "pausapranzo")
+    private int pausapranzo;
+
+    @Column(name = "ore permesso")
+    private int orepermesso;
+
+    @Column(name = "permessomaternita")
+    private int permessomaternita;
+
+    @Column(name = "congedoparentale")
+    private int congedoparentale;
+
+    @Column(name = "malattia")
+    private String malattia;
+
+    @Column(name = "ferie")
+    private String ferie;
+
+    @Column(name = "permessomalattiafiglio")
+    private int permessomalattafiglio;
+
     /**
      * @return the utente
      */
@@ -109,14 +107,14 @@ public class Presenza {
     /**
      * @return the id
      */
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
     /**
      * @param id the id to set
      */
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -259,8 +257,15 @@ public class Presenza {
     public void setPermessomalattafiglio(int permessomalattafiglio) {
         this.permessomalattafiglio = permessomalattafiglio;
     }
-    
- @OneToMany(cascade = CascadeType.ALL, mappedBy = "persona")
-  private Set<Persona> persone = new HashSet<>();
-    
+    @ManyToOne()
+    @JoinColumn(name = "iduser")
+    private User user;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User u) {
+        this.user = u;
+    }
 }
