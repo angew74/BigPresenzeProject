@@ -56,7 +56,11 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addViewController("/logout.html");
         registry.addViewController("/menu.html");
         registry.addViewController("/head.html");
+        registry.addViewController("/users/register.html");
+        registry.addViewController("/users/manage.html");
     }
+  
+   
   
   @Override
   public void addResourceHandlers(ResourceHandlerRegistry registry) {
