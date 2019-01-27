@@ -25,6 +25,7 @@ import org.apache.logging.log4j.Logger;
  */
 
 @Service("userDetailsService")
+// @Transactional
 public class UserService implements UserDetailsService , IUserService {
 
     private static final Logger logger = LogManager.getLogger(UserService.class);
@@ -39,8 +40,11 @@ public class UserService implements UserDetailsService , IUserService {
     }
 
     @Override
-    public List<User> getAllUtenti() {
-       return userDAO.getAllUtenti();
+    @Transactional 
+    public List<User> getAllUtenti() {    
+          userDAO = new UserDao();
+       List<User> l = userDAO.getAllUtenti();
+        return l;
     }
 
     @Override
@@ -60,9 +64,10 @@ public class UserService implements UserDetailsService , IUserService {
     }
     
      @Override
-     @Transactional(readOnly = true)
-    public UserDetails loadUserByUsername(String username) {
+     @Transactional
+    public UserDetails loadUserByUsername(String username) {     
        User user = userDAO.findUserByUsername(username);
+      List<User> l = userDAO.getAllUtenti();
     UserBuilder builder = null;
     logger.debug("Ho trovate user" + username);
     //logs debug message
