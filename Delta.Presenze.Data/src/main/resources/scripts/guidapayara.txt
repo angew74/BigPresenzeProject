@@ -1,0 +1,13 @@
+netstat -aon | find ":80" | find "LISTENING"
+
+ taskkill /F /pid "idprocesso"
+
+http://localhost:8080/
+
+C:\Users\Nick\Payara_Server\glassfish\config\asenv.bat
+
+setting path like below, setting your JDK path
+
+set AS_JAVA=C:\Program Files\Java\jdk1.7.0_25
+
+./asadmin set-payara-executor-service-configuration --threadpoolexecutorqueuesize 1000
