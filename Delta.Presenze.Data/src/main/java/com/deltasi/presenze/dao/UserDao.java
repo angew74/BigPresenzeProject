@@ -7,12 +7,20 @@ package com.deltasi.presenze.dao;
 
 import com.deltasi.presenze.idao.IUserDao;
 import com.deltasi.presenze.model.User;
+import com.deltasi.spring.config.HibernateConf;
+import java.util.Arrays;
 import java.util.List;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.CriteriaQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -21,7 +29,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class UserDao implements IUserDao {
 
-  private static final Logger logger = LogManager.getLogger(UserDao.class);
+    private static final Logger logger = LogManager.getLogger(UserDao.class);
 
     @Autowired
     private SessionFactory sessionFactory;
@@ -31,11 +39,17 @@ public class UserDao implements IUserDao {
         sessionFactory.getCurrentSession().saveOrUpdate(utente);
     }
 
-    @SuppressWarnings("unchecked")
-    @Override
+    @Override   
     public List<User> getAllUtenti() {
-        return sessionFactory.getCurrentSession().createQuery("from Users")
-                .list();
+        List<User> u = null;
+        try {
+            u = sessionFactory.getCurrentSession().createQuery("from User").getResultList();
+        } catch (HibernateException ex) {
+            logger.error(ex.getMessage() + " stack trace" + Arrays.toString(ex.getStackTrace()));
+        } catch (Exception ex) {
+            logger.error(ex.getMessage() + " stack trace" + Arrays.toString(ex.getStackTrace()));
+        }
+        return u;
     }
 
     @Override

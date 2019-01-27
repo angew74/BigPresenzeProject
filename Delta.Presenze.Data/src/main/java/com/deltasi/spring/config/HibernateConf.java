@@ -6,8 +6,13 @@
 package com.deltasi.spring.config;
 
 import com.deltasi.presenze.model.Authorities;
+import com.deltasi.presenze.model.Curriculum;
+import com.deltasi.presenze.model.Documento;
+import com.deltasi.presenze.model.Persona;
+import com.deltasi.presenze.model.Presenza;
 import com.deltasi.presenze.model.User;
 import java.util.Properties;
+import javax.persistence.PersistenceUnit;
 import static org.hibernate.cfg.AvailableSettings.C3P0_ACQUIRE_INCREMENT;
 import static org.hibernate.cfg.AvailableSettings.C3P0_MAX_SIZE;
 import static org.hibernate.cfg.AvailableSettings.C3P0_MAX_STATEMENTS;
@@ -37,6 +42,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Configuration
 @PropertySource("classpath:db.properties")
 @EnableTransactionManagement
+@PersistenceUnit
 @ComponentScans(value = {
     @ComponentScan("com.deltasi.presenze.dao"),
     @ComponentScan("com.deltasi.presenze.service")})
@@ -69,7 +75,7 @@ public class HibernateConf {
     props.put(C3P0_MAX_STATEMENTS, env.getProperty("hibernate.c3p0.max_statements"));
 
     factoryBean.setHibernateProperties(props);
-    factoryBean.setAnnotatedClasses(User.class, Authorities.class);
+    factoryBean.setAnnotatedClasses(User.class, Authorities.class, Persona.class, Curriculum.class,Documento.class, Presenza.class);
     
     return factoryBean;
     }
