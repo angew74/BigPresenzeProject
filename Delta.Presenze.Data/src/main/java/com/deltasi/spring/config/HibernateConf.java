@@ -44,8 +44,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 @PersistenceUnit
 @ComponentScans(value = {
-    @ComponentScan("com.deltasi.presenze.dao"),
-    @ComponentScan("com.deltasi.presenze.service")})
+@ComponentScan("com.deltasi.presenze.dao"),
+@ComponentScan("com.deltasi.presenze.service")})
 public class HibernateConf {
 
     @Autowired
