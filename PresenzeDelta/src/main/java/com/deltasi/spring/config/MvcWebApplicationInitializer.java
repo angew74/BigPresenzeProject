@@ -5,7 +5,6 @@
  */
 package com.deltasi.spring.config;
 
-import com.deltasi.presenze.dao.spring.config.HibernateConf;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 /**

@@ -5,10 +5,13 @@
  */
 package com.deltasi.presenzedelta.Controllers;
 
+import com.deltasi.presenze.contracts.IUserService;
 import com.deltasi.presenze.model.User;
 import com.deltasi.presenze.service.UserService;
 import java.security.Principal;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,16 +26,19 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 @RequestMapping(value = "/users")
 public class UsersController {
+  
     
+ @Autowired
+ IUserService userservice;
     
-      @GetMapping(value = "/manage")
+     @GetMapping(value = "/manage")
      public ModelAndView index(Model model, Principal principal) {
-     UserService service = new UserService();
+    
      List<User> list = null;
      ModelAndView modelAndView = new ModelAndView("users/manage");
     modelAndView.addObject("titlepage", "Homepage");
-     try {
-             list = service.getAllUtenti();
+     try {           
+             list = userservice.getAllUtenti();
              modelAndView.addObject("Users",list);
      }
      catch(Exception ex)
