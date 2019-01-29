@@ -9,9 +9,6 @@
     </head>   
     <body>    
         <jsp:include page="common/menu.jsp" />   
-
-
-
         <section id="our-process" class="padding">
             <div class="container">
                 <div class="row">

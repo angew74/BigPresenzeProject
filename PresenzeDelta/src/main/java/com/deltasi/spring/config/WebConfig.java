@@ -33,7 +33,7 @@ import org.springframework.web.servlet.view.JstlView;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = { "com.deltasi.presenzedelta.Controllers" })
+@ComponentScan(basePackages = { "com.deltasi.presenzedelta.Controllers"})
 public class WebConfig implements WebMvcConfigurer {
 
      public WebConfig() {

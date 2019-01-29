@@ -5,6 +5,7 @@
  */
 package com.deltasi.spring.config;
 
+import com.deltasi.presenze.dao.spring.config.HibernateConf;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 /**
@@ -17,7 +18,7 @@ public class MvcWebApplicationInitializer extends AbstractAnnotationConfigDispat
   @Override
   protected Class<?>[] getRootConfigClasses() {
       
-    return new Class[] { HibernateConf.class, WebSecurityConfig.class };
+    return new Class[] { HibernateMachine.class, WebSecurityConfig.class };
   }
 
   // Load spring web configuration
