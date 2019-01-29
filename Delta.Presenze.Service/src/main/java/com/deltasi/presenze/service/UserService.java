@@ -19,18 +19,13 @@ import com.deltasi.presenze.contracts.IUserService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-/**
- *
- * @author AdminDSI
- */
 
 @Service("userDetailsService")
-// @Transactional
 public class UserService implements UserDetailsService , IUserService {
 
     private static final Logger logger = LogManager.getLogger(UserService.class);
     
-    @Autowired(required = true)
+    @Autowired
     private UserDao userDAO;
     
     @Override
@@ -65,8 +60,7 @@ public class UserService implements UserDetailsService , IUserService {
      @Override
      @Transactional
     public UserDetails loadUserByUsername(String username) {     
-       User user = userDAO.findUserByUsername(username);
-      List<User> l = userDAO.getAllUtenti();
+       User user = userDAO.findUserByUsername(username);     
     UserBuilder builder = null;
     logger.debug("Ho trovate user" + username);
     //logs debug message
