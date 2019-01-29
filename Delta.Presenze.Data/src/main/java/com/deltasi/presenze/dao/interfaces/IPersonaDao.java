@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.deltasi.presenze.idao;
+package com.deltasi.presenze.dao.interfaces;
 
 import com.deltasi.presenze.model.Persona;
 import java.util.List;

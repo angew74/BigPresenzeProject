@@ -5,9 +5,9 @@
  */
 package com.deltasi.presenze.dao;
 
-import com.deltasi.presenze.idao.IUserDao;
+import com.deltasi.presenze.dao.interfaces.IUserDao;
 import com.deltasi.presenze.model.User;
-import com.deltasi.spring.config.HibernateConf;
+import com.deltasi.presenze.dao.spring.config.HibernateConf;
 import java.util.Arrays;
 import java.util.List;
 import javax.persistence.TypedQuery;
@@ -22,10 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-/**
- *
- * @author AdminDSI
- */
+
 @Repository
 public class UserDao implements IUserDao {
 
@@ -40,16 +37,15 @@ public class UserDao implements IUserDao {
     }
 
     @Override   
-    public List<User> getAllUtenti() {
-        List<User> u = null;
-        try {
-            u = sessionFactory.getCurrentSession().createQuery("from User").getResultList();
-        } catch (HibernateException ex) {
+    public List<User> getAllUtenti() {             
+         @SuppressWarnings("unchecked")
+          TypedQuery<User> query = sessionFactory.getCurrentSession().createQuery("from User");     
+      /*  } catch (HibernateException ex) {
             logger.error(ex.getMessage() + " stack trace" + Arrays.toString(ex.getStackTrace()));
         } catch (Exception ex) {
             logger.error(ex.getMessage() + " stack trace" + Arrays.toString(ex.getStackTrace()));
-        }
-        return u;
+        }*/
+         return query.getResultList();
     }
 
     @Override

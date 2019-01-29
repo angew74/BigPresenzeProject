@@ -6,7 +6,7 @@
 package com.deltasi.presenze.dao;
 
 import com.deltasi.presenze.model.Persona;
-import com.deltasi.presenze.idao.IPersonaDao;
+import com.deltasi.presenze.dao.interfaces.IPersonaDao;
 import java.util.List; 
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;

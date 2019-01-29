@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.deltasi.spring.config;
+package com.deltasi.presenze.dao.spring.config;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;

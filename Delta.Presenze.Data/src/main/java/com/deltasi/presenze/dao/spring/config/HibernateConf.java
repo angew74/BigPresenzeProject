@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.deltasi.spring.config;
+package com.deltasi.presenze.dao.spring.config;
 
 import com.deltasi.presenze.model.Authorities;
 import com.deltasi.presenze.model.Curriculum;
@@ -13,6 +13,7 @@ import com.deltasi.presenze.model.Presenza;
 import com.deltasi.presenze.model.User;
 import java.util.Properties;
 import javax.persistence.PersistenceUnit;
+import org.hibernate.SessionFactory;
 import static org.hibernate.cfg.AvailableSettings.C3P0_ACQUIRE_INCREMENT;
 import static org.hibernate.cfg.AvailableSettings.C3P0_MAX_SIZE;
 import static org.hibernate.cfg.AvailableSettings.C3P0_MAX_STATEMENTS;
@@ -25,6 +26,7 @@ import static org.hibernate.cfg.AvailableSettings.SHOW_SQL;
 import static org.hibernate.cfg.AvailableSettings.URL;
 import static org.hibernate.cfg.AvailableSettings.USER;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ComponentScans;
@@ -42,22 +44,19 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Configuration
 @PropertySource("classpath:db.properties")
 @EnableTransactionManagement
-@PersistenceUnit
 @ComponentScans(value = {
 @ComponentScan("com.deltasi.presenze.dao"),
 @ComponentScan("com.deltasi.presenze.service")})
 public class HibernateConf {
 
     @Autowired
-    private Environment env;
-   
+    private Environment env;   
+ 
 
     @Bean
     public LocalSessionFactoryBean getSessionFactory() {
-         LocalSessionFactoryBean factoryBean = new LocalSessionFactoryBean();
-    
-    Properties props = new Properties();
-    
+        LocalSessionFactoryBean factoryBean = new LocalSessionFactoryBean();    
+      Properties props = new Properties();
     // Setting JDBC properties
     props.put(DRIVER, env.getProperty("mysql.driver"));
     props.put(URL, env.getProperty("mysql.jdbcUrl"));
