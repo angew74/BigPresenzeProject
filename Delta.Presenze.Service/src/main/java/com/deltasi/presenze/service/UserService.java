@@ -30,7 +30,7 @@ public class UserService implements UserDetailsService , IUserService {
 
     private static final Logger logger = LogManager.getLogger(UserService.class);
     
-     @Autowired
+    @Autowired(required = true)
     private UserDao userDAO;
     
     @Override
@@ -41,8 +41,7 @@ public class UserService implements UserDetailsService , IUserService {
 
     @Override
     @Transactional 
-    public List<User> getAllUtenti() {    
-          userDAO = new UserDao();
+    public List<User> getAllUtenti() {             
        List<User> l = userDAO.getAllUtenti();
         return l;
     }
