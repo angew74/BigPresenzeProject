@@ -16,3 +16,14 @@ body{
 	font-size: 13px;
 	line-height: 1;
 }
+
+.fa fa-trash-o:hover{
+	background: #EA6212;
+}
+.fa fa-pencil:hover{
+	background: #EA6212;
+}
+.fa fa-user-circle-o:hover{
+	background: #EA6212;
+}
+
