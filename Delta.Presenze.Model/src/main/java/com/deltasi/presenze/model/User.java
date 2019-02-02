@@ -5,11 +5,13 @@
  */
 package com.deltasi.presenze.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.util.HashSet;
 import java.util.Set;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -27,6 +29,10 @@ import org.hibernate.validator.constraints.Email;
 @Entity
 @Table(name = "users")
 public class User {
+
+    public User() {
+        this.authorities = new HashSet<>();
+    }
 
     /**
      * @return the id
@@ -100,7 +106,7 @@ public class User {
    
    @Column(name = "password")
    @NotNull
-   @Size(max = 16, min = 6, message = "{utente.password.invalido}")
+   @Size(max = 200, min = 6, message = "{utente.password.invalido}")
    private String password;
    
    
@@ -114,8 +120,10 @@ public class User {
    @Email
    private String mailaziendale;
    
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-  private Set<Authorities> authorities = new HashSet<>();
+  @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+  @JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
+  // @JsonManagedReference
+  private Set<Authorities> authorities;
 
     /**
      * @return the mailaziendale

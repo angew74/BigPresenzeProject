@@ -5,9 +5,12 @@
  */
 package com.deltasi.presenze.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.math.BigInteger;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -28,8 +31,9 @@ public class Authorities {
   @Column(name = "authority")
   private String authority;
 
-  @ManyToOne
-  @JoinColumn(name = "user_id")
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "user_id") 
+  @JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
   private User user;
 
   //Getter and Setter methods
