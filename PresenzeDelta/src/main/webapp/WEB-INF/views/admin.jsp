@@ -5,7 +5,7 @@
 <html>
     <head>
         <jsp:include page="common/head.jsp"></jsp:include>
-        <link href="<c:url value="/resources/css/panel.css" />" type="text/css" rel="stylesheet" />     
+        <link href="<c:url value="/resources/css/users/panel.css" />" type="text/css" rel="stylesheet" />     
     </head>   
     <body>    
         <jsp:include page="common/menu.jsp" />   

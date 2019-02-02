@@ -44,6 +44,12 @@
                            Utenti
                         </a>
                     </li>
+                    <li class="nav-item"> 
+                        <a class="nav-link" href="<c:url value="/users/register" />" >
+                            <i class="fa fa-user-plus"></i>  
+                           Registrazione
+                        </a>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link" href="<c:url value="/curricula/view" />" >
                             <i class="fa fa-clone"></i>  

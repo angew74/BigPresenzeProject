@@ -14,6 +14,8 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.http.CacheControl;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -44,6 +46,11 @@ public class WebConfig implements WebMvcConfigurer {
   public void configureViewResolvers(ViewResolverRegistry registry) {
     registry.jsp().prefix("/WEB-INF/views/").suffix(".jsp");
   }
+  
+  @Bean
+public PasswordEncoder passwordEncoder() {
+    return new BCryptPasswordEncoder();
+}
   
    @Override
     public void addViewControllers(final ViewControllerRegistry registry) {
