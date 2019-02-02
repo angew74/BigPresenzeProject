@@ -10,21 +10,17 @@ import java.util.List;
 
 /**
  *
- * @author AdminDSI
+ * @author Nick
  */
-public interface IUserService {
-
-    public void addUtente(User utente);
+public interface IAuthorityService {
+    public void addUtenteToAuthority(User utente,String authority);
  
-    public List<User> getAllUtenti();
+    public List<User> getAllUtentiByAuthority(String authority);
  
-    public void deleteUtente(Integer id);
+    public void removeUtenteFromAuthoriy(Integer iduser, String authority);
  
-    public User getUtente(int id);
+    public User getAuthorityByUtente(String UserName);
  
-    public User updateUtente(User utente);    
-    
-    public User getByUsername(String username);
-    
+   
     
 }

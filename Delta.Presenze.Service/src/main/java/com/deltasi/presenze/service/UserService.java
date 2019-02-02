@@ -30,7 +30,7 @@ public class UserService implements UserDetailsService , IUserService {
     
     @Override
     @Transactional 
-    public void addUtente(User utente) {
+    public void addUtente(User utente) {       
       userDAO.addUtente(utente);
     }
 
@@ -49,7 +49,10 @@ public class UserService implements UserDetailsService , IUserService {
     @Override
     @Transactional(readOnly = true)
     public User getUtente(int id) {
-       return userDAO.getUtente(id);
+        User user = userDAO.getUtente(id);
+        user.getAuthorities();
+        return user;
+     
     }
 
     @Override
@@ -57,10 +60,16 @@ public class UserService implements UserDetailsService , IUserService {
         return userDAO.updateUtente(utente);
     }
     
+    @Transactional
+    public User getByUsername(String username)
+    {return userDAO.findUserByUsername(username);}
+    
+    
+    
      @Override
      @Transactional
     public UserDetails loadUserByUsername(String username) {     
-       User user = userDAO.findUserByUsername(username);     
+    User user = userDAO.findUserByUsername(username);     
     UserBuilder builder = null;
     logger.debug("Ho trovate user" + username);
     //logs debug message
