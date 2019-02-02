@@ -5,6 +5,7 @@
  */
 package com.deltasi.presenze.contracts;
 
+import com.deltasi.presenze.model.Authorities;
 import com.deltasi.presenze.model.User;
 import java.util.List;
 
@@ -13,13 +14,13 @@ import java.util.List;
  * @author Nick
  */
 public interface IAuthorityService {
-    public void addUtenteToAuthority(User utente,String authority);
+    public void addUtenteToAuthority(Authorities authority);
  
     public List<User> getAllUtentiByAuthority(String authority);
  
     public void removeUtenteFromAuthoriy(Integer iduser, String authority);
  
-    public User getAuthorityByUtente(String UserName);
+    public Authorities getAuthorityByUtente(String UserName);
  
    
     
