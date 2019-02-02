@@ -5,7 +5,9 @@
  */
 package com.deltasi.presenzedelta.Controllers;
 
+import com.deltasi.presenze.contracts.IAuthorityService;
 import com.deltasi.presenze.contracts.IUserService;
+import com.deltasi.presenze.model.Authorities;
 import com.deltasi.presenze.model.User;
 import com.deltasi.presenze.model.UserJsonResponse;
 import java.security.Principal;
@@ -40,6 +42,9 @@ public class UsersController {
 
     @Autowired
     IUserService userservice;
+    
+    @Autowired
+    IAuthorityService authorityservice;
     
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -124,8 +129,12 @@ public class UsersController {
                 String passwordhash= user.getPassword();
                 user.setPassword(passwordEncoder.encode(passwordhash));
                 user.setUsername(user.getUsername().toLowerCase());
+                user.setEnabled(true);
                 userservice.addUtente(user);
-                auto
+                Authorities authority = new Authorities();
+                authority.setAuthority("USER");
+                authority.setUser(user);
+                authorityservice.addUtenteToAuthority(authority);
                 response.setValidated(true);
                 response.setUser(user);
             }
