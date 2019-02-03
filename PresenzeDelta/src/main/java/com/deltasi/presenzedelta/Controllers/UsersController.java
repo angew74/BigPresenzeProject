@@ -42,13 +42,12 @@ public class UsersController {
 
     @Autowired
     IUserService userservice;
-    
+
     @Autowired
     IAuthorityService authorityservice;
-    
+
     @Autowired
     private PasswordEncoder passwordEncoder;
-    
 
     @GetMapping(value = "/manage")
     public ModelAndView index(Model model, Principal principal) {
@@ -94,7 +93,7 @@ public class UsersController {
         return response;
     }
 
-    @GetMapping(value = "/register",produces = {MediaType.APPLICATION_JSON_VALUE})
+    @GetMapping(value = "/register", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ModelAndView register(Model model, Principal principal) {
         ModelAndView modelAndView = new ModelAndView("users/register", "user", new User());
         modelAndView.addObject("titlepage", "Registrazione utente");
@@ -126,7 +125,7 @@ public class UsersController {
                 response.setValidated(false);
                 response.setErrorMessages(errors);
             } else {
-                String passwordhash= user.getPassword();
+                String passwordhash = user.getPassword();
                 user.setPassword(passwordEncoder.encode(passwordhash));
                 user.setUsername(user.getUsername().toLowerCase());
                 user.setEnabled(true);
@@ -138,6 +137,55 @@ public class UsersController {
                 response.setValidated(true);
                 response.setUser(user);
             }
+        } catch (Exception ex) {
+            errors = new HashMap<String, String>();
+            errors.put("Errrore in banca dati", ex.getMessage());
+            response.setValidated(false);
+            response.setErrorMessages(errors);
+        }
+        return response;
+    }
+
+    @PostMapping(value = "/modify", produces = {MediaType.APPLICATION_JSON_VALUE})
+    // @ResponseBody
+    public @ResponseBody
+    UserJsonResponse ModifyUser(@ModelAttribute("user") @Valid User user,
+            BindingResult result, ModelMap mode) {
+
+        UserJsonResponse response = new UserJsonResponse();
+        Map<String, String> errors = null;
+        try {
+            if (result.hasErrors()) {
+                errors = result.getFieldErrors().stream()
+                        .collect(
+                                Collectors.toMap(FieldError::getField, FieldError::getDefaultMessage)
+                        );
+
+                response.setValidated(false);
+                response.setErrorMessages(errors);
+            }
+            User useripo = userservice.getByUsername(user.getUsername().toLowerCase());
+            Boolean ok = true;
+            if (useripo.getId() == user.getId()) {
+                ok = true;
+            } else if (useripo.getUsername() == user.getUsername().toLowerCase()) {
+                ok = false;
+                errors = new HashMap<String, String>();
+                errors.put("Errore in archivio", "Username già esistente");
+                response.setValidated(false);
+                response.setErrorMessages(errors);
+            }           
+            if(ok == true)
+            {
+                String passwordhash = user.getPassword();
+                user.setPassword(passwordEncoder.encode(passwordhash));
+                user.setUsername(user.getUsername().toLowerCase());                
+                userservice.updateUtente(user);             
+                response.setValidated(true);
+                response.setUser(user);
+            }
+            
+
         } catch (Exception ex) {
             errors = new HashMap<String, String>();
             errors.put("Errrore in banca dati", ex.getMessage());
