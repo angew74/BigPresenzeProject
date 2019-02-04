@@ -44,7 +44,7 @@
                                     <div class="form-group">  
                                         <div class="form-check">
                                                <div class="col-md-8">    
-                                            <input class="form-check-input" type="radio" name="abilitato" id="able" value="S" checked>
+                                            <input class="form-check-input" type="radio" name="enabled"  id="able" value="true" checked>
                                             <label class="form-check-label" for="abilitato"><span class="fa fa-toggle-on" id="icondisablededit"></span>
                                                 Abilitato
                                             </label>
@@ -52,12 +52,12 @@
                                         </div>
                                         <div class="form-check">
                                                <div class="col-md-8">    
-                                            <input class="form-check-input" type="radio" name="disabilitato" id="disable" value="N">
+                                            <input class="form-check-input" type="radio" name="enabled" id="disable" value="false">
                                             <label class="form-check-label" for="disabilitato"><span class="fa fa-toggle-off" id="icondisablededit"></span>
                                                 Disabilitato
                                             </label>
                                                </div>
-                                        </div>
+                                        </div>                                  
                                     </div>
                                     <div class="form-group">
                                         <div class="col-md-12 text-center">

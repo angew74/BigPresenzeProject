@@ -50,7 +50,7 @@ function viewService(id) {
                 }
             } catch (err)
             {
-                $(errorDisplay).value(err);
+                $(errorDisplay).text(err);
                 $(errorcontainer).modal('show');
             }
         },
@@ -130,48 +130,107 @@ function editService(id) {
 }
 
 
-$(function () {
-    /*  Submit form using Ajax */
-    $("#userEditForm").submit(function (event) {
 
-        var idbutton = '#submitEditUser';
+jQuery(document).ready(function ($) {
+
+    var useredit = '#submitEditUser';
+    // SUBMIT FORM
+    $(useredit).click(function (event) {
+        // Prevent the form from submitting via the browser.
+        event.preventDefault();
+        ajaxPost();
+    });
+
+
+    function ajaxPost() {
+
+        // PREPARE FORM DATA
+        var formData = $('form[name=userEditForm]').serialize();
         var errorcontainer = '#errorModal';
         var errorDisplay = '#errorDisplay';
         var successcontainer = '#successModal';
-        //Prevent default submission of form
-        e.preventDefault();
+        var usercontainer = '#userEditModal';
 
-        //Remove all errors
-        $('input').next().remove();
-
-        $.post({
-            url: '/PresenzeDelta/users/add',
-            data: $('form[name=userEditForm]').serialize(),
-            success: function (res) {
-                try {
-                    if (res.validated) {
-                        //Set response
-                        $(successcontainer).modal('show');
-                    } else {
-                        //Set error messages
-                        $.each(res.errorMessages, function (key, value) {
-                            $(errorDisplay).text(value);
-                            $(errorcontainer).modal('show');
-                        });
+        // DO POST
+        $.ajax({
+            type: "POST",
+            contentType: "application/json",
+            url: '/PresenzeDelta/users/modify',
+            data: formData,
+            dataType: 'json'})
+                .done(function (data) {
+                    try {
+                        if (data.validated) {
+                            //Set response
+                            $(successcontainer).modal('show');
+                        } else {
+                            //Set error messages
+                            $.each(data.errorMessages, function (key, value) {
+                                $(errorDisplay).text(value);                               
+                            });
+                             $(usercontainer).modal('hide');
+                             $(errorcontainer).modal('show');
+                        }
+                    } catch (err)
+                    {
+                        $(errorDisplay).text(err);
+                        $(errorcontainer).modal('show');
+                        $(usercontainer).modal('hide');
                     }
-                } catch (err)
-                {
-                    $(errorDisplay).value(err);
-                    $(errorcontainer).modal('show');
-                }
-            },
-            error: function () {
-                $(errorDisplay).text("errore di connessione");
-                $(errorcontainer).modal('show');
-            }
-        });
 
-    });
-});
+                })
+                .fail(function (e) {
+                    $(errorDisplay).text("errore di connessione dettagli " + e);
+                    $(errorcontainer).modal('show');
+                    $(usercontainer).modal('hide');
+                });
+
+    }
+})
+
+/*
+ $(function () {    
+ $("#userEditForm").submit(function (event) {
+ 
+ var idbutton = '#submitEditUser';
+ var errorcontainer = '#errorModal';
+ var errorDisplay = '#errorDisplay';
+ var successcontainer = '#successModal';
+ //Prevent default submission of form
+ //  e.preventDefault();
+ 
+ //Remove all errors
+ $('input').next().remove();
+ 
+ $.ajax()({
+ url: '/PresenzeDelta/users/add',
+ data: $('form[name=userEditForm]').serialize(),
+ success: function (res) {
+ try {
+ if (res.validated) {
+ //Set response
+ $(successcontainer).modal('show');
+ } else {
+ //Set error messages
+ $.each(res.errorMessages, function (key, value) {
+ $(errorDisplay).text(value);
+ $(errorcontainer).modal('show');
+ });
+ }
+ } catch (err)
+ {
+ $(errorDisplay).value(err);
+ $(errorcontainer).modal('show');
+ }
+ },
+ error: function () {
+ $(errorDisplay).text("errore di connessione");
+ $(errorcontainer).modal('show');
+ }
+ });
+ 
+ });
+ });
+ */
 
 

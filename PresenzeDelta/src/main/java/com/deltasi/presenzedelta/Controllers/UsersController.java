@@ -163,6 +163,7 @@ public class UsersController {
 
                 response.setValidated(false);
                 response.setErrorMessages(errors);
+                return response;
             }
             User useripo = userservice.getByUsername(user.getUsername().toLowerCase());
             Boolean ok = true;

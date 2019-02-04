@@ -5,6 +5,7 @@
  */
 package com.deltasi.spring.config;
 
+
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 /**
@@ -29,5 +30,6 @@ public class MvcWebApplicationInitializer extends AbstractAnnotationConfigDispat
   @Override
   protected String[] getServletMappings() {
     return new String[] { "/" };
-  }    
+  }   
+  
 }
