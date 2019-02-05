@@ -121,8 +121,8 @@ public class User {
    @Email
    private String mailaziendale;
    
- 
-   private String roles;
+    @Transient
+    private String roles;
    
   @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
   @JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
