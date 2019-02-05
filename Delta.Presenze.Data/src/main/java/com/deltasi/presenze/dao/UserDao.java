@@ -53,7 +53,14 @@ public class UserDao implements IUserDao {
 
     @Override
     public User updateUtente(User utente) {
+        try
+        {
         sessionFactory.getCurrentSession().update(utente);
+        }
+        catch(HibernateException h)
+        {
+             logger.error(h.getMessage().toString());
+        }
         return utente;
     }
 
