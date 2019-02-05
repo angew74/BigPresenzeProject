@@ -56,6 +56,7 @@ public class UserService implements UserDetailsService , IUserService {
     }
 
     @Override
+    @Transactional
     public User updateUtente(User utente) {
         return userDAO.updateUtente(utente);
     }
