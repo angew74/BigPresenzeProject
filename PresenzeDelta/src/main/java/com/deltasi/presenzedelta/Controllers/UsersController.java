@@ -27,6 +27,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -61,8 +62,8 @@ public class UsersController {
         } catch (Exception ex) {
             String error = ex.getMessage();
             ModelAndView errormodelAndView = new ModelAndView("common/error");
-            modelAndView.addObject("titlepage", "Pagina Errore");
-            modelAndView.addObject("Error", error);
+            errormodelAndView.addObject("titlepage", "Pagina Errore");
+            errormodelAndView.addObject("Error", error);
             return errormodelAndView;
         }
 
@@ -149,7 +150,7 @@ public class UsersController {
     @PostMapping(value = "/modify", produces = {MediaType.APPLICATION_JSON_VALUE},consumes = (MediaType.APPLICATION_JSON_VALUE))
     // @ResponseBody
     public @ResponseBody
-    UserJsonResponse ModifyUser(@ModelAttribute("user") @Valid User user,
+    UserJsonResponse ModifyUser(@RequestBody User user,
             BindingResult result, ModelMap mode) {
 
         UserJsonResponse response = new UserJsonResponse();

@@ -9,7 +9,6 @@
 <link rel="stylesheet" href="<c:url value="/webjars/bootstrap/4.1.1/css/bootstrap.min.css" /> ">
 <script type="text/javascript" src="<c:url value="/webjars/jquery/3.2.1/jquery.min.js" />"></script>
 <script type="text/javascript" src="<c:url value="/webjars/bootstrap/4.1.1/js/bootstrap.min.js" />"></script>
-<script type="text/javascript" src="<c:url value="/resources/js/snap.svg-min.js" />"></script> 
 <link rel="apple-touch-icon" sizes="57x57" href="<c:url value="/resources/css/images/favicon/apple-icon-57x57.png" />" />
 <link rel="apple-touch-icon" sizes="60x60" href="<c:url value="/resources/css/images/favicon/apple-icon-60x60.png" />" />
 <link rel="apple-touch-icon" sizes="72x72" href="<c:url value="/resources/css/images/favicon/apple-icon-72x72.png" />" />

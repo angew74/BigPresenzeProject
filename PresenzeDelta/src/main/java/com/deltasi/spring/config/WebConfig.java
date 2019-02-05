@@ -5,6 +5,7 @@
  */
 package com.deltasi.spring.config;
 
+import com.deltasi.spring.helpers.MySecurityProvider;
 import com.deltasi.spring.interceptors.SessionTimerInterceptor;
 import com.deltasi.spring.interceptors.UserInterceptor;
 import java.util.concurrent.TimeUnit;
@@ -12,12 +13,15 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.http.CacheControl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
+import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -35,7 +39,7 @@ import org.springframework.web.servlet.view.JstlView;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = { "com.deltasi.presenzedelta.Controllers"})
+@ComponentScan(basePackages = { "com.deltasi.presenzedelta.Controllers", "com.deltasi.spring.helpers"})
 public class WebConfig implements WebMvcConfigurer {
 
      public WebConfig() {
@@ -50,6 +54,14 @@ public class WebConfig implements WebMvcConfigurer {
   @Bean
 public PasswordEncoder passwordEncoder() {
     return new BCryptPasswordEncoder();
+}
+
+@Bean
+@Scope(value = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)
+public MySecurityProvider mysecurityprovider()
+{
+    MySecurityProvider provider = new MySecurityProvider();
+    return provider;
 }
   
    @Override

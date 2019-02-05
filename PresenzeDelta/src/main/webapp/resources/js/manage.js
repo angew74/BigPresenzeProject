@@ -186,6 +186,7 @@ jQuery(document).ready(function ($) {
                         try {
                             if (data.validated) {
                                 //Set response
+                                $(usercontainer).modal('hide');
                                 $(successcontainer).modal('show');
                             } else {
                                 //Set error messages
