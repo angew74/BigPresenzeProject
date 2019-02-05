@@ -17,6 +17,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.Email;
@@ -120,6 +121,9 @@ public class User {
    @Email
    private String mailaziendale;
    
+ 
+   private String roles;
+   
   @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
   @JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
   // @JsonManagedReference
@@ -137,6 +141,21 @@ public class User {
      */
     public void setMailaziendale(String mailaziendale) {
         this.mailaziendale = mailaziendale;
+    }
+
+    /**
+     * @return the roles
+     */
+    @Transient
+    public String getRoles() {
+        return roles;
+    }
+
+    /**
+     * @param roles the roles to set
+     */
+    public void setRoles(String roles) {
+        this.roles = roles;
     }
 
     
