@@ -28,6 +28,7 @@
                                             <input type="text" name="username"class="form-control" id="usernameedit" autocomplete="off" />
                                         </div>  
                                     </div>
+                                        <input type="hidden" name="password" id="passwordedit" />                                        
                                     <div class="form-group row">
                                         <span class="col-md-1 col-md-offset-2 text-center"><i class="fa fa-at bigicon"></i></span>
                                         <div class="col-md-8">    

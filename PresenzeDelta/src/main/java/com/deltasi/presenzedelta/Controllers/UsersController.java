@@ -146,7 +146,7 @@ public class UsersController {
         return response;
     }
 
-    @PostMapping(value = "/modify", produces = {MediaType.APPLICATION_JSON_VALUE})
+    @PostMapping(value = "/modify", produces = {MediaType.APPLICATION_JSON_VALUE},consumes = (MediaType.APPLICATION_JSON_VALUE))
     // @ResponseBody
     public @ResponseBody
     UserJsonResponse ModifyUser(@ModelAttribute("user") @Valid User user,
