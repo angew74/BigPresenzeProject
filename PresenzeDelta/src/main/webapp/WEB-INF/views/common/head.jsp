@@ -22,6 +22,12 @@
 <link rel="icon" type="image/png" sizes="32x32" href="<c:url value="/resources/css/images/favicon/favicon-32x32.png" />" />
 <link rel="icon" type="image/png" sizes="96x96" href="<c:url value="/resources/css/images/favicon/favicon-96x96.png" />" />
 <link rel="icon" type="image/png" sizes="16x16" href="<c:url value="/resources/css/images/favicon/favicon-16x16.png" />" />
+<script type="text/javascript" src="<c:url value="/resources/js/moment.js" />"></script>
+<script type="text/javascript" src="<c:url value="/resources/js/moment.locale.it.js" />"></script>
+<script type="text/javascript" src="<c:url value="/resources/js/tempusdominus-bootstrap-4.min.js" />"></script>
+<script type="text/javascript" src="<c:url value="/resources/js/jquery.form-validator.min.js" />"></script>
+<link href="<c:url value="/resources/css/common/tempusdominus-bootstrap-4.min.css" />" type="text/css" rel="stylesheet" />  
+<link href="<c:url value="/resources/css/common/jquery-form-validator.2.3.26/theme-default.min.css" />" type="text/css" rel="stylesheet" /> 
 <link rel="manifest" href="<c:url value="/resources/css/images/favicon/manifest.json" />" />
 <meta name="msapplication-TileColor" content="#ffffff">
 <meta name="msapplication-TileImage" content="<c:url value="/resources/css/images/favicon/ms-icon-144x144.png" />" />

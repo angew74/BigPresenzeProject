@@ -50,16 +50,14 @@
         <div class="wrapper fadeInDown">
             <div id="formContent">
                 <!-- Tabs Titles -->
-
                 <!-- Icon -->
                 <div class="fadeIn first">
                     <img id="profile-img" class="profile-img-card" src="resources/css/images/avatar.png" id="icon"  alt="User Icon" />
                 </div>
-
                 <form action='<spring:url value="/login"/>' method="post">       
                     <input id="login" type="text" name="username"  placeholder="Username"  class="fadeIn second">                                   
                     <input id="password" type="password" name="password"  placeholder="password" class="fadeIn third">                  
-                    <input type="submit" class="fadeIn fourth" value="Accedi">     
+                    <input type="submit" class="fadeIn fourth" class="btn btn-dark"  value="Accedi">     
                     <div id="formFooter">
                         <a class="underlineHover" href="#">Password dimenticata?</a>
                     </div>
