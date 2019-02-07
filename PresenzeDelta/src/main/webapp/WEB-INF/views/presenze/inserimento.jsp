@@ -45,8 +45,10 @@
                                                 <span class="col-md-1 col-md-offset-2 text-center"></span>
                                                 <div class="col-md-8">    
                                                     <div class="input-group">
-                                                        <form:select path="Users" class="form-control">
-                                                            <form:option value="-" label="--Selezionare Utente"/>
+                                                        <form:select path="Users" id="selectUsers" data-validation="required" 
+                                                                      data-parsley-errors-container="#errorSelectUsers"
+                                                                     class="form-control" required="true">
+                                                            <form:option value="" label="--Selezionare Utente"/>
                                                             <form:options items="${Users}" itemValue="id" itemLabel="username"/>
                                                         </form:select>
                                                         <div class="input-group-append">
@@ -55,40 +57,72 @@
                                                     </div>
                                                 </div>  
                                             </div>
+                                           <div class="form-group row">
+                                              <span class="col-md-1 col-md-offset-2 text-center"></span>
+                                              <div class="col-md-8">   
+                                             <div id="errorSelectUsers" class="errorBlock"></div>
+                                              </div>
+                                        </div>
                                         </sec:authorize>                                                            
                                         <div class="form-group row">
                                             <span class="col-md-1 col-md-offset-2 text-center"></span>
                                             <div class="col-md-8">    
                                                 <div class="input-group date" id="giornopicker" data-target-input="nearest">
-                                                    <input type="text" id="giorno" name="giorno" class="form-control datetimepicker-input" data-target="#giornopicker"/>
+                                                    <input type="text" id="giorno" name="giorno" data-validation="required"  required
+                                                            data-parsley-errors-container="#errorGiorno"
+                                                           class="form-control datetimepicker-input" data-target="#giornopicker"/>
                                                     <div class="input-group-append" data-target="#giornopicker" data-toggle="datetimepicker">
                                                         <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                                     </div>
                                                 </div>
                                             </div>                         
                                         </div>
+                                         <div class="form-group row">
+                                              <span class="col-md-1 col-md-offset-2 text-center"></span>
+                                              <div class="col-md-8">   
+                                             <div id="errorGiorno" class="errorBlock"></div>
+                                              </div>
+                                        </div>
                                         <div class="form-group row">                          
                                             <span class="col-md-1 col-md-offset-2 text-center"></span>
                                             <div class="col-md-8">    
                                                 <div class="input-group date" id="oraentratapicker" data-target-input="nearest">
-                                                    <input type="text" name="oraentrata" placeholder="ora entrata" id="oraentrata" class="form-control datetimepicker-input" data-target="#oraentratapicker"/>
+                                                    <input type="text" name="oraentrata" placeholder="ora entrata" id="oraentrata" 
+                                                   required
+                                                   data-parsley-errors-container="#errorOraEntrata"
+                                                    data-validation="required"
+                                                           class="form-control datetimepicker-input" data-target="#oraentratapicker"/>
                                                     <div class="input-group-append" data-target="#oraentratapicker" data-toggle="datetimepicker">
                                                         <div class="input-group-text"><i class="fa fa-clock-o"></i></div>
                                                     </div>
                                                 </div>
                                             </div>                       
                                         </div>  
+                                             <div class="form-group row">
+                                              <span class="col-md-1 col-md-offset-2 text-center"></span>
+                                              <div class="col-md-8">   
+                                             <div id="errorOraEntrata" class="errorBlock"></div>
+                                              </div>
+                                        </div>
                                         <div class="form-group row">                          
                                             <span class="col-md-1 col-md-offset-2 text-center"></span>
                                             <div class="col-md-8">    
                                                 <div class="input-group date" id="orauscitapicker" data-target-input="nearest">
-                                                    <input type="text" name="orauscita" placeholder="ora uscita" id="orauscita" class="form-control datetimepicker-input" data-target="#oraentratapicker"/>
+                                                    <input type="text" name="orauscita" placeholder="ora uscita" id="orauscita"                                                            
+                                                            data-parsley-errors-container="#errorOraUscita"                                                         
+                                                           class="form-control datetimepicker-input" data-target="#oraentratapicker"/>
                                                     <div class="input-group-append" data-target="#orauscitapicker" data-toggle="datetimepicker">
                                                         <div class="input-group-text"><i class="fa fa-clock-o"></i></div>
                                                     </div>
                                                 </div>
                                             </div>                       
                                         </div> 
+                                          <div class="form-group row">
+                                              <span class="col-md-1 col-md-offset-2 text-center"></span>
+                                              <div class="col-md-8">   
+                                             <div id="errorOraUscita" class="errorBlock"></div>
+                                              </div>
+                                        </div>
                                         <div class="form-group row">                          
                                             <span class="col-md-1 col-md-offset-2 text-center"></span>
                                             <div class="col-md-8">   
@@ -132,7 +166,8 @@
                                                 <div class="input-group">
                                                     <input class="form-control" id="orepermesso" 
                                                               data-parsley-errors-container="#errorOrePermesso"
-                                                           name="orepermesso" min="0" max="8" data-validation="required"  placeholder="ore permesso" type="number" />
+                                                           name="orepermesso" min="0" max="8" data-validation="required"                                                           
+                                                           placeholder="ore permesso" type="number" />
                                                     <div class="input-group-append">
                                                         <div class="input-group-text"><i class="fa fa-hourglass bigicon"></i></div>
                                                     </div>
@@ -151,7 +186,8 @@
                                                 <div class="input-group">
                                                     <input class="form-control" id="congedoparentale" 
                                                             data-parsley-errors-container="#errorCongedoParentale"
-                                                           name="congedoparentale"  data-parsley-type="number" data-validation="required"  min="0" max="8" placeholder="ore congedo parentale" type="number" />
+                                                           name="congedoparentale"  data-parsley-type="number" 
+                                                           data-validation="required"  min="0" max="8" placeholder="ore congedo parentale" type="number" />
                                                     <div class="input-group-append">
                                                         <div class="input-group-text"><i class="fa fa-child bigicon"></i></div>
                                                     </div>
@@ -169,18 +205,19 @@
                                             <div class="col-md-8">   
                                                 <div class="input-group">
                                                     <input class="form-control" id="permessomalattafiglio" 
-                                                           data-parsley-errors-container="errorPermessoMalattaFiglio"
-                                                           data-validation="required"  name="permessomalattafiglio" min="0" max="8" placeholder="ore malattia figlio" type="number" />
+                                                           data-parsley-errors-container="errorPMalattiaFiglio"
+                                                           data-validation="required"  name="permessomalattafiglio" min="0" max="8"
+                                                           placeholder="ore malattia figlio" type="number" />
                                                     <div class="input-group-append">
                                                         <div class="input-group-text"><i class="fa fa-stethoscope bigicon"></i></div>
                                                     </div>
                                                 </div>                       
                                             </div>  
-                                        </div>
+                                        </div>                                        
                                          <div class="form-group row">
                                               <span class="col-md-1 col-md-offset-2 text-center"></span>
                                               <div class="col-md-8">   
-                                                  <div id="errorPermessoMalattiaFiglio" class="errorBlock"></div>                           
+                                                  <div id="errorPMalattiaFiglio" class="errorBlock"></div>                           
                                               </div>
                                         </div>
                                         <div class="form-group">
