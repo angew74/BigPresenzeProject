@@ -25,9 +25,10 @@
 <script type="text/javascript" src="<c:url value="/resources/js/moment.js" />"></script>
 <script type="text/javascript" src="<c:url value="/resources/js/moment.locale.it.js" />"></script>
 <script type="text/javascript" src="<c:url value="/resources/js/tempusdominus-bootstrap-4.min.js" />"></script>
-<script type="text/javascript" src="<c:url value="/resources/js/jquery.form-validator.min.js" />"></script>
-<link href="<c:url value="/resources/css/common/tempusdominus-bootstrap-4.min.css" />" type="text/css" rel="stylesheet" />  
-<link href="<c:url value="/resources/css/common/jquery-form-validator.2.3.26/theme-default.min.css" />" type="text/css" rel="stylesheet" /> 
+<script type="text/javascript" src="<c:url value="/resources/js/parsley.min.js" />"></script>
+<script type="text/javascript" src="<c:url value="/resources/js/parsley.it.js" />"></script>
+<script type="text/javascript" src="<c:url value="/resources/js/parsley.it.extra.js" />"></script>
+<link href="<c:url value="/resources/css/common/tempusdominus-bootstrap-4.min.css" />" type="text/css" rel="stylesheet" /> 
 <link rel="manifest" href="<c:url value="/resources/css/images/favicon/manifest.json" />" />
 <meta name="msapplication-TileColor" content="#ffffff">
 <meta name="msapplication-TileImage" content="<c:url value="/resources/css/images/favicon/ms-icon-144x144.png" />" />

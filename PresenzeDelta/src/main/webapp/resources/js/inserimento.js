@@ -17,21 +17,15 @@ $(function () {
 });
 
 
-$.validate({
-  form : '#insertPForm'
-});
-
-
-$.validate({
-  modules : 'date, security',
-  onModulesLoaded : function() {
-    alert('All modules loaded!');
-  }
-});
-
-$.validate({
-  borderColorOnError : '#FFF',
-  addValidClassOnAll : true
+ $('#insertPForm').parsley();
+ 
+ $("#btnSalva").on('click', function() {
+    $('#insertPForm').parsley().validate();
+    if ($('#insertPForm').parsley().isValid()) {
+        console.log('valid');
+    } else {
+        console.log('not valid');
+    }
 });
 
 

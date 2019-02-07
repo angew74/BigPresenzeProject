@@ -5,7 +5,8 @@
 <html>
     <head>
         <jsp:include page="../common/head.jsp" />   
-        <link href="<c:url value="/resources/css/presenze/inserimento.css" />" type="text/css" rel="stylesheet" />             
+        <link href="<c:url value="/resources/css/common/parsley.css" />" type="text/css" rel="stylesheet" />   
+         <link href="<c:url value="/resources/css/presenze/inserimento.css" />" type="text/css" rel="stylesheet" />       
         <script src="<c:url value="/resources/js/inserimento.js" />" type="text/javascript"></script>
     </head>   
     <body>    
@@ -18,7 +19,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="well well-sm">
-                                <form class="form-horizontal" name="insertPForm" action="/PresenzeDelta/presenze/add" method="post">               
+                                <form class="form-horizontal" name="insertPForm" data-parsley-validate action="/PresenzeDelta/presenze/add" method="post">               
                                     <fieldset>                                    
                                         <sec:authorize access="!hasRole('ROLE_ADMIN')">   
                                             <div class="form-group row">
@@ -124,7 +125,7 @@
                                             <span class="col-md-1 col-md-offset-2 text-center"></span>
                                             <div class="col-md-8">   
                                                 <div class="input-group">
-                                                    <input class="form-control" id="congedoparentale" name="congedoparentale" data-validation="required"  min="0" max="8" placeholder="ore congedo parentale" type="number" />
+                                                    <input class="form-control" id="congedoparentale" name="congedoparentale"  data-parsley-type="number" data-validation="required"  min="0" max="8" placeholder="ore congedo parentale" type="number" />
                                                     <div class="input-group-append">
                                                         <div class="input-group-text"><i class="fa fa-child bigicon"></i></div>
                                                     </div>
@@ -144,7 +145,7 @@
                                         </div>
                                         <div class="form-group">
                                             <div class="col-md-12 text-center">
-                                                <button type="submit" class="btn btn-dark"><span class="cui-contrast"></span>Salva</button> 
+                                                <button type="submit" id="btnSalva" class="btn btn-dark"><span class="cui-contrast"></span>Salva</button> 
                                             </div>
                                         </div> 
                                     </fieldset>
