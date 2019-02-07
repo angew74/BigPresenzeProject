@@ -1,8 +1,13 @@
+
+
+
 $(function () {
     $('#giornopicker').datetimepicker({
         format: 'L'
     });
 });
+
+
 
 $(function () {
     $('#oraentratapicker').datetimepicker({
@@ -17,7 +22,10 @@ $(function () {
 });
 
 
+
  $('#insertPForm').parsley();
+ 
+
  
  $("#btnSalva").on('click', function() {
     $('#insertPForm').parsley().validate();

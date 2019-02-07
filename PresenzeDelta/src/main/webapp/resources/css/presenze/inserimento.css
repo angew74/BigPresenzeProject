@@ -1,2 +1,12 @@
 @import "../common/menu.css";
 
+.panel-default > .panel-heading-custom {
+    background: #343A40; color: #fff;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    margin-left: 95px;
+    width:730px;
+    border-radius:.25rem!important
+  
+   
+}

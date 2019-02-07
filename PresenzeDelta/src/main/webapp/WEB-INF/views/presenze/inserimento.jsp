@@ -14,7 +14,13 @@
         <div class="container">
             <div class="panel panel-default">
                 <!-- Default panel contents -->
-                <div class="panel-heading"><i class="fa fa-plus-circle" aria-hidden="true"></i>Presenza</div>
+                <div class="panel-heading panel-heading-custom">
+                     <span class="col-md-1 col-md-offset-2 text-center"></span>
+                                                <div class="col-md-8">    
+                    <i class="fa fa-plus-circle bigicon" aria-hidden="true"></i>
+                    Presenza
+                                                </div>
+                </div>
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-md-12">
@@ -87,13 +93,23 @@
                                             <span class="col-md-1 col-md-offset-2 text-center"></span>
                                             <div class="col-md-8">   
                                                 <div class="input-group">                                    
-                                                    <input class="form-control" id="pausapranzo" min="0" max="480" name="pausapranzo" data-validation="required"  placeholder="minuti pausa pranzo" type="number" />
+                                                    <input class="form-control" id="pausapranzo"
+                                                           min="0" max="480" name="pausapranzo" data-validation="required"  
+                                                           placeholder="minuti pausa pranzo" type="number"
+                                                           data-parsley-errors-container="#errorPausaPranzo"
+                                                           />
                                                     <div class="input-group-append">
                                                         <div class="input-group-text"><i class="fa fa-cutlery bigicon"></i></div>
                                                     </div>
                                                 </div>
                                             </div>                       
                                         </div>  
+                                        <div class="form-group row">
+                                              <span class="col-md-1 col-md-offset-2 text-center"></span>
+                                              <div class="col-md-8">   
+                                             <div id="errorPausaPranzo" class="errorBlock"></div>
+                                              </div>
+                                        </div>
                                         <div class="form-group" style="margin-left:60px">
                                              <div class="col-md-8">    
                                            <div class="form-check">
@@ -114,37 +130,61 @@
                                             <span class="col-md-1 col-md-offset-2 text-center"></span>
                                             <div class="col-md-8">   
                                                 <div class="input-group">
-                                                    <input class="form-control" id="orepermesso" name="orepermesso" min="0" max="8" data-validation="required"  placeholder="ore permesso" type="number" />
+                                                    <input class="form-control" id="orepermesso" 
+                                                              data-parsley-errors-container="#errorOrePermesso"
+                                                           name="orepermesso" min="0" max="8" data-validation="required"  placeholder="ore permesso" type="number" />
                                                     <div class="input-group-append">
                                                         <div class="input-group-text"><i class="fa fa-hourglass bigicon"></i></div>
                                                     </div>
                                                 </div>                       
                                             </div>  
                                         </div>
+                                         <div class="form-group row">
+                                              <span class="col-md-1 col-md-offset-2 text-center"></span>
+                                              <div class="col-md-8">   
+                                             <div id="errorOrePermesso" class="errorBlock"></div>
+                                              </div>
+                                        </div>
                                         <div class="form-group row">               
                                             <span class="col-md-1 col-md-offset-2 text-center"></span>
                                             <div class="col-md-8">   
                                                 <div class="input-group">
-                                                    <input class="form-control" id="congedoparentale" name="congedoparentale"  data-parsley-type="number" data-validation="required"  min="0" max="8" placeholder="ore congedo parentale" type="number" />
+                                                    <input class="form-control" id="congedoparentale" 
+                                                            data-parsley-errors-container="#errorCongedoParentale"
+                                                           name="congedoparentale"  data-parsley-type="number" data-validation="required"  min="0" max="8" placeholder="ore congedo parentale" type="number" />
                                                     <div class="input-group-append">
                                                         <div class="input-group-text"><i class="fa fa-child bigicon"></i></div>
                                                     </div>
                                                 </div>                       
                                             </div>  
                                         </div>
+                                          <div class="form-group row">
+                                              <span class="col-md-1 col-md-offset-2 text-center"></span>
+                                              <div class="col-md-8">   
+                                                  <div id="errorCongedoParentale" class="errorBlock"></div>                           
+                                              </div>
+                                        </div>
                                         <div class="form-group row">                          
                                             <span class="col-md-1 col-md-offset-2 text-center"></span>
                                             <div class="col-md-8">   
                                                 <div class="input-group">
-                                                    <input class="form-control" id="permessomalattafiglio" data-validation="required"  name="permessomalattafiglio" min="0" max="8" placeholder="ore malattia figlio" type="number" />
+                                                    <input class="form-control" id="permessomalattafiglio" 
+                                                           data-parsley-errors-container="errorPermessoMalattaFiglio"
+                                                           data-validation="required"  name="permessomalattafiglio" min="0" max="8" placeholder="ore malattia figlio" type="number" />
                                                     <div class="input-group-append">
                                                         <div class="input-group-text"><i class="fa fa-stethoscope bigicon"></i></div>
                                                     </div>
                                                 </div>                       
                                             </div>  
                                         </div>
+                                         <div class="form-group row">
+                                              <span class="col-md-1 col-md-offset-2 text-center"></span>
+                                              <div class="col-md-8">   
+                                                  <div id="errorPermessoMalattiaFiglio" class="errorBlock"></div>                           
+                                              </div>
+                                        </div>
                                         <div class="form-group">
-                                            <div class="col-md-12 text-center">
+                                            <div class="col-md-12">
                                                 <button type="submit" id="btnSalva" class="btn btn-dark"><span class="cui-contrast"></span>Salva</button> 
                                             </div>
                                         </div> 
