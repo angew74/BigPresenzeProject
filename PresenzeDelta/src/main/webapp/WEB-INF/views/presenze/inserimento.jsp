@@ -32,7 +32,7 @@
                                                 <span class="col-md-1 col-md-offset-2 text-center"></span>
                                                 <div class="col-md-8">    
                                                     <div class="input-group">
-                                                        <input type="text" name="id" value="${Presenze.user.id}" class="form-control" id="iduseredit"  readonly  autocomplete="off" />
+                                                        <input type="text" name="userid" value="${Presenze.user.id}" class="form-control" id="iduseredit"  readonly  autocomplete="off" />
                                                         <div class="input-group-append">
                                                             <div class="input-group-text"><i class="fa fa-id-badge bigicon"></i></div>
                                                         </div>
@@ -46,7 +46,7 @@
                                                 <div class="col-md-8">    
                                                     <div class="input-group">
                                                         <form:select path="Users" id="selectUsers" data-validation="required" 
-                                                                      data-parsley-errors-container="#errorSelectUsers"
+                                                                   name="userid"   data-parsley-errors-container="#errorSelectUsers"
                                                                      class="form-control" required="true">
                                                             <form:option value="" label="--Selezionare Utente"/>
                                                             <form:options items="${Users}" itemValue="id" itemLabel="username"/>
@@ -87,7 +87,7 @@
                                             <span class="col-md-1 col-md-offset-2 text-center"></span>
                                             <div class="col-md-8">    
                                                 <div class="input-group date" id="oraentratapicker" data-target-input="nearest">
-                                                    <input type="text" name="oraentrata" placeholder="ora entrata" id="oraentrata" 
+                                                    <input type="text" name="partialoraingresso" placeholder="ora entrata" id="oraentrata" 
                                                    required
                                                    data-parsley-errors-container="#errorOraEntrata"
                                                     data-validation="required"
@@ -108,7 +108,7 @@
                                             <span class="col-md-1 col-md-offset-2 text-center"></span>
                                             <div class="col-md-8">    
                                                 <div class="input-group date" id="orauscitapicker" data-target-input="nearest">
-                                                    <input type="text" name="orauscita" placeholder="ora uscita" id="orauscita"                                                            
+                                                    <input type="text" name="partialorauscita" placeholder="ora uscita" id="orauscita"                                                            
                                                             data-parsley-errors-container="#errorOraUscita"                                                         
                                                            class="form-control datetimepicker-input" data-target="#oraentratapicker"/>
                                                     <div class="input-group-append" data-target="#orauscitapicker" data-toggle="datetimepicker">
@@ -222,7 +222,7 @@
                                         </div>
                                         <div class="form-group">
                                             <div class="col-md-12">
-                                                <button type="submit" id="btnSalva" class="btn btn-dark"><span class="cui-contrast"></span>Salva</button> 
+                                                <button type="submit" id="btnSalva" class="btn btn-dark btn-sm float-right submit_btn"><i class="fas fa-arrow-alt-circle-right"></i>Salva</button> 
                                             </div>
                                         </div> 
                                     </fieldset>
@@ -233,6 +233,5 @@
                 </div>
             </div>
         </div>
-    </div>
-</body>
+  </body>
 </html>

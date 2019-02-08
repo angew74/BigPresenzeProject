@@ -30,19 +30,19 @@ $('#insertPForm').parsley();
 
 /*
  *  if ($("selectUsers") !== null)
-        {
-            if ($("selectUsers").value() === '')
-            {
-                $("errorSelectUsers").val = "Selezione utente obbligatoria";
-            }
-        }
+ {
+ if ($("selectUsers").value() === '')
+ {
+ $("errorSelectUsers").val = "Selezione utente obbligatoria";
+ }
+ }
  */
 
 
 $("#btnSalva").on('click', function () {
     $('#insertPForm').parsley().validate();
     if ($('#insertPForm').parsley().isValid()) {
-       
+
     } else {
 
     }
@@ -66,7 +66,7 @@ $(function () {
         $("#permessomalattafiglio").val("");
         $("#oraentrata").val("");
         $("#orauscita").val("");
-        $("#oraentrata").prop("required", false);    
+        $("#oraentrata").prop("required", false);
         $('#insertPForm').parsley().reset();
     });
 });
@@ -88,7 +88,7 @@ $(function () {
         $("#permessomalattafiglio").val("");
         $("#oraentrata").val("");
         $("#orauscita").val("");
-        $("#oraentrata").prop("required", false);   
+        $("#oraentrata").prop("required", false);
         $('#insertPForm').parsley().reset();
     });
 });
@@ -111,8 +111,54 @@ $(function () {
         $("#permessomalattafiglio").val("");
         $("#oraentrata").val("");
         $("#orauscita").val("");
-        $("#oraentrata").prop("required", true); 
-       	$('#insertPForm').parsley().reset();
-        		
+        $("#oraentrata").prop("required", true);
+        $('#insertPForm').parsley().reset();
+
     });
 });
+
+
+$(function () {
+    /*  Submit form using Ajax */
+    $('button[type=submit]').click(function (e) {
+        $('#insertPForm').parsley().validate();
+        if ($('#insertPForm').parsley().isValid()) {
+            var errorcontainer = '#errorModal';
+            var errorDisplay = '#errorDisplay';
+            var successcontainer = '#successModal';
+            //Prevent default submission of form
+            e.preventDefault();
+            //Remove all errors
+            $('input').next().remove();
+            $.post({
+                url: '/PresenzeDelta/presenze/add',
+                data: $('form[name=insertPForm]').serialize(),
+                success: function (res) {
+                    try {
+                        if (res.validated) {
+                            //Set response
+                            $(successcontainer).modal('show');
+                        } else {
+                            //Set error messages
+                            $.each(res.errorMessages, function (key, value) {
+                                $(errorDisplay).text(value);
+                                $(errorcontainer).modal('show');
+                            });
+                        }
+                    } catch (err)
+                    {
+                        $(errorDisplay).value(err);
+                        $(errorcontainer).modal('show');
+                    }
+                },
+                error: function () {
+                    $(errorDisplay).text("errore di connessione");
+                    $(errorcontainer).modal('show');
+                }
+            });
+
+        } else {
+
+        }
+    });
+})

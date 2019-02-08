@@ -37,8 +37,7 @@
                                 </div>
                                 <input type="email" placeholder="Email" name="mailaziendale" class="form-control"/>
                             </div>
-                        </div>
-                                <div style="display:none"><form:input value="0" path="id"/></div>                   
+                        </div>                                                
                 </div>
                 <div class="card-footer">
                     <button type="submit" id="submitUser" class="btn btn-success btn-sm float-right submit_btn"><i class="fas fa-arrow-alt-circle-right"></i>Registra</button>
