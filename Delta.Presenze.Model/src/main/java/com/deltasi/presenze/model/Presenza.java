@@ -15,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -70,6 +71,15 @@ public class Presenza {
 
     @Column(name = "permessomalattiafiglio")
     private int permessomalattafiglio;
+    
+    @Transient
+    private int iduser;
+    
+    @Transient
+    private String partialoraingresso;
+    
+    @Transient
+    private String partialorauscita;
 
     /**
      * @return the utente
@@ -262,5 +272,43 @@ public class Presenza {
 
     public void setUser(User u) {
         this.user = u;
+    }
+
+  
+    @Transient
+    public int getIduser() {
+        return iduser;
+    }
+
+    /**
+     * @param iduser the iduser to set
+     */
+    public void setIduser(int iduser) {
+        this.iduser = iduser;
+    }
+
+   
+    @Transient
+    public String getPartialoraingresso() {
+        return partialoraingresso;
+    }
+
+    /**
+     * @param partialoraingresso the partialoraingresso to set
+     */
+    public void setPartialoraingresso(String partialoraingresso) {
+        this.partialoraingresso = partialoraingresso;
+    }
+
+    @Transient
+    public String getPartialorauscita() {
+        return partialorauscita;
+    }
+
+    /**
+     * @param partialorauscita the partialorauscita to set
+     */
+    public void setPartialorauscita(String partialorauscita) {
+        this.partialorauscita = partialorauscita;
     }
 }
