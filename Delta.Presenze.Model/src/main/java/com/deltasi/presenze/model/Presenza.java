@@ -18,6 +18,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -27,13 +28,10 @@ import javax.validation.constraints.Size;
 @Table(name = "presenza")
 public class Presenza {
 
-    @Column(name = "utenteope")
-    @NotNull
-    @Size(max = 16, min = 8, message = "{persona.utente.invalido}")
+    @Column(name = "utenteope")  
     private String utente;
 
-    @Column(name = "dataope")
-    @NotNull
+    @Column(name = "dataope")    
     private Date dataope;
 
     @Id
@@ -41,7 +39,8 @@ public class Presenza {
     @Column(name = "idgiorno")
     private Integer id;
 
-    @Column(name = "giorno")
+    @Column(name = "giorno") 
+    @DateTimeFormat(pattern="dd/MM/yyyy")
     @NotNull
     private Date giorno;
 
@@ -73,7 +72,7 @@ public class Presenza {
     private int permessomalattafiglio;
     
     @Transient
-    private int iduser;
+    private int userid;
     
     @Transient
     private String partialoraingresso;
@@ -275,17 +274,7 @@ public class Presenza {
     }
 
   
-    @Transient
-    public int getIduser() {
-        return iduser;
-    }
-
-    /**
-     * @param iduser the iduser to set
-     */
-    public void setIduser(int iduser) {
-        this.iduser = iduser;
-    }
+    
 
    
     @Transient
@@ -310,5 +299,20 @@ public class Presenza {
      */
     public void setPartialorauscita(String partialorauscita) {
         this.partialorauscita = partialorauscita;
+    }
+
+    /**
+     * @return the userid
+     */
+    @Transient
+    public int getUserid() {
+        return userid;
+    }
+
+    /**
+     * @param userid the userid to set
+     */
+    public void setUserid(int userid) {
+        this.userid = userid;
     }
 }
