@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -50,6 +51,7 @@ public class UsersController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Secured("ROLE_ADMIN")
     @GetMapping(value = "/manage")
     public ModelAndView index(Model model, Principal principal) {
 
@@ -94,6 +96,7 @@ public class UsersController {
         return response;
     }
 
+    @Secured("ROLE_ADMIN")
     @GetMapping(value = "/register", produces = {MediaType.APPLICATION_JSON_VALUE})
     public ModelAndView register(Model model, Principal principal) {
         ModelAndView modelAndView = new ModelAndView("users/register", "user", new User());
@@ -101,6 +104,7 @@ public class UsersController {
         return modelAndView;
     }
 
+    @Secured("ROLE_ADMIN")
     @PostMapping(value = "/add", produces = {MediaType.APPLICATION_JSON_VALUE})
     // @ResponseBody
     public @ResponseBody
@@ -147,6 +151,7 @@ public class UsersController {
         return response;
     }
 
+    @Secured("ROLE_ADMIN")
     @PostMapping(value = "/modify", produces = {MediaType.APPLICATION_JSON_VALUE},consumes = (MediaType.APPLICATION_JSON_VALUE))
     // @ResponseBody
     public @ResponseBody

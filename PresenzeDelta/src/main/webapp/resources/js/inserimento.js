@@ -6,7 +6,7 @@ $(function () {
     });
 });
 
-
+  $('#giornopicker').datetimepicker('maxDate', moment());
 
 $(function () {
     $('#oraentratapicker').datetimepicker({
@@ -22,35 +22,10 @@ $(function () {
 
 
 
-
-
-$('#insertPForm').parsley();
-
-
-
-/*
- *  if ($("selectUsers") !== null)
- {
- if ($("selectUsers").value() === '')
- {
- $("errorSelectUsers").val = "Selezione utente obbligatoria";
- }
- }
- */
-
-
-$("#btnSalva").on('click', function () {
-    $('#insertPForm').parsley().validate();
-    if ($('#insertPForm').parsley().isValid()) {
-
-    } else {
-
-    }
-});
-
-
 $(function () {
     $("#malattia").change(function () {
+        resetParsley();
+        resetValues();
         $("#ferie").prop("disabled", true);
         $("#ferie").prop("checked", false);
         $("#reset").prop("checked", false);
@@ -60,19 +35,34 @@ $(function () {
         $("#permessomalattafiglio").prop("disabled", true);
         $("#oraentrata").prop("disabled", true);
         $("#orauscita").prop("disabled", true);
-        $("#pausapranzo").val("");
-        $("#orepermesso").val("");
-        $("#congedoparentale").val("");
-        $("#permessomalattafiglio").val("");
-        $("#oraentrata").val("");
-        $("#orauscita").val("");
         $("#oraentrata").prop("required", false);
-        $('#insertPForm').parsley().reset();
+
     });
 });
 
+function resetParsley() {
+    $("#pausapranzo").parsley().reset();
+    $("#oraentrata").parsley().reset();
+    $("#orauscita").parsley().reset();
+    $("#pausapranzo").parsley().reset();
+    $("#orepermesso").parsley().reset();
+    $("#congedoparentale").parsley().reset();
+    $("#permessomalattafiglio").parsley().reset();
+}
+
+function resetValues() {
+    $("#pausapranzo").val("");
+    $("#orepermesso").val("");
+    $("#congedoparentale").val("");
+    $("#permessomalattafiglio").val("");
+    $("#oraentrata").val("");
+    $("#orauscita").val("");
+}
+
 $(function () {
     $("#ferie").change(function () {
+        resetParsley();
+        resetValues();
         $("#malattia").prop("disabled", true);
         $("#malattia").prop("checked", false);
         $("#reset").prop("checked", false);
@@ -82,19 +72,16 @@ $(function () {
         $("#permessomalattafiglio").prop("disabled", true);
         $("#oraentrata").prop("disabled", true);
         $("#orauscita").prop("disabled", true);
-        $("#pausapranzo").val("");
-        $("#orepermesso").val("");
-        $("#congedoparentale").val("");
-        $("#permessomalattafiglio").val("");
-        $("#oraentrata").val("");
-        $("#orauscita").val("");
         $("#oraentrata").prop("required", false);
-        $('#insertPForm').parsley().reset();
     });
 });
 
 $(function () {
     $("#reset").change(function () {
+        resetParsley();
+        resetParsley();
+        $("#congedoparentale").parsley().reset();
+        $("#permessomalattafiglio").parsley().reset();
         $("#malattia").prop("disabled", false);
         $("#ferie").prop("disabled", false);
         $("#malattia").prop("checked", false);
@@ -105,60 +92,111 @@ $(function () {
         $("#permessomalattafiglio").prop("disabled", false);
         $("#oraentrata").prop("disabled", false);
         $("#orauscita").prop("disabled", false);
-        $("#pausapranzo").val("");
-        $("#orepermesso").val("");
-        $("#congedoparentale").val("");
-        $("#permessomalattafiglio").val("");
-        $("#oraentrata").val("");
-        $("#orauscita").val("");
         $("#oraentrata").prop("required", true);
-        $('#insertPForm').parsley().reset();
-
     });
 });
 
 
-$(function () {
-    /*  Submit form using Ajax */
-    $('button[type=submit]').click(function (e) {
-        $('#insertPForm').parsley().validate();
-        if ($('#insertPForm').parsley().isValid()) {
-            var errorcontainer = '#errorModal';
-            var errorDisplay = '#errorDisplay';
-            var successcontainer = '#successModal';
-            //Prevent default submission of form
-            e.preventDefault();
-            //Remove all errors
-            $('input').next().remove();
-            $.post({
-                url: '/PresenzeDelta/presenze/add',
-                data: $('form[name=insertPForm]').serialize(),
-                success: function (res) {
-                    try {
-                        if (res.validated) {
-                            //Set response
-                            $(successcontainer).modal('show');
-                        } else {
-                            //Set error messages
-                            $.each(res.errorMessages, function (key, value) {
-                                $(errorDisplay).text(value);
-                                $(errorcontainer).modal('show');
-                            });
-                        }
-                    } catch (err)
-                    {
-                        $(errorDisplay).value(err);
-                        $(errorcontainer).modal('show');
-                    }
-                },
-                error: function () {
-                    $(errorDisplay).text("errore di connessione");
-                    $(errorcontainer).modal('show');
-                }
-            });
-
-        } else {
-
-        }
+jQuery(document).ready(function ($) {
+    var presenzaForm = '#btnSalva';
+    // SUBMIT FORM
+    $(presenzaForm).click(function (event) {
+        // Prevent the form from submitting via the browser.
+        event.preventDefault();
+         var isValid = true;
+         var isValidSelect = true;
+      $('select').each( function() {
+         if ($(this).parsley().validate() !== true) isValidSelect = false;
+      });   
+      $('input').each( function() {
+         if ($(this).parsley().validate() !== true) isValid = false;
+      }); 
+      if (isValid && isValidSelect) {
+         ajaxPost();
+      }      
     });
+
+
+    function ajaxPost() {
+       
+        var errorcontainer = '#errorModal';
+        var errorDisplay = '#errorDisplay';
+        var successcontainer = '#successModal';    
+        /*
+        var selectUsers = '#selectUsers';
+        var userid = '#iduseredit';       
+        var permessomalattafiglio = '#permessomalattafiglio';
+        var congedoparentale = '#congedoparentale';
+        var orepermesso = '#orepermesso';
+        var pausapranzo = '#pausapranzo';       
+        var malattia = '#malattia';
+        var ferie = '#ferie';       
+        var formData = {}
+        formData["giorno"] =$('#giornopicker').datetimepicker('viewDate').format('L'); 
+        formData["id"] = $('idgiorno').val();
+        formData["permessomalattafiglio"] = $(permessomalattafiglio).val();
+        formData["congedoparentale"] = $(congedoparentale).val();
+        formData["orepermesso"] = $(orepermesso).val();
+        formData["pausapranzo"] =  $(pausapranzo).val();     
+        formData["partialoraingresso"] =  $('#oraentratapicker').datetimepicker('viewDate').format('LT');   
+        formData["partialorauscita"] = $('#orauscitapicker').datetimepicker('viewDate').format('LT');  
+        formData["oraentrata"] = null;
+        formData["orauscita"] = null;
+        if($('#iduseredit').length === 0)
+        {
+            formData["userid"] = $(selectUsers).val();
+        }
+        else 
+        {
+            formData["userid"] = $(userid).val();
+        }
+        if($(malattia).is(':checked')) 
+        {
+            formData["malattia"] = "S";
+        }
+        else{
+             formData["malattia"] = "N";
+        }
+        if($(ferie).is(':checked')) 
+        {
+            formData["ferie"] = "S";
+        }
+        else
+        {
+              formData["ferie"] = "N";
+        }   */
+            // DO POST
+            $.post({
+                type: "POST",
+               // contentType: "application/json",
+                url: '/PresenzeDelta/presenze/add',
+               // data: JSON.stringify(formData),
+               data: $('form[name=insertPForm]').serialize()
+               // dataType: 'json'
+              })
+                    .done(function (data) {
+                        try {
+                            if (data.validated) {
+                                $(successcontainer).modal('show');
+                            } else {
+                                //Set error messages
+                                $.each(data.errorMessages, function (key, value) {
+                                    $(errorDisplay).text(value);
+                                });                                
+                                $(errorcontainer).modal('show');
+                            }
+                        } catch (err)
+                        {
+                            $(errorDisplay).text(err);
+                            $(errorcontainer).modal('show');
+                        }
+
+                    })
+                    .fail(function (e) {
+                        $(errorDisplay).text("errore di connessione dettagli " + e);
+                        $(errorcontainer).modal('show');                    
+                    });
+
+    }
 })
+

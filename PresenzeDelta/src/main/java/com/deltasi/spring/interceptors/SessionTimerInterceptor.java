@@ -24,7 +24,7 @@ public class SessionTimerInterceptor extends HandlerInterceptorAdapter {
 
     private static final Logger log = LogManager.getLogger(UserService.class);
 
-    private static final long MAX_INACTIVE_SESSION_TIME = 5 * 10000;
+    private static final long MAX_INACTIVE_SESSION_TIME = 36 * 10000;
 
     @Autowired
     private HttpSession session;
@@ -44,7 +44,7 @@ public class SessionTimerInterceptor extends HandlerInterceptorAdapter {
                 log.warn("Logging out, due to inactive session");
                 SecurityContextHolder.clearContext();
                 request.logout();
-                response.sendRedirect("/spring-security-rest-full/logout");
+                response.sendRedirect("/logout");
             }
         }
         return true;

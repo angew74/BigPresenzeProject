@@ -25,7 +25,7 @@
 <script type="text/javascript" src="<c:url value="/resources/js/moment.js" />"></script>
 <script type="text/javascript" src="<c:url value="/resources/js/moment.locale.it.js" />"></script>
 <script type="text/javascript" src="<c:url value="/resources/js/tempusdominus-bootstrap-4.min.js" />"></script>
-<script type="text/javascript" src="<c:url value="/resources/js/parsley.min.js" />"></script>
+<script type="text/javascript" src="<c:url value="/resources/js/parsley.min.js" />" ></script>
 <script type="text/javascript" src="<c:url value="/resources/js/parsley.it.js" />"></script>
 <script type="text/javascript" src="<c:url value="/resources/js/parsley.it.extra.js" />"></script>
 <link href="<c:url value="/resources/css/common/tempusdominus-bootstrap-4.min.css" />" type="text/css" rel="stylesheet" /> 

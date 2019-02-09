@@ -25,7 +25,8 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="well well-sm">
-                                <form class="form-horizontal" name="insertPForm" data-parsley-validate action="/PresenzeDelta/presenze/add" method="post">               
+                                <form class="form-horizontal" name="insertPForm" data-parsley-validate action="/PresenzeDelta/presenze/add" method="post">         
+                                    <input type="hidden" id="idgiorno" value="0"/>                                    
                                     <fieldset>                                    
                                         <sec:authorize access="!hasRole('ROLE_ADMIN')">   
                                             <div class="form-group row">
@@ -46,10 +47,11 @@
                                                 <div class="col-md-8">    
                                                     <div class="input-group">
                                                         <form:select path="Users" id="selectUsers" data-validation="required" 
-                                                                   name="userid"   data-parsley-errors-container="#errorSelectUsers"
+                                                                     data-parsley-errors-container="#errorSelectUsers"
+                                                                     name="userid"
                                                                      class="form-control" required="true">
                                                             <form:option value="" label="--Selezionare Utente"/>
-                                                            <form:options items="${Users}" itemValue="id" itemLabel="username"/>
+                                                            <form:options items="${Users}" name="userid" itemValue="id" itemLabel="username"/>
                                                         </form:select>
                                                         <div class="input-group-append">
                                                             <div class="input-group-text"><i class="fa fa-id-badge bigicon"></i></div>
@@ -110,7 +112,7 @@
                                                 <div class="input-group date" id="orauscitapicker" data-target-input="nearest">
                                                     <input type="text" name="partialorauscita" placeholder="ora uscita" id="orauscita"                                                            
                                                             data-parsley-errors-container="#errorOraUscita"                                                         
-                                                           class="form-control datetimepicker-input" data-target="#oraentratapicker"/>
+                                                           class="form-control datetimepicker-input" data-target="#orauscitapicker"/>
                                                     <div class="input-group-append" data-target="#orauscitapicker" data-toggle="datetimepicker">
                                                         <div class="input-group-text"><i class="fa fa-clock-o"></i></div>
                                                     </div>
@@ -166,7 +168,7 @@
                                                 <div class="input-group">
                                                     <input class="form-control" id="orepermesso" 
                                                               data-parsley-errors-container="#errorOrePermesso"
-                                                           name="orepermesso" min="0" max="8" data-validation="required"                                                           
+                                                           name="orepermesso" min="0" max="8" data-validation="required"   value="0"                                                        
                                                            placeholder="ore permesso" type="number" />
                                                     <div class="input-group-append">
                                                         <div class="input-group-text"><i class="fa fa-hourglass bigicon"></i></div>
@@ -186,7 +188,7 @@
                                                 <div class="input-group">
                                                     <input class="form-control" id="congedoparentale" 
                                                             data-parsley-errors-container="#errorCongedoParentale"
-                                                           name="congedoparentale"  data-parsley-type="number" 
+                                                           name="congedoparentale"  data-parsley-type="number" value="0"
                                                            data-validation="required"  min="0" max="8" placeholder="ore congedo parentale" type="number" />
                                                     <div class="input-group-append">
                                                         <div class="input-group-text"><i class="fa fa-child bigicon"></i></div>
@@ -205,24 +207,24 @@
                                             <div class="col-md-8">   
                                                 <div class="input-group">
                                                     <input class="form-control" id="permessomalattafiglio" 
-                                                           data-parsley-errors-container="errorPMalattiaFiglio"
+                                                           data-parsley-errors-container="errorFiglio"
                                                            data-validation="required"  name="permessomalattafiglio" min="0" max="8"
-                                                           placeholder="ore malattia figlio" type="number" />
+                                                      value="0"    placeholder="ore malattia figlio" type="number" />
                                                     <div class="input-group-append">
                                                         <div class="input-group-text"><i class="fa fa-stethoscope bigicon"></i></div>
                                                     </div>
                                                 </div>                       
                                             </div>  
                                         </div>                                        
-                                         <div class="form-group row">
+                                           <div class="form-group row">
                                               <span class="col-md-1 col-md-offset-2 text-center"></span>
                                               <div class="col-md-8">   
-                                                  <div id="errorPMalattiaFiglio" class="errorBlock"></div>                           
+                                                  <div id="errorFiglio" class="errorBlock"></div>                           
                                               </div>
                                         </div>
                                         <div class="form-group">
-                                            <div class="col-md-12">
-                                                <button type="submit" id="btnSalva" class="btn btn-dark btn-sm float-right submit_btn"><i class="fas fa-arrow-alt-circle-right"></i>Salva</button> 
+                                            <div class="col-md-8">
+                                                <button id="btnSalva" data-parsley-validate class="btn btn-dark btn-sm float-right submit_btn"><i class="fas fa-arrow-alt-circle-right"></i>Salva</button> 
                                             </div>
                                         </div> 
                                     </fieldset>
@@ -233,5 +235,7 @@
                 </div>
             </div>
         </div>
+          <jsp:include page="../common/modalerror.jsp" />   
+        <jsp:include page="../common/modalsuccess.jsp" />   
   </body>
 </html>

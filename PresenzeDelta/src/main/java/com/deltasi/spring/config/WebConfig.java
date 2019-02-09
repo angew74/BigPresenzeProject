@@ -4,8 +4,6 @@
  * and open the template in the editor.
  */
 package com.deltasi.spring.config;
-
-import com.deltasi.spring.helpers.MySecurityProvider;
 import com.deltasi.spring.interceptors.SessionTimerInterceptor;
 import com.deltasi.spring.interceptors.UserInterceptor;
 import java.util.concurrent.TimeUnit;
@@ -56,13 +54,6 @@ public PasswordEncoder passwordEncoder() {
     return new BCryptPasswordEncoder();
 }
 
-@Bean
-@Scope(value = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)
-public MySecurityProvider mysecurityprovider()
-{
-    MySecurityProvider provider = new MySecurityProvider();
-    return provider;
-}
   
    @Override
     public void addViewControllers(final ViewControllerRegistry registry) {
