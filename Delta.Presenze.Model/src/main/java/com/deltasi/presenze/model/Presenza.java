@@ -7,6 +7,8 @@ package com.deltasi.presenze.model;
 
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.Objects;
+import java.util.stream.Stream;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,6 +21,7 @@ import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.util.StringUtils;
 
 /**
  *
@@ -28,10 +31,10 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Table(name = "presenza")
 public class Presenza {
 
-    @Column(name = "utenteope")  
+    @Column(name = "utenteope")
     private String utente;
 
-    @Column(name = "dataope")    
+    @Column(name = "dataope")
     private Date dataope;
 
     @Id
@@ -39,8 +42,8 @@ public class Presenza {
     @Column(name = "idgiorno")
     private Integer id;
 
-    @Column(name = "giorno") 
-    @DateTimeFormat(pattern="dd/MM/yyyy")
+    @Column(name = "giorno")
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     @NotNull
     private Date giorno;
 
@@ -53,7 +56,7 @@ public class Presenza {
     @Column(name = "pausapranzo")
     private int pausapranzo;
 
-    @Column(name = "ore permesso")
+    @Column(name = "orepermesso")
     private int orepermesso;
 
     @Column(name = "permessomaternita")
@@ -69,16 +72,41 @@ public class Presenza {
     private String ferie;
 
     @Column(name = "permessomalattiafiglio")
-    private int permessomalattafiglio;
-    
+    private int permessomalattiafiglio;
+
     @Transient
     private int userid;
-    
+
     @Transient
     private String partialoraingresso;
-    
+
     @Transient
     private String partialorauscita;
+
+    public boolean IsEmpty() {
+        return Stream.of(id, orauscita)
+                .allMatch(Objects::isNull);
+    }
+
+    public boolean IsHalfEmpty() {
+        boolean verify = false;
+        if (id == null) {
+            verify = false;
+        }
+        if (!verify) {
+            return verify;
+        }
+        if (orauscita == null) {
+            verify = true;
+        }
+        return verify;
+
+    }
+
+    public boolean IsFull() {
+        return Stream.of(id, orauscita)
+                .allMatch(Objects::nonNull);
+    }
 
     /**
      * @return the utente
@@ -251,15 +279,15 @@ public class Presenza {
     /**
      * @return the permessomalattafiglio
      */
-    public int getPermessomalattafiglio() {
-        return permessomalattafiglio;
+    public int getPermessomalattiafiglio() {
+        return permessomalattiafiglio;
     }
 
     /**
      * @param permessomalattafiglio the permessomalattafiglio to set
      */
     public void setPermessomalattafiglio(int permessomalattafiglio) {
-        this.permessomalattafiglio = permessomalattafiglio;
+        this.permessomalattiafiglio = permessomalattafiglio;
     }
     @ManyToOne()
     @JoinColumn(name = "iduser")
@@ -273,13 +301,17 @@ public class Presenza {
         this.user = u;
     }
 
-  
-    
-
-   
     @Transient
     public String getPartialoraingresso() {
-        return partialoraingresso;
+        if (StringUtils.isEmpty(partialoraingresso) && oraentrata != null) {
+            StringBuilder str = new StringBuilder();
+            return str.append(oraentrata.getHour())
+                    .append(":")
+                    .append(oraentrata.getMinute()).toString();
+
+        } else {
+            return partialoraingresso;
+        }
     }
 
     /**
@@ -291,7 +323,15 @@ public class Presenza {
 
     @Transient
     public String getPartialorauscita() {
-        return partialorauscita;
+        if (StringUtils.isEmpty(partialorauscita) && orauscita != null) {
+            StringBuilder str = new StringBuilder();
+            return str.append(orauscita.getHour())
+                    .append(":")
+                    .append(orauscita.getMinute()).toString();
+
+        } else {
+            return partialorauscita;
+        }
     }
 
     /**
