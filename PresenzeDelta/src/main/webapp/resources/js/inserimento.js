@@ -2,7 +2,7 @@
 $(function () {
     $('#giornopicker').datetimepicker({
         format: 'L',
-        defaultDate: moment()
+        //defaultDate: moment()
     });
 });
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="warn">
     <Properties>
-        <Property name="basePath">C:\\Users\Accademia\log</Property>
+        <Property name="basePath">C:\\Users\Nick\log</Property>
     </Properties>
  
     <Appenders>
