@@ -29,4 +29,5 @@ public interface IPresenzaService {
     public List<Presenza> getPresenzeByUser(String username);
  
     public Presenza updatePresenza(Presenza presenza);
+    public Presenza getPresenzaByUseridGiorno(int userid, Date giorno);
 }

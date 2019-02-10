@@ -33,37 +33,43 @@ public class PresenzaService implements IPresenzaService {
     
     @Override
     public void addPresenza(Presenza presenza) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       presenzaDAO.addPresenza(presenza);
     }
 
     @Override
     public List<Presenza> getAllPresenze() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+     return presenzaDAO.getAllPresenze();
     }
 
     @Override
     public void deletePresenza(Integer id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+     presenzaDAO.deletePresenza(id);
     }
 
     @Override
     public Presenza getPresenza(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+      return presenzaDAO.getPresenza(id);
     }
 
     @Override
     public List<Presenza> getPresenzeByDay(Date day) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       return presenzaDAO.getPresenzeByDay(day);
     }
 
     @Override
     public List<Presenza> getPresenzeByUser(String username) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+     return presenzaDAO.getPresenzeByUser(username);
     }
 
     @Override
     public Presenza updatePresenza(Presenza presenza) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       return presenzaDAO.updatePresenza(presenza);
+    }
+    
+    @Override
+    public Presenza getPresenzaByUseridGiorno(int userid, Date giorno)
+    {
+        return presenzaDAO.getPresenzaByUseridGiorno(userid, giorno);
     }
     
 }
