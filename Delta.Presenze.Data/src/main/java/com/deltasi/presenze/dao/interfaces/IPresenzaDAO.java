@@ -6,6 +6,7 @@
 package com.deltasi.presenze.dao.interfaces;
 
 import com.deltasi.presenze.model.Presenza;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -13,13 +14,20 @@ import java.util.List;
  * @author Nick
  */
 public interface IPresenzaDAO {
-    public void addPresenza(Presenza persona);
- 
-    public List<Presenza> getAllPresenze();
- 
-    public void deletePresenza(Integer id);
- 
-    public Presenza updatePresenza(Presenza persona);
- 
-    public Presenza getPresenza(int id);
+
+    void addPresenza(Presenza persona);
+
+    List<Presenza> getAllPresenze();
+
+    void deletePresenza(Integer id);
+
+    Presenza updatePresenza(Presenza persona);
+
+    Presenza getPresenza(int id);
+
+    Presenza getPresenzaByUseridGiorno(int userid, Date giorno);
+
+    List<Presenza> getPresenzeByDay(Date day);
+
+    List<Presenza> getPresenzeByUser(String username);
 }
