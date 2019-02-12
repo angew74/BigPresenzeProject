@@ -70,18 +70,11 @@ function editService(id) {
     var maildiv = '#mailedit';
     var rolediv = '#rolesedit';
     var errorcontainer = '#errorModal';
-    var errorDisplay = '#errorDisplay';
-    var enabledDisplay = '#displayendisabled';
+    var errorDisplay = '#errorDisplay';   
     var iduseredit = '#iduseredit';
     var able = '#able';
     var disable = '#disable';
-    //Remove all errors
-    // $(idbutton).next().remove();
-    var iconenabled = "fa fa-toggle-on";
-    var spandisabled = "#icondisabled";
-    var icondisabled = "fa fa-toggle-off";
     var passworddiv = '#passwordedit';
-
     $.post({
         url: '/PresenzeDelta/users/view',
         data: {id: id},
@@ -149,8 +142,7 @@ jQuery(document).ready(function ($) {
 
 
     function ajaxPost() {
-
-        var formedituser = '#userEditForm';
+       
         var errorcontainer = '#errorModal';
         var errorDisplay = '#errorDisplay';
         var successcontainer = '#successModal';
@@ -168,7 +160,7 @@ jQuery(document).ready(function ($) {
         formData["mailaziendale"] = $(maildiv).val();
         formData["roles"] =  $(rolediv).val();
         var able = '#able';
-        var disable = '#disable';
+        var mdisplay = "#messagesuccess";
         if($(able).is(':checked')) 
         {
             formData["enabled"] = true;
@@ -187,6 +179,7 @@ jQuery(document).ready(function ($) {
                             if (data.validated) {
                                 //Set response
                                 $(usercontainer).modal('hide');
+                                $(mdisplay).text("Utente modificato correttamente");           
                                 $(successcontainer).modal('show');
                             } else {
                                 //Set error messages

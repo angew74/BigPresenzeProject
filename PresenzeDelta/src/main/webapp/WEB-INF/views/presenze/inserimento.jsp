@@ -2,7 +2,6 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
-<%@page session="true"%>
 <html>
     <head>
         <jsp:include page="../common/head.jsp" />   
@@ -70,11 +69,10 @@
                                         <div class="form-group row">
                                             <span class="col-md-1 col-md-offset-2 text-center"></span>
                                             <div class="col-md-8">    
-                                                <div class="input-group date" id="giornopicker" data-target-input="nearest">
-                                                    <fmt:formatDate value="${Presenza.presenza.giorno}" pattern="dd/MM/yyyy" var="myGiorno" />
+                                                <div class="input-group date" id="giornopicker" data-target-input="nearest">                                                 
                                                     <form:input type="text" id="giorno" name="giorno" data-validation="required"
                                                                 required="required" path="Presenza.presenza.giorno"                                                                
-                                                                value="${myGiorno}"                                                            
+                                                                value="${localDateTimeFormat.format(Presenza.presenza.giorno)}"                                                            
                                                                 data-parsley-errors-container="#errorGiorno"
                                                                 class="form-control datetimepicker-input" data-target="#giornopicker"/>
                                                     <div class="input-group-append" data-target="#giornopicker" data-toggle="datetimepicker">
@@ -93,9 +91,9 @@
                                             <span class="col-md-1 col-md-offset-2 text-center"></span>
                                             <div class="col-md-8">    
                                                 <div class="input-group date" id="oraentratapicker" data-target-input="nearest">
-                                                    <form:input type="text" name="partialoraingresso" placeholder="ora entrata" id="oraentrata" 
-                                                                path="Presenza.presenza.partialoraingresso"      required="required" 
-                                                                value="${Presenza.presenza.partialoraingresso}"                                                      
+                                                    <form:input type="text" name="oraentrata" placeholder="ora entrata" id="oraentrata" 
+                                                                path="Presenza.presenza.oraentrata"      required="required" 
+                                                                value="${Presenza.presenza.oraentrata}"                                                      
                                                                 data-parsley-errors-container="#errorOraEntrata"
                                                                 data-validation="required"
                                                                 class="form-control datetimepicker-input" data-target="#oraentratapicker"/>
@@ -115,10 +113,10 @@
                                             <span class="col-md-1 col-md-offset-2 text-center"></span>
                                             <div class="col-md-8">    
                                                 <div class="input-group date" id="orauscitapicker" data-target-input="nearest">
-                                                    <form:input type="text" name="partialorauscita" placeholder="ora uscita" id="orauscita"                                                            
-                                                                path="Presenza.presenza.partialorauscita"    
+                                                    <form:input type="text" name="orauscita" placeholder="ora uscita" id="orauscita"                                                            
+                                                                path="Presenza.presenza.orauscita"    
                                                                 data-parsley-errors-container="#errorOraUscita"                                                         
-                                                                value="${Presenza.presenza.partialorauscita}" 
+                                                                value="${Presenza.presenza.orauscita}" 
                                                                 class="form-control datetimepicker-input" data-target="#orauscitapicker"/>
                                                     <div class="input-group-append" data-target="#orauscitapicker" data-toggle="datetimepicker">
                                                         <div class="input-group-text"><i class="fa fa-clock-o"></i></div>
@@ -138,6 +136,7 @@
                                                 <div class="input-group">                                    
                                                     <form:input class="form-control" id="pausapranzo"       
                                                                 value="${Presenza.presenza.pausapranzo}" 
+                                                                required="required"
                                                                 path="Presenza.presenza.pausapranzo"  
                                                                 min="0" max="480" name="pausapranzo" data-validation="required"  
                                                                 placeholder="minuti pausa pranzo" type="number"
@@ -163,6 +162,7 @@
                                                                 path="Presenza.presenza.orepermesso"
                                                                 data-parsley-errors-container="#errorOrePermesso"
                                                                 value="${Presenza.presenza.orepermesso}" 
+                                                                required="required"
                                                                 name="orepermesso" min="0" max="8" data-validation="required"                                              
                                                                 placeholder="ore permesso" type="number" />
                                                     <div class="input-group-append">
@@ -184,6 +184,7 @@
                                                     <form:input class="form-control" id="congedoparentale" 
                                                                 path="Presenza.presenza.congedoparentale" 
                                                                 value="${Presenza.presenza.congedoparentale}" 
+                                                                required="required"
                                                                 data-parsley-errors-container="#errorCongedoParentale"
                                                                 name="congedoparentale"  data-parsley-type="number"
                                                                 data-validation="required"  min="0" max="8" placeholder="ore congedo parentale" type="number" />
@@ -207,6 +208,7 @@
                                                                 data-parsley-errors-container="errorFiglio"
                                                                 path="Presenza.presenza.permessomalattiafiglio"    
                                                                 value="${Presenza.presenza.permessomalattiafiglio}" 
+                                                                required="required"
                                                                 data-validation="required"  name="permessomalattafiglio" min="0" max="8"
                                                                 placeholder="ore malattia figlio" type="number" />
                                                     <div class="input-group-append">
@@ -225,11 +227,11 @@
                                             <div class="col-md-8">    
                                                 <div class="form-check">
                                                     <c:choose>
-                                                        <c:when test="${Presenza.presenza.malattia != null && Presenza.presenza.malattia == 'S'}">
+                                                        <c:when test="${Presenza.presenza.malattia == 'S'}">
                                                             <input type="radio" class="radio" id="malattia" name="malattia"
                                                                    checked value="S" />    
                                                         </c:when>
-                                                        <c:when test="${Presenza.presenza.malattia == null && Presenza.presenza.malattia != 'S'}">
+                                                        <c:when test="${Presenza.presenza.malattia == 'N'}">
                                                             <input type="radio" class="radio" id="malattia" name="malattia"
                                                                    value="S" />    
                                                         </c:when>
@@ -238,11 +240,11 @@
                                                 </div>
                                                 <div class="form-check">
                                                     <c:choose>
-                                                        <c:when test="${Presenza.presenza.malattia != null && Presenza.presenza.ferie == 'S'}">
+                                                        <c:when test="${Presenza.presenza.ferie == 'S'}">
                                                             <input type="radio" class="radio" id="ferie" name="ferie"
                                                                    checked value="S" />    
                                                         </c:when>
-                                                        <c:when test="${Presenza.presenza.malattia == null && Presenza.presenza.malattia != 'S'}">
+                                                        <c:when test="${Presenza.presenza.malattia == 'N'}">
                                                             <input type="radio" class="radio" id="ferie" name="ferie"
                                                                    value="S" />    
                                                         </c:when>

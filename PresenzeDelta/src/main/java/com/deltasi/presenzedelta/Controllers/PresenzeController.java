@@ -9,10 +9,13 @@ import com.deltasi.presenze.contracts.IPresenzaService;
 import com.deltasi.presenze.contracts.IUserService;
 import com.deltasi.presenze.model.Presenza;
 import com.deltasi.presenze.model.PresenzeJson;
+import com.deltasi.presenze.model.RiepilogoJson;
 import com.deltasi.presenze.model.User;
 import com.deltasi.spring.interceptors.UserInterceptor;
 import java.security.Principal;
 import java.time.Instant;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
@@ -64,9 +67,10 @@ public class PresenzeController {
                     .stream().map(a -> a.getAuthority()).toArray(String[]::new);
             if (Arrays.stream(authorities).anyMatch("ADMIN"::equals)) {
                 list = userservice.getAllUtenti();
-                p.setGiorno(Date.from(Instant.now()));
+                p.setGiorno(LocalDate.now());
+                model.addAttribute("localDateTimeFormat", DateTimeFormatter.ofPattern("dd/MM/yyyy"));
             } else {
-                Date oggi = Date.from(Instant.now());
+                LocalDate oggi = LocalDate.now();
                 p = presenzaservice.getPresenzeByDay(oggi).stream().filter(x -> x.getUserid() == user.getId()).findFirst().get();
                 if (p != null && p.getOrauscita() != null) {
                     ModelAndView listmodelview = new ModelAndView("presenze/riepilogo");
@@ -100,7 +104,7 @@ public class PresenzeController {
         PresenzeJson response = new PresenzeJson();
         Presenza presenza = pjson.getPresenza();
         int iduser;
-        Date giorno;
+        LocalDate giorno;
         boolean modify = false;
         Map<String, String> errors = null;
         if (result.hasErrors()) {
@@ -108,7 +112,6 @@ public class PresenzeController {
                     .collect(
                             Collectors.toMap(FieldError::getField, FieldError::getDefaultMessage)
                     );
-
             response.setValidated(false);
             response.setErrorMessages(errors);
             return response;
@@ -128,14 +131,16 @@ public class PresenzeController {
                 } else if (oldp.IsHalfEmpty()) {
                     modify = true;
                     presenza.setId(oldp.getId());
-                } else if(oldp.IsEmpty()){
+                } else if (oldp.IsEmpty()) {
                     modify = false;
                     presenza.setId(oldp.getId());
                 }
-                String convingresso = presenza.getPartialoraingresso().replace(':', '.');
+                String convingresso = presenza.getOraentrata().replace(':', '.');
                 Double ingresso = NumberUtils.toDouble(convingresso);
-                String convuscita = presenza.getPartialorauscita().replace(':', '.');
+                String convuscita = presenza.getOrauscita().replace(':', '.');
                 Double uscita = NumberUtils.toDouble(convuscita);
+                String f = presenza.getFerie();
+                String m = presenza.getMalattia();
                 if (uscita != 0) {
                     int orepermesso = presenza.getOrepermesso();
                     int pausapranzo = presenza.getPausapranzo();
@@ -143,30 +148,41 @@ public class PresenzeController {
                     int pmalattiafiglio = presenza.getPermessomalattiafiglio();
                     double orepranzo = pausapranzo / 60;
                     Double orecomplessive = uscita - ingresso + orepermesso - orepranzo + permessomaternita + pmalattiafiglio;
-                    if (orecomplessive != 8) {
+                    if (Math.round(orecomplessive) != 8) {
                         errors = new HashMap<String, String>();
                         errors.put("Errrore in banca dati", "Totale deve essere di 8 ore");
                         response.setValidated(false);
                         response.setErrorMessages(errors);
                         return response;
+                    }
+                    presenza.setMalattia("N");
+                    presenza.setFerie("N");
+                } else if (uscita == 0 && ingresso != 0) {
+                    presenza.setMalattia("N");
+                    presenza.setFerie("N");
+                } else if (f == "S" || m == "S") {
+                    presenza.setOraentrata("00:00");
+                    presenza.setOrauscita("00:00");
+                    if (f == "S") {
+                        presenza.setMalattia("N");
                     } else {
-                        if (modify) {
-                            presenzaservice.updatePresenza(presenza);
-                        } else {
-                            Date oggi = Date.from(Instant.now());
-                            presenza.setDataope(oggi);
-                            String username = SecurityContextHolder.getContext().getAuthentication().getName();
-                            User u = userservice.getUtente(presenza.getUserid());
-                            presenza.setUser(u);
-                            presenza.setUtente(username);
-                            presenzaservice.addPresenza(presenza);
-                        }
-                        errors = new HashMap<String, String>();
-                        response.setErrorMessages(errors);
-                        response.setValidated(true);
+                        presenza.setFerie("N");
                     }
                 }
-
+                Date oggi = Date.from(Instant.now());
+                presenza.setDataope(oggi);
+                String username = SecurityContextHolder.getContext().getAuthentication().getName();
+                User u = userservice.getUtente(presenza.getUserid());
+                presenza.setUser(u);
+                presenza.setUtente(username);
+                if (modify) {
+                    presenzaservice.updatePresenza(presenza);
+                } else {
+                    presenzaservice.addPresenza(presenza);
+                }
+                errors = new HashMap<String, String>();
+                response.setErrorMessages(errors);
+                response.setValidated(true);
             } catch (Exception ex) {
                 errors = new HashMap<String, String>();
                 errors.put("Errrore in banca dati", ex.getMessage());
@@ -180,6 +196,39 @@ public class PresenzeController {
             response.setErrorMessages(errors);
         }
         return response;
+    }
+
+    @GetMapping(value = "/riepilogo")
+    public ModelAndView riepilogo(Model model, Principal principal) {
+        List<User> list = null;
+        ModelAndView modelAndView = new ModelAndView("presenze/riepilogo");
+     //   Presenza p = new Presenza();
+        modelAndView.addObject("titlepage", "Riepilogo Presenze");
+        if (UserInterceptor.isUserLogged()) {
+            String username = SecurityContextHolder.getContext().getAuthentication().getName();
+            User user = userservice.getByUsername(username);
+            RiepilogoJson response = new RiepilogoJson();
+            String[] authorities = user.getAuthorities()
+                    .stream().map(a -> a.getAuthority()).toArray(String[]::new);
+            if (Arrays.stream(authorities).anyMatch("ADMIN"::equals)) {
+                list = userservice.getAllUtenti();
+            }
+            try {
+                modelAndView.addObject("Users", list);              
+                response.setUser(user);
+                modelAndView.addObject("Riepilogo", response);
+            } catch (Exception ex) {
+                String error = ex.getMessage();
+                ModelAndView errormodelAndView = new ModelAndView("common/error");
+                errormodelAndView.addObject("titlepage", "Pagina Errore");
+                errormodelAndView.addObject("Error", error);
+                return errormodelAndView;
+            }
+        }else {
+            ModelAndView errormodelAndView = new ModelAndView("/logout");
+            return errormodelAndView;
+        }
+        return modelAndView;
     }
 
 }

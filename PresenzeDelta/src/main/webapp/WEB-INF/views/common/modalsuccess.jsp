@@ -12,8 +12,8 @@
 			</div>
 			<div class="modal-body text-center">
 				<h4>Compliementi!!</h4>	
-				<p>Account creato correttamente.</p>                             
-                                <button class="btn btn-success" data-dismiss="modal"><a href="<c:url value="/users/manage" />"><span>Vai alla lista utenti</span></a> <i class="material-icons">&#xE5C8;</i></button>
+				<p id="messagesuccess"></p>                             
+                                <button class="btn btn-success" data-dismiss="modal"><i class="material-icons">&#xE5C8;</i></button>
 			</div>
 		</div>
 	</div>

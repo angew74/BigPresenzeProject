@@ -121,6 +121,7 @@ jQuery(document).ready(function ($) {
        
         var errorcontainer = '#errorModal';
         var errorDisplay = '#errorDisplay';
+        var mdisplay = "#messagesuccess";
         var successcontainer = '#successModal';    
         /*
         var selectUsers = '#selectUsers';
@@ -177,6 +178,7 @@ jQuery(document).ready(function ($) {
                     .done(function (data) {
                         try {
                             if (data.validated) {
+                                $(mdisplay).text("Presenza inserita correttamente");                               
                                 $(successcontainer).modal('show');
                             } else {
                                 //Set error messages

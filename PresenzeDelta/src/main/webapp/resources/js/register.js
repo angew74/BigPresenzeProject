@@ -3,7 +3,7 @@ $(function() {
     var errorcontainer = '#errorModal';
     var errorDisplay = '#errorDisplay';
     var successcontainer= '#successModal';
-      //Prevent default submission of form
+    var mdisplay = "#messagesuccess";
       e.preventDefault();
       //Remove all errors
       $('input').next().remove();
@@ -14,6 +14,7 @@ $(function() {
          try {             
                 if (res.validated) {
                     //Set response
+                    $(mdisplay).text("Utente registrato correttamente");               
                     $(successcontainer).modal('show');
                 } else {
                     //Set error messages
