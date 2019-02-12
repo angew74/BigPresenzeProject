@@ -6,6 +6,7 @@
 package com.deltasi.presenze.dao.interfaces;
 
 import com.deltasi.presenze.model.Presenza;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -25,9 +26,9 @@ public interface IPresenzaDAO {
 
     Presenza getPresenza(int id);
 
-    Presenza getPresenzaByUseridGiorno(int userid, Date giorno);
+    Presenza getPresenzaByUseridGiorno(int userid, LocalDate giorno);
 
-    List<Presenza> getPresenzeByDay(Date day);
+    List<Presenza> getPresenzeByDay(LocalDate day);
 
     List<Presenza> getPresenzeByUser(String username);
 }
