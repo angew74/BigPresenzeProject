@@ -5,7 +5,7 @@
  */
 package com.deltasi.presenze.model;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -19,7 +19,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.util.StringUtils;
 
@@ -45,13 +44,13 @@ public class Presenza {
     @Column(name = "giorno")
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     @NotNull
-    private Date giorno;
+    private LocalDate giorno;
 
     @Column(name = "oraentrata")
-    private LocalDateTime oraentrata;
+    private String oraentrata;
 
     @Column(name = "orauscita")
-    private LocalDateTime orauscita;
+    private String orauscita;
 
     @Column(name = "pausapranzo")
     private int pausapranzo;
@@ -77,35 +76,29 @@ public class Presenza {
     @Transient
     private int userid;
 
-    @Transient
-    private String partialoraingresso;
-
-    @Transient
-    private String partialorauscita;
-
     public boolean IsEmpty() {
-        return Stream.of(id, orauscita)
+        return Stream.of(id, orauscita, ferie, malattia)
                 .allMatch(Objects::isNull);
     }
 
     public boolean IsHalfEmpty() {
-        boolean verify = false;
-        if (id == null) {
-            verify = false;
-        }
-        if (!verify) {
-            return verify;
-        }
-        if (orauscita == null) {
-            verify = true;
-        }
-        return verify;
-
+        return (Stream.of(id,oraentrata)
+                .anyMatch(Objects::nonNull) == true);
     }
 
     public boolean IsFull() {
-        return Stream.of(id, orauscita)
-                .allMatch(Objects::nonNull);
+        boolean v = false;
+        if (Stream.of(id)
+                .allMatch(Objects::isNull) == true) {
+            return v;
+        }
+        if (StringUtils.isEmpty(orauscita)) {
+            return false;
+        } else {
+            v = Stream.of(ferie, malattia)
+                    .anyMatch(Objects::nonNull);
+        }
+        return v;
     }
 
     /**
@@ -153,42 +146,42 @@ public class Presenza {
     /**
      * @return the giorno
      */
-    public Date getGiorno() {
+    public LocalDate getGiorno() {
         return giorno;
     }
 
     /**
      * @param giorno the giorno to set
      */
-    public void setGiorno(Date giorno) {
+    public void setGiorno(LocalDate giorno) {
         this.giorno = giorno;
     }
 
     /**
      * @return the oraentrata
      */
-    public LocalDateTime getOraentrata() {
+    public String getOraentrata() {
         return oraentrata;
     }
 
     /**
      * @return the orauscita
      */
-    public LocalDateTime getOrauscita() {
+    public String getOrauscita() {
         return orauscita;
     }
 
     /**
      * @param oraentrata the oraentrata to set
      */
-    public void setOraentrata(LocalDateTime oraentrata) {
+    public void setOraentrata(String oraentrata) {
         this.oraentrata = oraentrata;
     }
 
     /**
      * @param orauscita the orauscita to set
      */
-    public void setOrauscita(LocalDateTime orauscita) {
+    public void setOrauscita(String orauscita) {
         this.orauscita = orauscita;
     }
 
@@ -252,7 +245,11 @@ public class Presenza {
      * @return the malattia
      */
     public String getMalattia() {
-        return malattia;
+        if (malattia != null) {
+            return malattia;
+        } else {
+            return "N";
+        }
     }
 
     /**
@@ -266,7 +263,11 @@ public class Presenza {
      * @return the ferie
      */
     public String getFerie() {
-        return ferie;
+        if (ferie != null) {
+            return ferie;
+        } else {
+            return "N";
+        }
     }
 
     /**
@@ -301,6 +302,7 @@ public class Presenza {
         this.user = u;
     }
 
+    /*
     @Transient
     public String getPartialoraingresso() {
         if (StringUtils.isEmpty(partialoraingresso) && oraentrata != null) {
@@ -314,10 +316,8 @@ public class Presenza {
         }
     }
 
-    /**
-     * @param partialoraingresso the partialoraingresso to set
-     */
-    public void setPartialoraingresso(String partialoraingresso) {
+    
+  /*  public void setPartialoraingresso(String partialoraingresso) {
         this.partialoraingresso = partialoraingresso;
     }
 
@@ -333,16 +333,11 @@ public class Presenza {
             return partialorauscita;
         }
     }
-
-    /**
-     * @param partialorauscita the partialorauscita to set
-     */
+    
     public void setPartialorauscita(String partialorauscita) {
         this.partialorauscita = partialorauscita;
     }
 
-    /**
-     * @return the userid
      */
     @Transient
     public int getUserid() {
