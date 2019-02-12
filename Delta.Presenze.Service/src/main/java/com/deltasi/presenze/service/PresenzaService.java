@@ -8,9 +8,13 @@ package com.deltasi.presenze.service;
 import com.deltasi.presenze.contracts.IPresenzaService;
 import com.deltasi.presenze.dao.PresenzaDAO;
 import com.deltasi.presenze.dao.UserDao;
+import com.deltasi.presenze.model.DaylyPoint;
+import com.deltasi.presenze.model.MonthlyPoint;
 import com.deltasi.presenze.model.Presenza;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import javax.transaction.Transactional;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -52,7 +56,7 @@ public class PresenzaService implements IPresenzaService {
     }
 
     @Override
-    public List<Presenza> getPresenzeByDay(Date day) {
+    public List<Presenza> getPresenzeByDay(LocalDate day) {
        return presenzaDAO.getPresenzeByDay(day);
     }
 
@@ -67,9 +71,21 @@ public class PresenzaService implements IPresenzaService {
     }
     
     @Override
-    public Presenza getPresenzaByUseridGiorno(int userid, Date giorno)
+    public Presenza getPresenzaByUseridGiorno(int userid, LocalDate giorno)
     {
         return presenzaDAO.getPresenzaByUseridGiorno(userid, giorno);
+    }
+    
+    @Override
+    public List<MonthlyPoint> getMesePresenzeByUserId(int userid, int anno)
+    {
+        return presenzaDAO.getMesePresenzeByUserId(userid, anno);
+    }
+    
+    @Override
+    public List<DaylyPoint> getGiornoPresenzeByUserId(int userid, int mese)
+    {
+        return presenzaDAO.getGiornoPresenzeByUserId(userid, mese);
     }
     
 }
