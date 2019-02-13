@@ -1,7 +1,7 @@
 
 $(function () {
     $('#giornopicker').datetimepicker({
-        format: 'L',
+        format: 'L'
         //defaultDate: moment()
     });
 });
@@ -51,10 +51,10 @@ function resetParsley() {
 }
 
 function resetValues() {
-    $("#pausapranzo").val("");
-    $("#orepermesso").val("");
-    $("#congedoparentale").val("");
-    $("#permessomalattafiglio").val("");
+    $("#pausapranzo").val("0");
+    $("#orepermesso").val("0");
+    $("#congedoparentale").val("0");
+    $("#permessomalattafiglio").val("0");
     $("#oraentrata").val("");
     $("#orauscita").val("");
 }
@@ -122,7 +122,14 @@ jQuery(document).ready(function ($) {
         var errorcontainer = '#errorModal';
         var errorDisplay = '#errorDisplay';
         var mdisplay = "#messagesuccess";
-        var successcontainer = '#successModal';    
+        var successcontainer = '#successModal';   
+                    
+        var ferievalue = $("input[name='ferie']:checked").val();
+        var malattiavalue = $("input[name='malattia']:checked").val();
+        var formData = $('form[name=insertPForm]').serialize()+ "&presenza.ferie="+ferievalue+ "&presenza.malattia="+malattiavalue;
+       /* formData["presenza.malattia"] = $("input[name='malattia']:checked").val();
+        formData.push({ name: "presenze.ferie", value: $("input[name='ferie']:checked").val() });
+        formData.push({ name: $("input[name='ferie']:checked").name, value: $("input[name='ferie']:checked").val() });
         /*
         var selectUsers = '#selectUsers';
         var userid = '#iduseredit';       
@@ -172,7 +179,7 @@ jQuery(document).ready(function ($) {
                // contentType: "application/json",
                 url: '/PresenzeDelta/presenze/add',
                // data: JSON.stringify(formData),
-               data: $('form[name=insertPForm]').serialize()
+               data: formData
                // dataType: 'json'
               })
                     .done(function (data) {

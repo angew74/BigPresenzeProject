@@ -8,18 +8,20 @@
 jQuery(document).ready(function ($) {
     var presenzaForm = '#riepilogoButton';
     $('#Mese').on('click', ajaxPostGiorni);
+    $('#Utente').on('click', ajaxPostMesi);
+    /*
     $(presenzaForm).click(function (event) {
         // Prevent the form from submitting via the browser.
         event.preventDefault();
         ajaxPostMesi();
-    });
+    });*/
 });
 
 function ajaxPostGiorni() {
     var errorcontainer = '#errorModal';
     var errorDisplay = '#errorDisplay';
-    var mese = $("#MeseText").val();
-    var id = $('#selectUsers').val();
+    var mese = $("#MeseValue").val();
+    var id = $('#IdUserValue').val();
     $.ajax({
         type: "GET",
         contentType: "application/json",
@@ -28,21 +30,19 @@ function ajaxPostGiorni() {
     })
             .done(function (data) {
                 try {
-                    if (data.validated) {
+                    if (data != null) {
+                        $("#divGiorni").show();
                         $.each(data, function (key, value) {
-                            var tr = $("<tr>");
+                            var tr = $("<tr>");                     
                             tr.append($("<td>").text(value.username));
-                            tr.append($("<td>").text(value.datagiorno));
+                            var dateString = switchDay(value.datagiorno.dayOfWeek) +" " + value.datagiorno.dayOfMonth + " " + switchMonth(value.datagiorno.monthValue) + " " + value.datagiorno.year;
+                            tr.append($("<td><a href=getGiornoDetails("+ value.idgiorno + ")>").text(dateString));
                             tr.append($("</tr>"));
                             $("#tableGiorni").append(tr);
-                        });
-                        $("#divGiorni").show();
-                    } else {
-                        //Set error messages
-                        $.each(data.errorMessages, function (key, value) {
-                            $(errorDisplay).text(value);
-                        });
-                        $(errorcontainer).modal('show');
+                        });                        
+                    } else {                        
+                       $(errorDisplay).text("Errore nella richiesta");                      
+                       $(errorcontainer).modal('show');
                     }
                 } catch (err)
                 {
@@ -79,8 +79,10 @@ function ajaxPostMesi() {
                         if (data.validated) {
                             $("#Mese").show();
                             $("#Totale").show();
-                            $("#MeseText").val(data["mese"]);
+                            $("#MeseValue").val(data["mese"]);
+                            $("#MeseText").val(switchMonth(data["mese"]));
                             $("#TotaleText").val(data["totale"]);
+                            $("#IdUserValue").val(data["idUser"]);
                         } else {
                             //Set error messages
                             $.each(data.errorMessages, function (key, value) {
@@ -100,4 +102,85 @@ function ajaxPostMesi() {
                     $(errorcontainer).modal('show');
                 });
     }
+}
+
+function getGiornoDetails(id)
+{
+    
+}
+
+function switchMonth(v)
+{
+    var mese = "";
+    switch (v)
+    {
+        case 1:
+            mese = "Gennaio";
+            break;
+         case 2:
+            mese = "Febbraio";
+            break;
+          case 3:
+            mese = "Marzo";
+            break;
+          case 4:
+            mese = "Aprile";
+            break;
+          case 5:
+            mese = "Maggio";
+            break;
+          case 6:
+            mese = "Giugno";
+            break;
+          case 7:
+            mese = "Luglio";
+            break;
+          case 8:
+            mese = "Agosto";
+            break;
+          case 9:
+            mese = "Settembre";
+            break;
+          case 10:
+            mese = "Ottobre";
+            break;
+          case 11:
+            mese = "Novembre";
+            break;
+          case 12:
+            mese = "Dicembre";
+            break;
+    }
+    return mese;
+}
+
+
+function switchDay(v)
+{
+    var giorno = "";
+    switch (v)
+    {
+        case "MONDAY":
+            giorno = "Lunedi";
+            break;
+         case "TUESDAY":
+            giorno = "Martedi";
+            break;
+          case "WEDNESDAY":
+            giorno = "Mercoledi";
+            break;
+          case "THURSDAY":
+            giorno = "Giovedi";
+            break;
+          case "FRIDAY":
+            giorno = "Venerdi";
+            break;
+          case "SATURDAY":
+            giorno = "Sabato";
+            break;
+          case "SUNDAY":
+            giorno = "Domenica";
+            break;         
+    }
+    return giorno;
 }

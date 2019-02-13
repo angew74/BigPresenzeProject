@@ -5,6 +5,7 @@
  */
 package com.deltasi.presenzedelta.Controllers;
 
+
 import com.deltasi.presenze.contracts.IPresenzaService;
 import com.deltasi.presenze.contracts.IUserService;
 import com.deltasi.presenze.model.Presenza;
@@ -37,7 +38,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.RequestBody;
-
+import org.springframework.util.StringUtils;
 /**
  *
  * @author Nick
@@ -104,6 +105,8 @@ public class PresenzeController {
         PresenzeJson response = new PresenzeJson();
         Presenza presenza = pjson.getPresenza();
         int iduser;
+        String convingresso;
+        String convuscita;
         LocalDate giorno;
         boolean modify = false;
         Map<String, String> errors = null;
@@ -135,9 +138,13 @@ public class PresenzeController {
                     modify = false;
                     presenza.setId(oldp.getId());
                 }
-                String convingresso = presenza.getOraentrata().replace(':', '.');
+                if(StringUtils.isEmpty(presenza.getOraentrata()) || presenza.getOraentrata() == null)
+                {convingresso = "0.0";}
+                else {convingresso = presenza.getOraentrata().replace(':', '.');}
                 Double ingresso = NumberUtils.toDouble(convingresso);
-                String convuscita = presenza.getOrauscita().replace(':', '.');
+                if(StringUtils.isEmpty(presenza.getOrauscita()) || presenza.getOrauscita() == null)
+                {convuscita = "0.0";}
+                else {convuscita = presenza.getOrauscita().replace(':', '.');}     
                 Double uscita = NumberUtils.toDouble(convuscita);
                 String f = presenza.getFerie();
                 String m = presenza.getMalattia();
@@ -157,14 +164,17 @@ public class PresenzeController {
                     }
                     presenza.setMalattia("N");
                     presenza.setFerie("N");
-                } else if (uscita == 0 && ingresso != 0) {
+                } 
+                if (uscita == 0 && ingresso != 0) {
                     presenza.setMalattia("N");
                     presenza.setFerie("N");
-                } else if (f == "S" || m == "S") {
+                }
+                if (f.trim().toUpperCase().equals("S") || m.trim().toUpperCase().equals("S"))
+                {
                     presenza.setOraentrata("00:00");
                     presenza.setOrauscita("00:00");
-                    if (f == "S") {
-                        presenza.setMalattia("N");
+                    if (f.equals("S")) {
+                        presenza.setMalattia("N");                        
                     } else {
                         presenza.setFerie("N");
                     }

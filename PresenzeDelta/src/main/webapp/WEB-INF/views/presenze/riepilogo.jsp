@@ -14,7 +14,7 @@
         <div class="container delta_services">
             <div class="row">
                 <ul class="links">
-                    <li><a href="#" title="Anno">
+                    <li class="disabled"><a href="#" title="Anno">
                             <span class="icon"><i class="fa fa-calendar"></i></span>
                             <span class="text">
                                 <select id="annoselect"
@@ -26,7 +26,7 @@
                         <div class="clearfix"></div>
                     </li>
                     <sec:authorize access="!hasRole('ROLE_ADMIN')">   
-                        <li><a href="#" title="Anno">
+                        <li><a href="#" title="Anno" class="disabled">
                                 <span class="icon"><i class="fa fa-user-circle-o"></i></span>
                                 <span class="text">
                                     Utente
@@ -35,7 +35,7 @@
                         </li>
                     </sec:authorize>
                     <sec:authorize access="hasRole('ADMIN')">
-                        <li>
+                        <li id="Utente">
                             <a href="#" title="Utente">
                                 <span class="icon"><i class="fa fa-user-circle-o"></i></span>    
                                 <span class="text">
@@ -59,48 +59,40 @@
                                 </div>
                             </div>
                         </li>                            
-                    </sec:authorize>                       
-                    <li id="Mese">
+                    </sec:authorize>       
+                    <li id="Mese" style="display:none">
                         <a href="#" title="Mese">
-                            <span class="icon"><i class="fa fa-calendar-check"></i></span>    
-                            <span  class="text">mese
+                            <span class="icon"><i class="fa fa-calendar-check-o"></i></span>    
+                            <span  class="text">
                                 <input type="text" name="MeseText" class="form-control" id="MeseText"  readonly  autocomplete="off" />
-                                <input type="hidden" id="MeseValue"   />                             
                             </span>
                         </a>
                         <div class="clearfix"></div>
+                        <input type="hidden" id="MeseValue"   />         
+                        <input type="hidden" id="IdUserValue"   />      
                     </li>
-                    <li id="Totale" style="display:none">
+                    <li id="Totale" style="display:none" class="disabled">
                         <a href="#" title="Totale">
-                            <span class="icon"><i class="fa fa-calendar-check"></i></span>    
-                            <span  class="text">Totale                                                       
+                            <span class="icon"><i class="fa fa-sort-amount-desc"></i></span>    
+                            <span  class="text">                                                       
                                 <input type="text" name="TotaleText" class="form-control" id="TotaleText"  readonly  autocomplete="off" />
                             </span>                     
                         </a>
                         <div class="clearfix"></div>
-                    </li>
-                    <li style="margin-left: 250px">      
-                        <a title="Filtra">                           
-                            <span class="icon">
-                                <button id="riepilogoButton" class="btn">
-                                    <i class="fa fa-search"></i>
-                                </button>
-                            </span>    
-                        </a>
-                    </li>
-                </ul>
-                <div id="divGiorni" style="display:none" class="container">
-                    <table id="tableGiorni" class="table table-hover table-sm">
-                        <thead class="thead-dark">
-                            <tr>
-                                <th>Usermame</th>
-                                <th>Data</th>                            
-                            </tr>
-                        </thead>                    
-                    </table>
-                </div>
+                    </li>                   
+                </ul>                
             </div>
         </div>   
+        <div id="divGiorni" style="display:none" class="container">
+            <table id="tableGiorni" class="table table-hover table-sm table-riepilogo">
+                <thead>
+                    <tr>
+                        <th>Usermame</th>
+                        <th>Data</th>                            
+                    </tr>
+                </thead>                    
+            </table>
+        </div>
         <jsp:include page="../common/modalerror.jsp" />   
     </body>
 </html>

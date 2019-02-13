@@ -39,22 +39,16 @@ public class PDatiRestController {
         return mese;
     }
     
-    @GetMapping("/giorni{iduser}/{mese}")
-    public DaylyPoint getGiorni(@PathVariable("iduser") int iduser, @PathVariable("mese") int idmese) {
-         Map<String, String> errors = null;
-        DaylyPoint giorno = new DaylyPoint();
+    @GetMapping("/giorni/{iduser}/{mese}")
+    public List<DaylyPoint> getGiorni(@PathVariable("iduser") int iduser, @PathVariable("mese") int idmese) {
+        Map<String, String> errors = null;    
+         List<DaylyPoint> m = null;
         try {
-            List<DaylyPoint> m = presenzaservice.getGiornoPresenzeByUserId(iduser, idmese);
-            if (m.size() > 0) {
-                giorno = m.get(0);
-            }
-            giorno.setValidated(true);
+             m = presenzaservice.getGiornoPresenzeByUserId(iduser, idmese);     
         } catch (Exception ex) {
               errors = new HashMap<String, String>();
-                    errors.put("Errrore in banca dati", ex.getMessage());
-            giorno.setValidated(false);
-            giorno.setErrorMessages(errors);
+                    errors.put("Errrore in banca dati", ex.getMessage());            
         }
-        return giorno;
+        return m;
     }
 }
