@@ -26,10 +26,10 @@ CREATE TABLE `presenza` (
   `idgiorno` int(10) NOT NULL AUTO_INCREMENT,
   `iduser` int(10) unsigned NOT NULL,
   `giorno` date DEFAULT NULL,
-  `oraentrata` datetime DEFAULT NULL,
-  `orauscita` datetime DEFAULT NULL,
+  `oraentrata` varchar(5) DEFAULT NULL,
+  `orauscita` varchar(5) DEFAULT NULL,
   `pausapranzo` int(10) DEFAULT NULL,
-  `ore permesso` int(10) DEFAULT NULL,
+  `orepermesso` int(10) DEFAULT NULL,
   `permessomaternita` int(10) DEFAULT NULL,
   `permessomalattiafiglio` int(10) DEFAULT NULL,
   `congedoparentale` int(10) DEFAULT NULL,
@@ -41,7 +41,7 @@ CREATE TABLE `presenza` (
   KEY `IDX_PRESENZA_GIORNO` (`giorno`),
   KEY `IDX_PRESENZA_USER` (`iduser`),
   CONSTRAINT `presenza_users` FOREIGN KEY (`iduser`) REFERENCES `users` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -50,6 +50,7 @@ CREATE TABLE `presenza` (
 
 LOCK TABLES `presenza` WRITE;
 /*!40000 ALTER TABLE `presenza` DISABLE KEYS */;
+INSERT INTO `presenza` VALUES (1,101,'2019-02-10','08:00','17:00',60,0,0,0,0,'N','N','admin','2019-02-11'),(2,101,'2019-02-12','08:00','17:00',60,0,0,0,0,'N','N','admin','2019-02-13'),(3,101,'2019-02-11','00:00','00:00',0,0,0,0,0,'N','S','admin','2019-02-13');
 /*!40000 ALTER TABLE `presenza` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -62,4 +63,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-01-27 21:21:30
+-- Dump completed on 2019-02-13 21:45:51
