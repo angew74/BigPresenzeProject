@@ -5,6 +5,7 @@
  */
 package com.deltasi.presenze.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.Objects;
@@ -73,7 +74,7 @@ public class Presenza {
     @Column(name = "permessomalattiafiglio")
     private int permessomalattiafiglio;
 
-    @Transient
+    @Transient   
     private int userid;
 
     public boolean IsEmpty() {

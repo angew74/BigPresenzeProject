@@ -8,7 +8,7 @@ package com.deltasi.presenze.model;
 import java.util.Map;
 
 
-public class PresenzeJson {
+public class PresenzaJson {
    private User user;
    private boolean validated;
    private Map<String, String> errorMessages;
