@@ -72,21 +72,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
         http.authorizeRequests()
             .antMatchers("/anonymous*").anonymous()
             .antMatchers("/login*").permitAll()
-            .anyRequest().authenticated()
-            
+            .anyRequest().authenticated()            
             .and()
             .formLogin()
             .loginPage("/login.html")
             .loginProcessingUrl("/login")
             .successHandler(myAuthenticationSuccessHandler())
-            .failureUrl("/login.html?error=true")
-            
+            .failureUrl("/login.html?error=true")            
             .and()
-            .logout().deleteCookies("JSESSIONID")
-            
+            .logout().deleteCookies("JSESSIONID")            
             .and()
-            .rememberMe().key("uniqueAndSecret").tokenValiditySeconds(86400)
-            
+            .rememberMe().key("uniqueAndSecret").tokenValiditySeconds(86400)            
+            .and()         
+            .exceptionHandling().accessDeniedPage("/common/unauthorized")
             .and()
             .csrf().disable()
             ;

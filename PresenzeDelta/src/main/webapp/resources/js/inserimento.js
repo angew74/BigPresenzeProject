@@ -78,8 +78,8 @@ $(function () {
 
 $(function () {
     $("#reset").change(function () {
-        resetParsley();
-        resetParsley();
+        resetParsley();   
+        resetValues();
         $("#congedoparentale").parsley().reset();
         $("#permessomalattafiglio").parsley().reset();
         $("#malattia").prop("disabled", false);
@@ -123,7 +123,6 @@ jQuery(document).ready(function ($) {
         var errorDisplay = '#errorDisplay';
         var mdisplay = "#messagesuccess";
         var successcontainer = '#successModal';   
-                    
         var ferievalue = $("input[name='ferie']:checked").val();
         var malattiavalue = $("input[name='malattia']:checked").val();
         var formData = $('form[name=insertPForm]').serialize()+ "&presenza.ferie="+ferievalue+ "&presenza.malattia="+malattiavalue;

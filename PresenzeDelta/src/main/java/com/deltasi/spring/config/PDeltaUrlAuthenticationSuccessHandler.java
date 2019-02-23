@@ -23,7 +23,7 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 public class PDeltaUrlAuthenticationSuccessHandler
   implements AuthenticationSuccessHandler {
   
-   private static final Logger logger = LogManager.getLogger(UserService.class);
+   private static final Logger logger = LogManager.getLogger(PDeltaUrlAuthenticationSuccessHandler.class);
  
     private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
  

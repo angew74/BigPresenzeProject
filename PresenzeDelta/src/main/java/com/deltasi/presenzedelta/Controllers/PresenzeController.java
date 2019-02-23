@@ -5,13 +5,13 @@
  */
 package com.deltasi.presenzedelta.Controllers;
 
-
 import com.deltasi.presenze.contracts.IPresenzaService;
 import com.deltasi.presenze.contracts.IUserService;
 import com.deltasi.presenze.model.Presenza;
-import com.deltasi.presenze.model.PresenzeJson;
+import com.deltasi.presenze.model.PresenzaJson;
 import com.deltasi.presenze.model.RiepilogoJson;
 import com.deltasi.presenze.model.User;
+import com.deltasi.spring.helpers.PBusinessRules;
 import com.deltasi.spring.interceptors.UserInterceptor;
 import java.security.Principal;
 import java.time.Instant;
@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import javax.validation.Valid;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -36,9 +37,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+
 /**
  *
  * @author Nick
@@ -63,7 +68,7 @@ public class PresenzeController {
         if (UserInterceptor.isUserLogged()) {
             String username = SecurityContextHolder.getContext().getAuthentication().getName();
             User user = userservice.getByUsername(username);
-            PresenzeJson response = new PresenzeJson();
+            PresenzaJson response = new PresenzaJson();
             String[] authorities = user.getAuthorities()
                     .stream().map(a -> a.getAuthority()).toArray(String[]::new);
             if (Arrays.stream(authorities).anyMatch("ADMIN"::equals)) {
@@ -101,12 +106,11 @@ public class PresenzeController {
     @PostMapping(value = "/add", produces = {MediaType.APPLICATION_JSON_VALUE})
     // @ResponseBody
     public @ResponseBody
-    PresenzeJson AddPresenza(@RequestBody @ModelAttribute("PresenzeJson") PresenzeJson pjson, BindingResult result) {
-        PresenzeJson response = new PresenzeJson();
+    PresenzaJson AddPresenza(@RequestBody @ModelAttribute("PresenzeJson") PresenzaJson pjson, BindingResult result) {
+        PresenzaJson response = new PresenzaJson();
         Presenza presenza = pjson.getPresenza();
+        PBusinessRules rules = new PBusinessRules();
         int iduser;
-        String convingresso;
-        String convuscita;
         LocalDate giorno;
         boolean modify = false;
         Map<String, String> errors = null;
@@ -138,46 +142,11 @@ public class PresenzeController {
                     modify = false;
                     presenza.setId(oldp.getId());
                 }
-                if(StringUtils.isEmpty(presenza.getOraentrata()) || presenza.getOraentrata() == null)
-                {convingresso = "0.0";}
-                else {convingresso = presenza.getOraentrata().replace(':', '.');}
-                Double ingresso = NumberUtils.toDouble(convingresso);
-                if(StringUtils.isEmpty(presenza.getOrauscita()) || presenza.getOrauscita() == null)
-                {convuscita = "0.0";}
-                else {convuscita = presenza.getOrauscita().replace(':', '.');}     
-                Double uscita = NumberUtils.toDouble(convuscita);
-                String f = presenza.getFerie();
-                String m = presenza.getMalattia();
-                if (uscita != 0) {
-                    int orepermesso = presenza.getOrepermesso();
-                    int pausapranzo = presenza.getPausapranzo();
-                    int permessomaternita = presenza.getPermessomaternita();
-                    int pmalattiafiglio = presenza.getPermessomalattiafiglio();
-                    double orepranzo = pausapranzo / 60;
-                    Double orecomplessive = uscita - ingresso + orepermesso - orepranzo + permessomaternita + pmalattiafiglio;
-                    if (Math.round(orecomplessive) != 8) {
-                        errors = new HashMap<String, String>();
-                        errors.put("Errrore in banca dati", "Totale deve essere di 8 ore");
-                        response.setValidated(false);
-                        response.setErrorMessages(errors);
-                        return response;
-                    }
-                    presenza.setMalattia("N");
-                    presenza.setFerie("N");
-                } 
-                if (uscita == 0 && ingresso != 0) {
-                    presenza.setMalattia("N");
-                    presenza.setFerie("N");
-                }
-                if (f.trim().toUpperCase().equals("S") || m.trim().toUpperCase().equals("S"))
-                {
-                    presenza.setOraentrata("00:00");
-                    presenza.setOrauscita("00:00");
-                    if (f.equals("S")) {
-                        presenza.setMalattia("N");                        
-                    } else {
-                        presenza.setFerie("N");
-                    }
+                errors = rules.ValidatePresenza(presenza);
+                if (errors != null) {
+                    response.setErrorMessages(errors);
+                    response.setValidated(false);
+                    return response;
                 }
                 Date oggi = Date.from(Instant.now());
                 presenza.setDataope(oggi);
@@ -212,7 +181,7 @@ public class PresenzeController {
     public ModelAndView riepilogo(Model model, Principal principal) {
         List<User> list = null;
         ModelAndView modelAndView = new ModelAndView("presenze/riepilogo");
-     //   Presenza p = new Presenza();
+        //   Presenza p = new Presenza();
         modelAndView.addObject("titlepage", "Riepilogo Presenze");
         if (UserInterceptor.isUserLogged()) {
             String username = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -224,7 +193,7 @@ public class PresenzeController {
                 list = userservice.getAllUtenti();
             }
             try {
-                modelAndView.addObject("Users", list);              
+                modelAndView.addObject("Users", list);
                 response.setUser(user);
                 modelAndView.addObject("Riepilogo", response);
             } catch (Exception ex) {
@@ -234,11 +203,53 @@ public class PresenzeController {
                 errormodelAndView.addObject("Error", error);
                 return errormodelAndView;
             }
-        }else {
+        } else {
             ModelAndView errormodelAndView = new ModelAndView("/logout");
             return errormodelAndView;
         }
         return modelAndView;
     }
 
+    @PostMapping(value = "/modifica")
+    public @ResponseBody
+    PresenzaJson ModificaPresenza(@RequestBody @ModelAttribute("Presenza") Presenza presenza, BindingResult result) {
+        PresenzaJson response = new PresenzaJson();
+        PBusinessRules rules = new PBusinessRules();
+        Map<String, String> errors = null;
+        int iduser;        
+        if (result.hasErrors()) {
+            errors = result.getFieldErrors().stream()
+                    .collect(
+                            Collectors.toMap(FieldError::getField, FieldError::getDefaultMessage)
+                    );
+            response.setValidated(false);
+            response.setErrorMessages(errors);
+            return response;
+        }
+        try {
+            if (UserInterceptor.isUserLogged()) {
+                String username = SecurityContextHolder.getContext().getAuthentication().getName();
+                iduser = presenza.getUserid();               
+                errors = rules.ValidatePresenza(presenza);     
+                if (errors != null) {
+                    response.setErrorMessages(errors);
+                    response.setValidated(false);
+                    return response;
+                }
+                User u = userservice.getUtente(presenza.getUserid());
+                presenza.setUser(u);
+                Date oggi = Date.from(Instant.now());
+                presenza.setDataope(oggi);
+                presenza.setUtente(username);
+                presenzaservice.updatePresenza(presenza);
+                response.setValidated(true);
+            }
+        } catch (Exception ex) {
+            errors = new HashMap<String, String>();
+            errors.put("Errrore in banca dati", ex.getMessage());
+            response.setValidated(false);
+            response.setErrorMessages(errors);
+        }
+        return response;
+    }
 }

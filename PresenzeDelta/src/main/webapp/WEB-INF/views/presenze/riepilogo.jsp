@@ -37,7 +37,7 @@
                     <sec:authorize access="hasRole('ADMIN')">
                         <li id="Utente">
                             <a href="#" title="Utente">
-                                <span class="icon"><i class="fa fa-user-circle-o"></i></span>    
+                                <span class="icon"><i class="fas fa-user"></i></span>    
                                 <span class="text">
                                     <form:select id="selectUsers"    
                                                  data-validation="required" 
@@ -62,18 +62,22 @@
                     </sec:authorize>       
                     <li id="Mese" style="display:none">
                         <a href="#" title="Mese">
-                            <span class="icon"><i class="fa fa-calendar-check-o"></i></span>    
-                            <span  class="text">
-                                <input type="text" name="MeseText" class="form-control" id="MeseText"  readonly  autocomplete="off" />
+                            <span class="icon"><i class="fas fa-calendar-plus"></i></span>    
+                            <span class="text">
+                                <select                                    
+                                    name="MeseSelect" 
+                                    class="form-control" 
+                                    required
+                                    id="MeseSelect">
+                                </select>                                   
                             </span>
                         </a>
-                        <div class="clearfix"></div>
-                        <input type="hidden" id="MeseValue"   />         
+                        <div class="clearfix"></div>                      
                         <input type="hidden" id="IdUserValue"   />      
                     </li>
                     <li id="Totale" style="display:none" class="disabled">
                         <a href="#" title="Totale">
-                            <span class="icon"><i class="fa fa-sort-amount-desc"></i></span>    
+                            <span class="icon"><i class="fas fa-calculator"></i></span>    
                             <span  class="text">                                                       
                                 <input type="text" name="TotaleText" class="form-control" id="TotaleText"  readonly  autocomplete="off" />
                             </span>                     
@@ -88,11 +92,13 @@
                 <thead>
                     <tr>
                         <th>Usermame</th>
-                        <th>Data</th>                            
+                        <th>Data</th>    
+                        <th><i class="fas fa-calendar-day"></i></th>                        
                     </tr>
                 </thead>                    
             </table>
         </div>
         <jsp:include page="../common/modalerror.jsp" />   
+        <jsp:include page="modifica.jsp" />   
     </body>
 </html>

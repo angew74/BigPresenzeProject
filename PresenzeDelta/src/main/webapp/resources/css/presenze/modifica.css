@@ -1,0 +1,24 @@
+@import "../common/menu.css";
+
+/*
+.panel-default > .panel-heading-custom {
+    background: #343A40; color: #fff;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    margin-left: 95px;
+    width:730px;
+    border-radius:.25rem!important
+  
+   
+}*/
+
+#presenzaEditModal{
+  background:#434343;
+  font-family: 'Roboto Mono', monospace;  
+opacity: 1 !important;
+filter: alpha(opacity=100) !important; 
+    overflow-y: auto;    
+    overflow-x: auto;
+padding-top: 250px;    
+
+}

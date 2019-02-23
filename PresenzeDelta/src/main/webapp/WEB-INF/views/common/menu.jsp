@@ -15,8 +15,8 @@
                     </li>
                     <sec:authorize access="isAuthenticated()">
                      <li class="nav-item active">
-                             <a class="nav-link" href="<c:url value="/logout" />" >
-                            <i class="fa fa-sign-out"></i>
+                             <a class="nav-link" href="<c:url value="/logout" />">
+                            <i class="fa fa-sign-out-alt"></i>
                             Logout                           
                         </a>
                     </li>    
@@ -27,6 +27,20 @@
                             Presenza
                         </a>
                     </li>
+                    <sec:authorize access="hasRole('USER')">
+                         <li class="nav-item">
+                        <a class="nav-link" href="<c:url value="/presenze/list" />" >
+                           <i class="fa fa-bars"></i> 
+                          Mio Riepilogo
+                        </a>
+                    </li>    
+                    <li class="nav-item">
+                        <a class="nav-link" href="<c:url value="/anagrafica/card" />" >
+                           <i class="fa fa-address-card"></i> 
+                          Mio Profilo
+                        </a>
+                    </li>
+                    </sec:authorize>
                     <sec:authorize access="hasRole('ADMIN')">
                     <li class="nav-item">
                         <a class="nav-link" href="<c:url value="/presenze/riepilogo" />" >
@@ -37,7 +51,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="<c:url value="/anagrafica/list" />" >
                            <i class="fa fa-address-card"></i> 
-                          Anagrafica
+                          Anagrafiche
                         </a>
                     </li>
                       </sec:authorize>
