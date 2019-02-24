@@ -73,6 +73,9 @@ public class Presenza {
 
     @Column(name = "permessomalattiafiglio")
     private int permessomalattiafiglio;
+    
+    @Column(name = "verified")
+    private byte verified;
 
     @Transient   
     private int userid;
@@ -350,5 +353,19 @@ public class Presenza {
      */
     public void setUserid(int userid) {
         this.userid = userid;
+    }
+
+    /**
+     * @return the verified
+     */
+    public byte getVerified() {
+        return verified;
+    }
+
+    /**
+     * @param verified the verified to set
+     */
+    public void setVerified(byte verified) {
+        this.verified = verified;
     }
 }
