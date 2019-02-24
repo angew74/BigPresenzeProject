@@ -256,7 +256,29 @@
                                                     <label for="rest" class="radio-custom-label">Reset</label>
                                                 </div>   
                                             </div>
-                                        </div>                                      
+                                        </div> 
+                                        <div class="form-group" style="margin-left:60px">
+                                            <div class="col-md-8">                                                   
+                                                <div class="form-check">
+                                                    <sec:authorize access="!hasRole('ROLE_ADMIN')">   
+                                                        <input class="form-check-input" type="checkbox" name="verified" 
+                                                               value="${Presenza.presenza.verified}" 
+                                                               id="verified" disabled>
+                                                        <label class="form-check-label" for="verified">
+                                                            Vistate
+                                                        </label> 
+                                                    </sec:authorize>
+                                                    <sec:authorize access="hasRole('ADMIN')">
+                                                        <input class="form-check-input" type="checkbox" name="verified" 
+                                                               value="${Presenza.presenza.verified}"
+                                                               id="verified">
+                                                        <label class="form-check-label" for="verified">
+                                                            Vistate
+                                                        </label>
+                                                    </sec:authorize>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <div class="form-group">
                                             <div class="col-md-8">
                                                 <button id="btnSalva" data-parsley-validate class="btn btn-dark btn-sm float-right submit_btn"><i class="fas fa-arrow-alt-circle-right"></i>Salva</button> 

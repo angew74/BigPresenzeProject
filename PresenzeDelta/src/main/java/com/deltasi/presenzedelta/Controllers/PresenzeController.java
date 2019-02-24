@@ -210,7 +210,8 @@ public class PresenzeController {
         return modelAndView;
     }
 
-    @PostMapping(value = "/modifica")
+ 
+    @PostMapping(value = "/modifica", produces = {MediaType.APPLICATION_JSON_VALUE})
     public @ResponseBody
     PresenzaJson ModificaPresenza(@RequestBody @ModelAttribute("Presenza") Presenza presenza, BindingResult result) {
         PresenzaJson response = new PresenzaJson();

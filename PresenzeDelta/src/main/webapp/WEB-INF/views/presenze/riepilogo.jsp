@@ -97,8 +97,9 @@
                     </tr>
                 </thead>                    
             </table>
-        </div>
+        </div>   
         <jsp:include page="../common/modalerror.jsp" />   
+        <jsp:include page="../common/modalsuccess.jsp" />   
         <jsp:include page="modifica.jsp" />   
     </body>
 </html>

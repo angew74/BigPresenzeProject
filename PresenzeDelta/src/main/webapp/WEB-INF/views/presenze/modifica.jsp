@@ -5,6 +5,7 @@
 --%>
 
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <link href="<c:url value="/resources/css/presenze/modifica.css" />" type="text/css" rel="stylesheet" />
 <script src="<c:url value="/resources/js/modifica.js" />" type="text/javascript"></script>
 <link href="<c:url value="/resources/css/common/parsley.css" />" type="text/css" rel="stylesheet" />   
@@ -180,13 +181,13 @@
                         <div class="form-group" style="margin-left:60px">
                             <div class="col-md-8">    
                                 <div class="form-check">                                                   
-                                    <input type="radio" class="radio" id="malattia" name="malattia"
-                                           value="S" />                                                        
+                                    <input type="radio" class="radio" id="malattia" 
+                                           />                                                        
                                     <label for="malattia" class="radio-custom-label">Malattia</label>
                                 </div>
                                 <div class="form-check">                                                                                               
-                                    <input type="radio" class="radio" id="ferie" name="ferie"
-                                           value="S" />   
+                                    <input type="radio" class="radio" id="ferie" 
+                                            />   
                                     <label for="ferie" class="radio-custom-label">Ferie</label>
                                 </div>
                                 <div class="form-check">
@@ -195,7 +196,27 @@
                                 </div>   
                             </div>
                         </div>   
-                          <input type="hidden" name="userid" class="form-control" 
+                        <div class="form-group" style="margin-left:60px">
+                            <div class="col-md-8">                                                   
+                                <div class="form-check">
+                                    <sec:authorize access="!hasRole('ROLE_ADMIN')">   
+                                        <input class="form-check-input" type="checkbox"                                              
+                                           value="0"    id="verified" disabled>
+                                        <label class="form-check-label" for="verified">
+                                            Vistate
+                                        </label> 
+                                    </sec:authorize>
+                                    <sec:authorize access="hasRole('ADMIN')">
+                                        <input class="form-check-input" type="checkbox"                                             
+                                          value="0" id="verified">
+                                        <label class="form-check-label" for="verified">
+                                            Vistate
+                                        </label>
+                                    </sec:authorize>
+                                </div>
+                            </div>
+                        </div>
+                        <input type="hidden" name="userid" class="form-control" 
                                id="userid"  />        
                         <div class="form-group">
                             <div class="col-md-8">

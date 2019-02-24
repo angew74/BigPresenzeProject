@@ -53,12 +53,7 @@ public class PBusinessRules {
                 if (f.trim().toUpperCase().equals("S") || m.trim().toUpperCase().equals("S"))
                 {
                     presenza.setOraentrata("00:00");
-                    presenza.setOrauscita("00:00");
-                    if (f.equals("S")) {
-                        presenza.setMalattia("N");                        
-                    } else {
-                        presenza.setFerie("N");
-                    }
+                    presenza.setOrauscita("00:00");                    
                 }
                return  errors;                
     }

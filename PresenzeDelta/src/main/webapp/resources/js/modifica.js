@@ -36,7 +36,7 @@ function getGiornoDetails(id)
                         $("#username").val(data.user.username);
                         $("#userid").val(data.user.id);
                         $("#idgiorno").val(data.id);
-                        var g = data.giorno.dayOfMonth + "/" + pad(data.giorno.monthValue,2) + "/" + data.giorno.year;
+                        var g = pad(data.giorno.dayOfMonth, 2) + "/" + pad(data.giorno.monthValue, 2) + "/" + data.giorno.year;
                         $("#giorno").val(g);
                         $("#oraentrata").val(data.oraentrata);
                         $("#orauscita").val(data.orauscita);
@@ -44,14 +44,20 @@ function getGiornoDetails(id)
                         $("#orepermesso").val(data.orepermesso);
                         $("#congedoparentale").val(data.congedoparentale);
                         $("#permessomalattafiglio").val(data.permessomalattiafiglio);
-                        if (data.malattia == "S")
+                        if (data.malattia === "S")
                         {
                             $("#malattia").prop('checked', true);
 
                         }
-                        if (data.ferie == "S")
+                        if (data.ferie === "S")
                         {
                             $("#ferie").prop('checked', true);
+                        }
+                        if (data.verified === 1)
+                        {
+                            $("#verified").prop('checked', true);
+                            $("#verified").val(1);
+                            disableValues();
                         }
 
                     } else {
@@ -86,6 +92,7 @@ $(function () {
         $("#oraentrata").prop("disabled", true);
         $("#orauscita").prop("disabled", true);
         $("#oraentrata").prop("required", false);
+        $("#orauscita").prop("required", false);
 
     });
 });
@@ -123,6 +130,7 @@ $(function () {
         $("#oraentrata").prop("disabled", true);
         $("#orauscita").prop("disabled", true);
         $("#oraentrata").prop("required", false);
+
     });
 });
 
@@ -130,29 +138,77 @@ $(function () {
     $("#reset").change(function () {
         resetParsley();
         resetParsley();
-        $("#congedoparentale").parsley().reset();
-        $("#permessomalattafiglio").parsley().reset();
-        $("#malattia").prop("disabled", false);
-        $("#ferie").prop("disabled", false);
-        $("#malattia").prop("checked", false);
-        $("#ferie").prop("checked", false);
-        $("#pausapranzo").prop("disabled", false);
-        $("#orepermesso").prop("disabled", false);
-        $("#congedoparentale").prop("disabled", false);
-        $("#permessomalattafiglio").prop("disabled", false);
-        $("#oraentrata").prop("disabled", false);
-        $("#orauscita").prop("disabled", false);
-        $("#oraentrata").prop("required", true);
+        if (!($('#verified').prop('checked')))
+        {
+            $("#congedoparentale").parsley().reset();
+            $("#permessomalattafiglio").parsley().reset();
+            $("#malattia").prop("disabled", false);
+            $("#ferie").prop("disabled", false);
+            $("#malattia").prop("checked", false);
+            $("#ferie").prop("checked", false);
+            $("#pausapranzo").prop("disabled", false);
+            $("#orepermesso").prop("disabled", false);
+            $("#congedoparentale").prop("disabled", false);
+            $("#permessomalattafiglio").prop("disabled", false);
+            $("#giorno").prop("readonly", false);
+            $("#oraentrata").prop("disabled", false);
+            $("#orauscita").prop("disabled", false);
+            $("#oraentrata").prop("required", true);
+        } else {
+            $("#reset").prop("checked", false);
+        }
     });
 });
 
-pad = function(num, length){
+pad = function (num, length) {
     num = num.toString();
-    while (num.length < length){
+    while (num.length < length) {
         num = "0" + num;
     }
     return num;
 };
+
+$(function () {
+    $("#verified").change(function () {
+        resetParsley();
+        if (!($('#verified').prop('checked')))
+        {
+            $("#pausapranzo").prop("disabled", false);
+            $("#orepermesso").prop("disabled", false);
+            $("#congedoparentale").prop("disabled", false);
+            $("#permessomalattafiglio").prop("disabled", false);
+            $("#oraentrata").prop("disabled", false);
+            $("#orauscita").prop("disabled", false);
+            $("#giorno").prop("readonly", false);
+            $("#malattia").prop("disabled", false);
+            $("#ferie").prop("disabled", false);
+        }
+        else {
+             $("#pausapranzo").prop("disabled", true);
+            $("#orepermesso").prop("disabled", true);
+            $("#congedoparentale").prop("disabled", true);
+            $("#permessomalattafiglio").prop("disabled", true);
+            $("#oraentrata").prop("disabled", true);
+            $("#orauscita").prop("disabled", true);
+            $("#giorno").prop("readonly", true);
+            $("#malattia").prop("disabled", true);
+            $("#ferie").prop("disabled", true);
+        }
+    });
+});
+
+
+function disableValues()
+{
+    $("#pausapranzo").prop("disabled", true);
+    $("#orepermesso").prop("disabled", true);
+    $("#congedoparentale").prop("disabled", true);
+    $("#permessomalattafiglio").prop("disabled", true);
+    $("#oraentrata").prop("disabled", true);
+    $("#orauscita").prop("disabled", true);
+    $("#giorno").prop("readonly", true);
+
+}
 
 jQuery(document).ready(function ($) {
     var presenzaForm = '#btnSalva';
@@ -181,10 +237,23 @@ jQuery(document).ready(function ($) {
         var errorDisplay = '#errorDisplay';
         var mdisplay = "#messagesuccess";
         var successcontainer = '#successModal';
-        var ferievalue = $("input[name='ferie']:checked").val();
-        var malattiavalue = $("input[name='malattia']:checked").val();
-        var id = $("#idgiorno").val();
-        var formData = $('form[name=presenzaEditForm]').serialize() + "&ferie=" + ferievalue + "&malattia=" + malattiavalue;
+        var ferievalue = 'N';
+        var malattiavalue = 'N';
+        var verifiedvalue = 0;
+        if ($('#ferie').prop('checked'))
+        {
+            ferievalue = 'S';
+        }
+        if ($('#malattia').prop('checked'))
+        {
+            malattiavalue = 'S';
+        }
+        if ($('#verified').prop('checked'))
+        {
+            verifiedvalue = 1;
+        }
+        var formData = $('form[name=presenzaEditForm]').serialize() + "&ferie=" + ferievalue + "&malattia=" + malattiavalue + "&verified=" + verifiedvalue;
+
         $.ajax({
             type: "POST",
             url: '/PresenzeDelta/presenze/modifica',
@@ -193,24 +262,28 @@ jQuery(document).ready(function ($) {
                 try {
                     if (data.validated) {
                         $(mdisplay).text("Presenza modificata correttamente");
+                        $("#presenzaEditModal").hide();
                         $(successcontainer).modal('show');
                     } else {
                         //Set error messages
                         $.each(data.errorMessages, function (key, value) {
                             $(errorDisplay).text(value);
                         });
+                        $("#presenzaEditModal").hide();
                         $(errorcontainer).modal('show');
                     }
                 } catch (err)
                 {
                     $(errorDisplay).text(err);
                     $(errorcontainer).modal('show');
+                    $("#presenzaEditModal").hide();
                 }
 
             }
             , error: function (e) {
                 $(errorDisplay).text("errore di connessione dettagli " + e);
                 $(errorcontainer).modal('show');
+                $("#presenzaEditModal").hide();
             }
         });
     }
