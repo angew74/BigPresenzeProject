@@ -45,12 +45,20 @@ function ajaxPostGiorni() {
                                 var tr = $("<tr>");
                                 tr.append($("<td>").text(value.username));
                                 tr.append($("</td>"));
-                                var dateString = switchDay(value.datagiorno.dayOfWeek) + " " + value.datagiorno.dayOfMonth + " " + switchMonth(value.datagiorno.monthValue) + " " + value.datagiorno.year;
+                                var m = switchMonth(value.datagiorno.monthValue);
+                                var dateString = switchDay(value.datagiorno.dayOfWeek) + " " + value.datagiorno.dayOfMonth + " " + m + " " + value.datagiorno.year;
                                 tr.append($("<td>").text(dateString));
                                 tr.append($("</td>"));
                                 tr.append($("<td><a href='#' onclick='getGiornoDetails(" + value.idgiorno + ");return false' title='Giorno'><span class='icon'><i class='fas fa-check-circle'></i></span></a>"));
                                 tr.append($("</tr>"));
-                                $("#tableGiorni").append(tr);
+                                var rowIds = $("#tableGiorni tr td:first-child").map(function () {
+                                    return $(this).text();
+                                }).get();
+                                if ($.inArray(m, rowIds) === -1) {
+                                    $("#tableGiorni").append(tr);
+                                }
+
+
                             });
                         } else {
                             $(errorDisplay).text("Errore nella richiesta");
