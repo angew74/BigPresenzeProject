@@ -5,8 +5,11 @@
  */
 package com.deltasi.presenzedelta.Controllers;
 
+import com.deltasi.presenze.dao.UserDao;
 import com.deltasi.spring.exception.CustomException;
 import java.io.IOException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,9 +20,12 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class ExceptionController {
 
+     private static final Logger logger = LogManager.getLogger(ExceptionController.class);
+    
 	@RequestMapping(value= "/exception/{type}", method= RequestMethod.GET)
 	public String exception(@PathVariable(name="type") String exception) throws IOException {
 
+                logger.error(exception);
 		if (exception.equalsIgnoreCase("error")) {			
 			throw new CustomException("A1001", "Messaggio per l'amministratore.");
 		} else if (exception.equalsIgnoreCase("io-error")) {			

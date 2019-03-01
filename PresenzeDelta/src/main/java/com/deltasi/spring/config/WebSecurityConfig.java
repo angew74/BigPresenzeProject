@@ -74,6 +74,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
         http.authorizeRequests()
             .antMatchers("/anonymous*").anonymous()
             .antMatchers("/login*").permitAll()
+            .antMatchers("/common/unauthorized").permitAll()  
             .anyRequest().authenticated()            
             .and()
             .formLogin()
@@ -87,6 +88,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
             .rememberMe().key("uniqueAndSecret").tokenValiditySeconds(86400)            
             .and()         
             .exceptionHandling().accessDeniedPage("/common/unauthorized")
+            .and()
+            .logout()
+            .permitAll()
             .and()
             .csrf().disable()
             ;

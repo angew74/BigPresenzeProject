@@ -27,6 +27,7 @@ import javax.validation.Valid;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -183,8 +184,8 @@ public class PresenzeController {
         ModelAndView modelAndView = new ModelAndView("presenze/riepilogo");
         //   Presenza p = new Presenza();
         modelAndView.addObject("titlepage", "Riepilogo Presenze");
-        if (UserInterceptor.isUserLogged()) {
-            String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        if (principal != null) {
+            String username = principal.getName();
             User user = userservice.getByUsername(username);
             RiepilogoJson response = new RiepilogoJson();
             String[] authorities = user.getAuthorities()
@@ -213,7 +214,7 @@ public class PresenzeController {
  
     @PostMapping(value = "/modifica", produces = {MediaType.APPLICATION_JSON_VALUE})
     public @ResponseBody
-    PresenzaJson ModificaPresenza(@RequestBody @ModelAttribute("Presenza") Presenza presenza, BindingResult result) {
+    PresenzaJson ModificaPresenza(@RequestBody @ModelAttribute("Presenza") Presenza presenza,Principal user, BindingResult result) {
         PresenzaJson response = new PresenzaJson();
         PBusinessRules rules = new PBusinessRules();
         Map<String, String> errors = null;
@@ -229,7 +230,7 @@ public class PresenzeController {
         }
         try {
             if (UserInterceptor.isUserLogged()) {
-                String username = SecurityContextHolder.getContext().getAuthentication().getName();
+                String username = user.getName();
                 iduser = presenza.getUserid();               
                 errors = rules.ValidatePresenza(presenza);     
                 if (errors != null) {

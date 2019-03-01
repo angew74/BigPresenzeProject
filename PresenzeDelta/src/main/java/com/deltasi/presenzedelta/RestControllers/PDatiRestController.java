@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +26,7 @@ public class PDatiRestController {
     IPresenzaService presenzaservice;
 
     @GetMapping("/mesi/{iduser}/{anno}")
+    @Secured("ROLE_ADMIN,ROLE_USER")
     public List<MonthlyPoint> getMesi(@PathVariable("iduser") int iduser, @PathVariable("anno") int idanno) {
         Map<String, String> errors = null;
         List<MonthlyPoint> m = null;
@@ -38,6 +40,7 @@ public class PDatiRestController {
     }
 
     @GetMapping("/giorni/{iduser}/{mese}")
+    @Secured("ROLE_ADMIN,ROLE_USER")
     public List<DaylyPoint> getGiorni(@PathVariable("iduser") int iduser, @PathVariable("mese") int idmese) {       
         List<DaylyPoint> m = null;
         try {
@@ -54,6 +57,7 @@ public class PDatiRestController {
     }
 
     @GetMapping("/giorno/{id}")
+   @Secured("ROLE_ADMIN,ROLE_USER")
     public Presenza getGiorno(@PathVariable("id") int id) {
         Presenza p = null;
         try {
