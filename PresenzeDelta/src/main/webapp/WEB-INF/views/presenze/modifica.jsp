@@ -14,7 +14,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <div class="avatar"><i class="material-icons">&#xE7FD;</i>Modifica Presenza</div>
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <button type="button" data-toggle="modal" data-target="#presenzaEditModal" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             </div>
             <div class="modal-body">             
                 <form name="presenzaEditForm" action="/PresenzeDelta/presenze/modifica" method="post">               
