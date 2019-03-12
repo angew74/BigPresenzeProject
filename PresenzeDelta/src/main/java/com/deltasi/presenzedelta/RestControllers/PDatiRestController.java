@@ -1,11 +1,13 @@
 package com.deltasi.presenzedelta.RestControllers;
 
 import com.deltasi.presenze.contracts.IPresenzaService;
+import com.deltasi.presenze.contracts.IUserService;
 import com.deltasi.presenze.model.DaylyPoint;
 import com.deltasi.presenze.model.MonthlyPoint;
 import com.deltasi.presenze.model.Presenza;
 import com.deltasi.presenze.model.PresenzaJson;
 import com.deltasi.presenze.model.RiepilogoJson;
+import com.deltasi.presenze.model.User;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +26,9 @@ public class PDatiRestController {
 
     @Autowired
     IPresenzaService presenzaservice;
+    
+    @Autowired
+    IUserService userservice;
 
     @GetMapping("/mesi/{iduser}/{anno}")
     @Secured("ROLE_ADMIN,ROLE_USER")
@@ -56,6 +61,7 @@ public class PDatiRestController {
         return m;
     }
 
+  
     @GetMapping("/giorno/{id}")
    @Secured("ROLE_ADMIN,ROLE_USER")
     public Presenza getGiorno(@PathVariable("id") int id) {
@@ -67,5 +73,18 @@ public class PDatiRestController {
                     HttpStatus.BAD_REQUEST, "Risorsa non trovata", ex);
         }
         return p;
+    }
+    
+      @GetMapping("/checkuser/{username}")
+   @Secured("ROLE_ADMIN")
+    public User checkUser(@PathVariable("username") String username) {
+        User u = null;
+        try {
+            u = userservice.getByUsername(username);
+        } catch (Exception ex) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST, "Risorsa non trovata", ex);
+        }
+        return u;
     }
 }

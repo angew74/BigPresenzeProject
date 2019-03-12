@@ -10,6 +10,7 @@ import com.deltasi.presenze.model.Persona;
 import java.security.Principal;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,6 +27,7 @@ public class AnagraficaController {
     IPersonaService personaservice;
     
      @GetMapping(value = "/list")
+     @Secured("ROLE_ADMIN")
     public ModelAndView index(Model model, Principal principal) {
 
         List<Persona> list = null;
@@ -45,4 +47,24 @@ public class AnagraficaController {
         return modelAndView;     
     }
 
+    
+      @GetMapping(value = "/create")
+      @Secured("ROLE_ADMIN")
+    public ModelAndView create(Model model, Principal principal) {
+
+        List<Persona> list = null;
+        ModelAndView modelAndView = new ModelAndView("anagrafica/create");
+        modelAndView.addObject("titlepage", "Creazione Anagrafica");
+        try {
+          
+        } catch (Exception ex) {
+            String error = ex.getMessage();
+            ModelAndView errormodelAndView = new ModelAndView("common/error");
+            modelAndView.addObject("titlepage", "Pagina Errore");
+            modelAndView.addObject("Error", error);
+            return errormodelAndView;
+        }
+
+        return modelAndView;     
+    }
 }
