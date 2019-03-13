@@ -50,15 +50,13 @@ function ajaxPostGiorni() {
                                 tr.append($("<td>").text(dateString));
                                 tr.append($("</td>"));
                                 tr.append($("<td><a href='#' onclick='getGiornoDetails(" + value.idgiorno + ");return false' title='Giorno'><span class='icon'><i class='fas fa-check-circle'></i></span></a>"));
-                                tr.append($("</tr>"));                                
-                                var trid = $("#tableGiorni tr").map(function () {
+                                tr.append($("</tr>"));
+                                var rowIds = $("#tableGiorni tr").map(function () {
                                     return $(this).text();
                                 }).get();
-                                if (trid.length > 0)
+                                if (jQuery.inArray(tr[0].innerText, rowIds) === -1)
                                 {
-                                    if (jQuery.inArray(tr[0].innerText, trid) === -1) {
-                                        $("#tableGiorni").append(tr);
-                                    }
+                                    $("#tableGiorni").append(tr);
                                 }
                             });
                         } else {
